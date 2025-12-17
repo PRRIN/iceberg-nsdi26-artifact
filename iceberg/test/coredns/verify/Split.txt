@@ -1,0 +1,16 @@
+@go.coredns.Split: Apply
+ └[Root]
+   ├[Assume| (<@go.coredns.Split::%s.chunk1> == 1w64) ]
+     └[Specialize| @go.coredns.Split::%s.chunk0 is &Const::Split::Test::0 ]
+       └[Specialize| @go.coredns.Split::%s.chunk1 is 11w64 ]
+   └[Assume| (<@go.coredns.Split::%s.chunk1> != 1w64) ]
+     └[Specialize| @go.coredns.Split::%s.chunk1 is 11w64 ]
+       └[Specialize| @go.coredns.Split::%s.chunk0 is &Const::Split::Test::0 ]
+         └[Specialize| @go.coredns.Split::%sret.formal.15 is &Global::Split::Sret::0 ]
+           └[Ret| [0] := malloc [i64; 32], zero;
+                | &[0]~256::0 -> Global::Split::Sret::0;
+                | 3w64 -> Global::Split::Sret::8;
+                | 3w64 -> Global::Split::Sret::16;
+                | 4w64 -> [0]::8;
+                | 8w64 -> [0]::16;
+                | return none; ]

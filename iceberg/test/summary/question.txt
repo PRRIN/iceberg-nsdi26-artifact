@@ -1,0 +1,43 @@
+@f1: Apply
+ └[Root]
+   └[Ret| ((<@f1::Global::@global::0> + <@f1::%0>) + (2w32 * (<@f1::Global::@global::0> + <@f1::%0>))) -> Global::@global::0;
+        | return none; ]
+@f2: Apply
+ └[Root]
+   └[Ret| (<@f2::Global::@global::0> + <@f2::%0>) -> Global::@global::0;
+        | return (<@f2::Global::@global::0> + <@f2::%0>); ]
+@callee: Apply
+ └[Root]
+   ├[Specialize| @callee::%0 is &[0]~4::0 ]
+     └[Ret| (<[0]::0> + 1w32) -> [0]::0;
+          | return none; ]
+   └[Specialize| @callee::%0 is &Global::@c::0 ]
+     └[Ret| (<@callee::Global::@c::0> + 1w32) -> Global::@c::0;
+          | return none; ]
+@intermediate: Apply
+ └[Root]
+   ├[Specialize| @intermediate::%0 is &[0]~4::0 ]
+     └[Ret| ((<[0]::0> + 1w32) + 1w32) -> [0]::0;
+          | return none; ]
+   └[Specialize| @intermediate::%0 is &Global::@c::0 ]
+     └[Ret| ((<@intermediate::Global::@c::0> + 1w32) + 1w32) -> Global::@c::0;
+          | return none; ]
+@caller: Apply
+ └[Root]
+   └[Ret| 5w32 -> Global::@c::0;
+        | return 50505w64; ]
+@may_alias: Apply
+ └[Root]
+   └[Specialize| @may_alias::%1 is &[0]~4::0 ]
+     ├[Specialize| @may_alias::%0 is &[0]~4::0 ]
+       └[Ret| ((<[0]::0> + <[0]::0>) + (<[0]::0> + <[0]::0>)) -> [0]::0;
+            | return none; ]
+     └[Specialize| @may_alias::%0 is &[1]~4::0 ]
+       └[Ret| ((<[1]::0> + <[0]::0>) + <[0]::0>) -> [1]::0;
+            | return none; ]
+@noalias: Apply
+ └[Root]
+   └[Ret| return 3w32; ]
+@alias: Apply
+ └[Root]
+   └[Ret| return 4w32; ]

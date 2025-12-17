@@ -1,0 +1,220 @@
+action = "summarize"
+
+[builtin]
+target = "isc"
+nop = [
+    "@query_send",
+    "@ns_client_error",
+    "@snprintf",
+    
+    "@dns_slabheader_setownercase",
+    "@dns_rdatalist_setownercase",
+    "@dns_rdataset_setownercase",
+
+    "@isc_nmhandle_attach",
+    "@isc_nmhandle_detach",
+    "@isc_mem_attach",
+    "@isc__mem_detach",
+    "@dns_rdatatypestats_increment",
+    "@inc_stats.11637",
+    "@ns_stats_increment",
+    "@isc_stats_increment",
+    "@dns_cache_updatestats",
+    "@call_updatenotify",
+
+    "@log_query",
+    "@log_tat",
+    "@ns_client_log",
+    "@cfg_obj_log",
+    "@debit_log",
+    "@dispatch_log",
+    "@dispentry_log",
+    "@dns_zone_log",
+    "@dnssec_log",
+    "@fctx_log",
+    "@gss_log",
+    "@isc__netmgr_log",
+    "@isc__nm_accept_connection_log",
+    "@isc__nmhandle_log",
+    "@isc__nmsocket_log",
+    "@isc_backtrace_log",
+    "@mgr_log",
+    "@notify_log",
+    "@ns_client_log",
+    "@recursionquota_log",
+    "@req_log",
+    "@sdlz_log",
+    "@set_log",
+    "@ssu_e_log",
+    "@tkey_log",
+    "@tsig_log",
+    "@update_log",
+    "@validator_log",
+    "@xfrin_log",
+    "@xfrout_log",
+    "@isc_log_write",
+    "@ns_client_extendederror",
+
+    "@dns__rbtdb_locknode",
+    "@dns__rbtdb_unlocknode",
+    "@dns_db_locknode",
+    "@dns_db_unlocknode",
+    "@dns_zone_lock_keyfiles",
+    "@dns_zone_unlock_keyfiles",
+    "@isc_rwlock_rdlock",
+    "@isc_rwlock_rdunlock",
+    "@isc_rwlock_wrlock",
+    "@isc_rwlock_wrunlock",
+    "@urcu_memb_read_lock",
+    "@urcu_memb_read_unlock",
+
+    # "@writers_lock_acquire",
+    # "@writers_lock_release",
+    # "@isc_rwlock_destroy",
+    # "@isc_rwlock_init",
+    # "@upgrade_entries_lock",
+    # "@check_deadlock",
+    # "@pthread_mutex_trylock",
+    # "@isc_rwlock_tryupgrade",
+    # "@isc_rwlock_trywrlock",
+    # "@writers_lock_islocked",
+]
+panic = [
+    "@isc_assertion_failed",
+    "@isc_nm_is_http_handle",
+]
+
+[builtin.type_hint]
+"@ns_query_done::%78" = [
+    "%struct.query_ctx",
+    "!"
+]
+"@dns_message_gettemprdataset::%18" = [
+    "%struct.dns_rdataset.2416",
+    "!"
+]
+"@dns_resolver_createfetch::%73" = [
+    "%struct.dns_fetch",
+    "!"
+]
+"@ns_client_newdbversion::%14" = [
+    "%struct.ns_dbversion",
+    "!"
+]
+"@isc_buffer_allocate.11403::%9" = [
+    "%struct.isc_buffer",
+    "+"
+]
+"@dns_message_gettempname::%18" = [
+    "%struct.dns_fixedname",
+    "!"
+]
+"@new_gluelist::%3" = [
+    "%struct.dns_glue",
+    "!"
+]
+
+[summary]
+inlined = [
+    "@msgresetnames",
+    "@previous_closest_nsec",
+    "@root_key_sentinel_return_servfail",
+    "@dns_message_firstname",
+    "@dns_message_nextname",
+    "@dns_message_currentname",
+    # "@dns_message_findname",
+    # "@findname",
+    # "@findname.4637",
+    "@dns_message_addname",
+    "@dns_message_findtype",
+    "@set_offsets",
+]
+spec_file = "test/bind/bind.spec"
+
+[summary.preconds]
+"@ns_query_start" = "ns_query_start_precond"
+"@ns_query_done" = "ns_query_done_precond"
+"@ns__query_start" = "ns__query_start_precond"
+"@query_getcachedb" = "query_getcachedb_precond"
+"@query_validatezonedb" = "query_validatezonedb_precond"
+"@query_lookup" = "query_lookup_precond"
+"@zone_find" = "zone_find_precond"
+"@zone_findrdataset" = "zone_findrdataset_precond"
+"@ns_client_newdbversion" = "ns_client_newdbversion_precond"
+"@dns__rbt_findnode" = "dns__rbt_findnode_precond"
+"@query_gotanswer" = "query_gotanswer_precond"
+"@query_prepresponse" = "query_prepresponse_precond"
+"@query_notfound" = "query_notfound_precond"
+"@query_delegation" = "query_delegation_precond"
+"@query_nodata" = "query_nodata_precond"
+"@query_sign_nodata" = "query_sign_nodata_precond"
+"@query_nxdomain" = "query_nxdomain_precond"
+"@query_cname" = "query_cname_precond"
+"@query_dname" = "query_dname_precond"
+"@query_addcname" = "query_addcname_precond"
+"@query_addanswer" = "query_addanswer_precond"
+"@query_addsoa" = "query_addsoa_precond"
+"@query_addns" = "query_addns_precond"
+"@query_addauth" = "query_addauth_precond"
+"@query_additional" = "query_additional_precond"
+"@query_zerottl_refetch" = "query_zerottl_refetch_precond"
+"@query_respond" = "query_respond_precond"
+"@query_addrrset" = "query_addrrset_precond"
+"@query_isduplicate" = "query_isduplicate_precond"
+"@query_additional_cb" = "query_additional_cb_precond"
+"@query_getexpire" = "query_getexpire_precond"
+
+"@dns_message_reply" = "dns_message_reply_precond"
+
+"@dns_name_fullcompare" = "dns_name_fullcompare_precond"
+"@dns_name_isabsolute" = "dns_name_isabsolute_precond"
+"@dns_name_clone" = "dns_name_clone_precond"
+"@dns_name_equal" = "dns_name_equal_precond"
+"@dns_name_copy" = "dns_name_copy_precond"
+"@dns_name_dynamic" = "dns_name_dynamic_precond"
+"@dns_name_issubdomain" = "dns_name_issubdomain_precond"
+"@dns_name_getlabelsequence" = "dns_name_getlabelsequence_precond"
+"@dns_name_concatenate" = "dns_name_concatenate_precond"
+"@dns_name_fromregion" = "dns_name_fromregion_precond"
+
+"@dns_rbtnodechain_prev" = "dns_rbtnodechain_prev_precond"
+"@dns_rbtnodechain_next" = "dns_rbtnodechain_next_precond"
+"@dns_rbtnodechain_current" = "dns_rbtnodechain_current_precond"
+"@chain_name" = "chain_name_precond"
+"@dns_zone_gettype" = "dns_zone_gettype_precond"
+"@dns__rbtdb_getoriginnode" = "dns__rbtdb_getoriginnode_precond"
+"@dns_db_iszone" = "dns_db_iszone_precond"
+
+"@dns_rdata_tostruct" = "dns_rdata_tostruct_precond"
+"@dns_rdata_freestruct" = "dns_rdata_freestruct_precond"
+"@dns_rdata_additionaldata" = "dns_rdata_additionaldata_precond"
+
+"@isc_ascii_lowercopy" = "isc_ascii_lowercopy_precond"
+"@isc_ascii_lowercopy.4228" = "isc_ascii_lowercopy_precond"
+
+[summary.oracles]
+"@dns_zt_find" = "dns_zt_find"
+"@ns_client_checkaclsilent" = "ns_client_checkaclsilent"
+"@ns__query_sfcache" = "ns__query_sfcache"
+"@query_setup_sortlist" = "query_setup_sortlist"
+"@dns_order_find" = "dns_order_find"
+"@cds_wfcq_dequeue_blocking" = "cds_wfcq_dequeue_blocking"
+"@isc_async_run" = "isc_async_run"
+"@isc_ascii_lowerequal" = "isc_ascii_lowerequal"
+"@isc_ascii_lowerequal.2402" = "isc_ascii_lowerequal"
+"@isc_ascii_lowercmp" = "isc_ascii_lowercmp"
+"@isc__ascii_tolower1" = "isc__ascii_tolower1"
+"@isc__ascii_tolower1.2461" = "isc__ascii_tolower1"
+"@isc__ascii_tolower1.4229" = "isc__ascii_tolower1"
+"@dns_rdatatype_ismeta" = "dns_rdatatype_ismeta"
+"@dns_rdatatype_atparent" = "dns_rdatatype_atparent"
+"@dns_rdatatype_iskeymaterial" = "dns_rdatatype_iskeymaterial"
+"@dns_rdatatype_attributes" = "dns_rdatatype_attributes"
+"@dns_db_getservestalerefresh" = "dns_db_getservestalerefresh"
+"@dns__rbtdb_newref" = "dns__rbtdb_newref"
+"@dns__rbtdb_decref" = "dns__rbtdb_decref"
+"@dns__rbtdb_attachnode" = "dns__rbtdb_attachnode"
+"@dns__rbtdb_detachnode" = "dns__rbtdb_detachnode"
+"@addglue" = "addglue"
+"@dns_name_fromstring" = "dns_name_fromstring"
+"@dns_message_findname" = "dns_message_findname"

@@ -1,0 +1,15 @@
+@leak1: Apply
+ └[Root]
+   └[Ret| return havoc; ]
+@leak2: Apply
+ └[Root]
+   └[Ret| havoc -> Global::@gbuf::0;
+        | return none; ]
+@leak3: Apply
+ └[Root]
+   └[Ret| [0] := malloc i64, havoc;
+        | [1] := malloc i64, havoc;
+        | &[1]~8::0 -> Global::@gbuf::0;
+        | havoc -> [0]::0;
+        | (bitcast &[0]~8::0 to i64) -> [1]::0;
+        | return none; ]

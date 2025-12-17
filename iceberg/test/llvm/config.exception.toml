@@ -1,0 +1,22 @@
+action = "summarize"
+
+[builtin]
+target = "cpp"
+nop = []
+panic = []
+
+[builtin.type_hint]
+"@_Z9throw_inti::%6" = ["i32", "!"]
+"@_Z3bari::%17" = ["%class.Foo", "!"]
+"@_Z3bari::%44" = ["i8", "!"]
+"@_Z3bari::%60" = ["%class.Foo", "!"]
+
+[summary]
+inlined = [
+    "@_Z9throw_inti"
+]
+spec_file = ""
+
+[summary.preconds]
+
+[summary.oracles]

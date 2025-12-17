@@ -1,0 +1,139 @@
+@main: Apply
+ └[Root]
+   ├[Assume| (<@main::%0> > 0w32) ]
+     └[Specialize| @main::%1 is &Const::Test::argv::0 ]
+       ├[Assume| (1w64 == (<@main::%0> as i64)) ]
+         └[Ret| return 505w32; ]
+       └[Assume| (1w64 != (<@main::%0> as i64)) ]
+         ├[Assume| (2w64 == (<@main::%0> as i64)) ]
+           └[Ret| return 2510w32; ]
+         └[Assume| (2w64 != (<@main::%0> as i64)) ]
+           ├[Assume| (3w64 == (<@main::%0> as i64)) ]
+             └[Ret| return 12515w32; ]
+           └[Assume| (3w64 != (<@main::%0> as i64)) ]
+             ├[Assume| (4w64 == (<@main::%0> as i64)) ]
+               └[Ret| return 62520w32; ]
+             └[Assume| (4w64 != (<@main::%0> as i64)) ]
+               └[Panic| pointer out of bound with Const::Test::argv and offset 40 ]
+   └[Assume| (<@main::%0> <= 0w32) ]
+     └[Ret| return 100w32; ]
+@test_list_local: Apply
+ └[Root]
+   └[Ret| return 6w32; ]
+@test_list_global: Apply
+ └[Root]
+   └[Ret| 2w32 -> Global::@list::0;
+        | &Global::@list::24 -> Global::@list::8;
+        | &Global::@list::48 -> Global::@list::16;
+        | &Global::@nodes::0 -> Global::@list::32;
+        | null -> Global::@list::40;
+        | null -> Global::@list::56;
+        | &Global::@nodes::24 -> Global::@list::64;
+        | <@test_list_global::%0> -> Global::@nodes::0;
+        | &Global::@nodes::24 -> Global::@nodes::8;
+        | &Global::@list::24 -> Global::@nodes::16;
+        | <@test_list_global::%1> -> Global::@nodes::24;
+        | &Global::@list::48 -> Global::@nodes::32;
+        | &Global::@nodes::0 -> Global::@nodes::40;
+        | <@test_list_global::%2> -> Global::@nodes::48;
+        | &Global::@list::48 -> Global::@nodes::56;
+        | &Global::@nodes::24 -> Global::@nodes::64;
+        | return (<@test_list_global::%2> + (<@test_list_global::%1> + (<@test_list_global::%0> + 0w32))); ]
+@list_sum: Apply
+ └[Root]
+   ├[Specialize| @list_sum::%0 is &[0]~72::0 ]
+     └[Specialize| [0]::8 is &[0]~72::24 ]
+       └[Specialize| [0]::32 is &[1]~72::0 ]
+         └[Specialize| [0]::16 is &[0]~72::48 ]
+           └[Specialize| [1]::8 is &[1]~72::24 ]
+             └[Specialize| [1]::32 is &[1]~72::48 ]
+               └[Specialize| [1]::56 is &[0]~72::48 ]
+                 └[Ret| return (<[1]::48> + (<[1]::24> + (<[1]::0> + 0w32))); ]
+   └[Specialize| @list_sum::%0 is &Global::@list::0 ]
+     └[Specialize| @list_sum::Global::@list::8 is &Global::@list::24 ]
+       └[Specialize| @list_sum::Global::@list::32 is &Global::@nodes::0 ]
+         └[Specialize| @list_sum::Global::@list::16 is &Global::@list::48 ]
+           └[Specialize| @list_sum::Global::@nodes::8 is &Global::@nodes::24 ]
+             └[Specialize| @list_sum::Global::@nodes::32 is &Global::@list::48 ]
+               └[Ret| return (<@list_sum::Global::@nodes::24> + (<@list_sum::Global::@nodes::0> + 0w32)); ]
+@init: Apply
+ └[Root]
+   └[Ret| 3w32 -> Global::@list::0;
+        | &Global::@list::24 -> Global::@list::8;
+        | &Global::@list::48 -> Global::@list::16;
+        | &Global::@nodes::0 -> Global::@list::32;
+        | null -> Global::@list::40;
+        | null -> Global::@list::56;
+        | &Global::@nodes::48 -> Global::@list::64;
+        | <@init::%0> -> Global::@nodes::0;
+        | &Global::@nodes::24 -> Global::@nodes::8;
+        | &Global::@list::24 -> Global::@nodes::16;
+        | <@init::%1> -> Global::@nodes::24;
+        | &Global::@nodes::48 -> Global::@nodes::32;
+        | &Global::@nodes::0 -> Global::@nodes::40;
+        | <@init::%2> -> Global::@nodes::48;
+        | &Global::@list::48 -> Global::@nodes::56;
+        | &Global::@nodes::24 -> Global::@nodes::64;
+        | return none; ]
+@list_push_back: Apply
+ └[Root]
+   ├[Specialize| @list_push_back::%0 is &[0]~72::0 ]
+     └[Specialize| [0]::16 is &[0]~72::48 ]
+       ├[Specialize| @list_push_back::%1 is &[1]~72::0 ]
+         └[Specialize| [0]::64 is &[0]~72::24 ]
+           └[Ret| (<[0]::0> + 1w32) -> [0]::0;
+                | &[1]~72::0 -> [0]::32;
+                | &[1]~72::0 -> [0]::64;
+                | &[0]~72::48 -> [1]::8;
+                | <[0]::64> -> [1]::16;
+                | return none; ]
+       ├[Specialize| @list_push_back::%1 is &[1]~72::24 ]
+         └[Specialize| [0]::64 is &[1]~72::0 ]
+           └[Ret| (<[0]::0> + 1w32) -> [0]::0;
+                | &[1]~72::24 -> [0]::64;
+                | &[1]~72::24 -> [1]::8;
+                | &[0]~72::48 -> [1]::32;
+                | <[0]::64> -> [1]::40;
+                | return none; ]
+       └[Specialize| @list_push_back::%1 is &[1]~72::48 ]
+         └[Specialize| [0]::64 is &[1]~72::24 ]
+           └[Ret| (<[0]::0> + 1w32) -> [0]::0;
+                | &[1]~72::48 -> [0]::64;
+                | &[1]~72::48 -> [1]::32;
+                | &[0]~72::48 -> [1]::56;
+                | <[0]::64> -> [1]::64;
+                | return none; ]
+   └[Specialize| @list_push_back::%0 is &Global::@list::0 ]
+     └[Specialize| @list_push_back::Global::@list::16 is &Global::@list::48 ]
+       ├[Specialize| @list_push_back::%1 is &Global::@nodes::0 ]
+         └[Specialize| @list_push_back::Global::@list::64 is &Global::@list::24 ]
+           └[Ret| (<@list_push_back::Global::@list::0> + 1w32) -> Global::@list::0;
+                | &Global::@nodes::0 -> Global::@list::32;
+                | &Global::@nodes::0 -> Global::@list::64;
+                | &Global::@list::48 -> Global::@nodes::8;
+                | <@list_push_back::Global::@list::64> -> Global::@nodes::16;
+                | return none; ]
+       ├[Specialize| @list_push_back::%1 is &Global::@nodes::24 ]
+         └[Specialize| @list_push_back::Global::@list::64 is &Global::@nodes::0 ]
+           └[Ret| (<@list_push_back::Global::@list::0> + 1w32) -> Global::@list::0;
+                | &Global::@nodes::24 -> Global::@list::64;
+                | &Global::@nodes::24 -> Global::@nodes::8;
+                | &Global::@list::48 -> Global::@nodes::32;
+                | <@list_push_back::Global::@list::64> -> Global::@nodes::40;
+                | return none; ]
+       ├[Specialize| @list_push_back::%1 is &Global::@nodes::48 ]
+         └[Specialize| @list_push_back::Global::@list::64 is &Global::@nodes::24 ]
+           └[Ret| (<@list_push_back::Global::@list::0> + 1w32) -> Global::@list::0;
+                | &Global::@nodes::48 -> Global::@list::64;
+                | &Global::@nodes::48 -> Global::@nodes::32;
+                | &Global::@list::48 -> Global::@nodes::56;
+                | <@list_push_back::Global::@list::64> -> Global::@nodes::64;
+                | return none; ]
+       └[Specialize| @list_push_back::%1 is &[0]~24::0 ]
+         └[Specialize| @list_push_back::Global::@list::64 is &Global::@nodes::48 ]
+           └[Ret| (<@list_push_back::Global::@list::0> + 1w32) -> Global::@list::0;
+                | &[0]~24::0 -> Global::@list::64;
+                | &[0]~24::0 -> Global::@nodes::56;
+                | &Global::@list::48 -> [0]::8;
+                | <@list_push_back::Global::@list::64> -> [0]::16;
+                | return none; ]

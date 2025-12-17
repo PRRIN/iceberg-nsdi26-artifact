@@ -1,0 +1,210 @@
+use std::str::FromStr;
+use std::rc::Rc;
+use crate::ast::*;
+
+
+//! Iceberg's SPECification language.
+//!
+//! Design of the SPEC language is facilitated by its one role in Icerbeg:
+//! an ergonomic scripting language for developer access, and nothing more.
+//!
+//! Thus the key construct `fn` is born. `fn`s are purposefully pure functions 
+//! - they are in essence complex expressions *without any* side effects.
+//! This follows the insight that memories and other side effects are for 
+//! **implementations** only, while a sematic specification should be good
+//! without them.
+//! SPEC's grammar is Rust-ified, with closure-like lambdas and let bindings 
+//! to make writing functions surprisingly easy.
+//!
+//! Finally, SPEC is strongly-typed. It supports type inference to make
+//! things easier for the developers.
+
+grammar;
+
+match {
+    // Skip whitespaces
+    r"[ \n\t\r]*" => {},
+    // Comments
+    r"//[^\n\r]*[\n\r]*" => {}, // `// comment`
+    // Go default for the rest
+    _
+}
+
+EnumOrGenericId: Ident = r"[A-Z]+" => Rc::from( <> );
+TypeId: Ident = r"([A-Z][a-z0-9]*)+[a-z0-9]" => Rc::from( <> );
+ValueId: Ident = r"[a-z_][a-z0-9_]*" => Rc::from( <> );
+ExternId: Ident = r#"[%@]([A-Za-z0-9_.]+|"[^"]+")"# => Rc::from( <> );
+
+IntLiteral: Int = r"[0-9]+" => UInt::from_str(<>).unwrap() as Int;
+BVLiteral: BitVector = <value: r"[0-9]+w"> <width: r"[0-9]+"> => BitVector { 
+    value: UInt::from_str(&value[..value.len()-1]).unwrap() as Int,
+    width: usize::from_str(width).unwrap(),
+};
+
+/// Macro for a list of `T`, separated by `SEP`.
+#[inline]
+List<T, SEP>: Vec<T> = {
+    <mut v:(<T> SEP)*> <e:T?> => match e {
+        None => v,
+        Some(e) => {
+            v.push(e);
+            v
+        }
+    }
+};
+
+pub Prog: Prog = <decls: Decl+> => Prog { <> };
+
+Decl: Decl = {
+    TypeDecl => Decl::TypeDecl( <> ),
+    FuncDef => Decl::FuncDef( <> ),
+    ExternFuncDecl => Decl::ExternFuncDecl( <> ),
+};
+
+TypeDecl: TypeDecl = {
+    EnumDecl => TypeDecl::EnumDecl( <> ),
+    StructDecl => TypeDecl::StructDecl( <> ),
+};
+
+EnumDecl: EnumDecl = "enum" <tid: TypeId> "{" <discriminants: List<EnumOrGenericId, ",">> "}" => EnumDecl { <> };
+
+StructField = <ValueId> ":" <Type>;
+StructDecl: StructDecl = <linkage: ("use" <ExternId> "as")?> <packed: "packed"?> "struct" <tid: TypeId> 
+    <fields: ("{" <List<StructField, ",">> "}")?> => StructDecl { 
+        linkage,
+        tid,
+        fields,
+        packed: packed.is_some(),
+    };
+
+Type: Type = {
+    "Void" => Type::Unit,
+    "Int" => Type::Int,
+    "Bool" => Type::Bool,
+    TypeId => Type::Named( <> ),
+    EnumOrGenericId => Type::Generic( <> ),
+    "Ptr" => Type::Pointer,
+    "List<" <Type> ">" => Type::List(Box::new( <> )),
+    "[" <e: Type> ";" <len: r"[0-9]+"> "]" => Type::Array(Box::new(e), usize::from_str(len).unwrap()),
+    r"Int<[0-9]+>" => Type::BV(usize::from_str(&<>[4..<>.len()-1]).unwrap()),
+    "(" <args: List<Type, ",">> ")" "->" <compute: Type> => Type::Lambda(
+        args.into_iter().map(Box::new).collect(),
+        Box::new(compute),
+    ),
+};
+
+FuncArg = <ValueId> ":" <Type>;
+FuncDef: FuncDef = "fn" <fid: ValueId> <glist: ("<" <List<EnumOrGenericId, ",">> ">")?> "(" <args: List<FuncArg, ",">> ")" <ret_ty: ("->" <Type>)?>
+    "{" <body: Expr> "}" => FuncDef { <> };
+
+ExternFuncDecl: ExternFuncDecl = "use" <linkage: ExternId> "as" "fn" <fid: ValueId> "(" <args: List<Type, ",">> ")" <ret_ty: ("->" <Type>)?> ";" => ExternFuncDecl { <> };
+
+
+ExtOp: ExtOp = {
+    "zext" => ExtOp::Zext,
+    "sext" => ExtOp::Sext,
+    "trunc" => ExtOp::Trunc,
+};
+
+Expr: Box<Expr> = LetExpr;
+
+LetExpr: Box<Expr> = {
+    LOrExpr,
+    "let" <ValueId> <(":" <Type>)?> "=" <Expr> ";" <Expr> => Box::new(Expr::Let( <> )),
+};
+
+LOrExpr: Box<Expr> = {
+    LAndExpr,
+    <LOrExpr> "||" <LAndExpr> => Box::new(Expr::Bool(BoolOp::Or, <> )),
+};
+
+LAndExpr: Box<Expr> = {
+    OrExpr,
+    <LAndExpr> "&&" <OrExpr> => Box::new(Expr::Bool(BoolOp::And, <> )),
+}; 
+
+OrExpr: Box<Expr> = {
+    XorExpr,
+    <OrExpr> "|" <XorExpr> => Box::new(Expr::Arith(ArithOp::Or, <> )),
+};
+
+XorExpr: Box<Expr> = {
+    AndExpr,
+    <XorExpr> "^" <AndExpr> => Box::new(Expr::Arith(ArithOp::Xor, <> )),
+};
+
+AndExpr: Box<Expr> = {
+    EqExpr,
+    <AndExpr> "&" <EqExpr> => Box::new(Expr::Arith(ArithOp::And, <> )),
+};
+
+EqExpr: Box<Expr> = {
+    RelExpr,
+    <EqExpr> "==" <RelExpr> => Box::new(Expr::Compare(CompareOp::Eq, <> )),
+    <EqExpr> "!=" <RelExpr> => Box::new(Expr::Compare(CompareOp::Neq, <> )),
+};
+
+RelExpr: Box<Expr> = {
+    AddExpr,
+    <RelExpr> "<" <AddExpr> => Box::new(Expr::Compare(CompareOp::Ult, <> )),
+    <RelExpr> ">" <AddExpr> => Box::new(Expr::Compare(CompareOp::Ugt, <> )),
+    <RelExpr> "<=" <AddExpr> => Box::new(Expr::Compare(CompareOp::Ule, <> )),
+    <RelExpr> ">=" <AddExpr> => Box::new(Expr::Compare(CompareOp::Uge, <> )),
+    <RelExpr> "<s" <AddExpr> => Box::new(Expr::Compare(CompareOp::Slt, <> )),
+    <RelExpr> ">s" <AddExpr> => Box::new(Expr::Compare(CompareOp::Sgt, <> )),
+    <RelExpr> "<=s" <AddExpr> => Box::new(Expr::Compare(CompareOp::Sle, <> )),
+    <RelExpr> ">=s" <AddExpr> => Box::new(Expr::Compare(CompareOp::Sge, <> )),
+};
+
+AddExpr: Box<Expr> = {
+    ShiftExpr,
+    <AddExpr> "+" <ShiftExpr> => Box::new(Expr::Arith(ArithOp::Add, <> )),
+    <AddExpr> "-" <ShiftExpr> => Box::new(Expr::Arith(ArithOp::Sub, <> )),
+    <AddExpr> "++" <ShiftExpr> => Box::new(Expr::Concat( <> )),
+};
+
+ShiftExpr: Box<Expr> = {
+    UnaryExpr,
+    <ShiftExpr> "shl" <UnaryExpr> => Box::new(Expr::Arith(ArithOp::Shl, <> )),
+    <ShiftExpr> "shr" <UnaryExpr> => Box::new(Expr::Arith(ArithOp::Lshr, <> )),
+    <ShiftExpr> "ashr" <UnaryExpr> => Box::new(Expr::Arith(ArithOp::Ashr, <> )),
+};
+
+UnaryExpr: Box<Expr> = {
+    PrimaryExpr,
+    "!" <UnaryExpr> => Box::new(Expr::Unary(UnaryOp::Not, <> )),
+    "-" <UnaryExpr> => Box::new(Expr::Unary(UnaryOp::Neg, <> )),
+};
+
+StructInit = <ValueId> ":" <Expr>;
+LambdaArg = <ValueId> <(":" <Type>)?>;
+PrimaryExpr: Box<Expr> = {
+    "(" <Expr> ")",
+    "true" => Box::new(Expr::True),
+    "false" => Box::new(Expr::False),
+    "havoc" => Box::new(Expr::Havoc),
+    "[" <List<Expr, ",">> "]" => Box::new(Expr::List( <> )),
+    <TypeId> "{" <List<StructInit, ",">> "}" => Box::new(Expr::Struct( <> )),
+    "sext" <Expr> "to" <Type> => Box::new(Expr::Ext(ExtOp::Sext, <> )),
+    "zext" <Expr> "to" <Type> => Box::new(Expr::Ext(ExtOp::Zext, <> )),
+    "trunc" <Expr> "to" <Type> => Box::new(Expr::Ext(ExtOp::Trunc, <> )),
+    <PrimaryExpr> "as" <Type> => Box::new(Expr::Cast( <> )),
+    "none" => Box::new(Expr::None),
+    "null" => Box::new(Expr::Null),
+    ValueId => Box::new(Expr::Var( <> )),
+    BVLiteral => Box::new(Expr::BVLiteral( <> )),
+    IntLiteral => Box::new(Expr::IntLiteral( <> )),
+    r#""[^"]+""# => Box::new(Expr::IdentLiteral( (&<>[1..(<>.len()-1)]).into() )),
+    <TypeId> "." <EnumOrGenericId> => Box::new(Expr::EnumLiteral( <> )),
+    "|" <List<LambdaArg, ",">> "|" "{" <Expr> "}"  => Box::new(Expr::Lambda( <> )),
+    "if" <Expr> "{" <Expr> "}" "else" "{" <Expr> "}" => Box::new(Expr::Ite( <> )),
+    <PrimaryExpr> "." <ValueId> => Box::new(Expr::Field( <> )),
+    <PrimaryExpr> "[" <Expr?> ".." <Expr?> "]" => Box::new(Expr::Range( <> )),
+    <PrimaryExpr> "[" <Expr> "]" => Box::new(Expr::Index( <> )),
+
+    <PrimaryExpr> "|>" "*" <Type> => Box::new(Expr::PtrDeref( <> )),
+    <PrimaryExpr> "|>" <Type> "." <ValueId> => Box::new(Expr::PtrField( <> )),
+    <PrimaryExpr> "|>" <Type> "[" <Expr> "]" => Box::new(Expr::PtrIndex( <> )),
+
+    <ValueId> <("::<" <List<Type, ",">> ">")?> "(" <List<Expr, ",">> ")" => Box::new(Expr::Call( <> )),
+};

@@ -1,0 +1,8 @@
+@test_function_pointer: Apply
+ └[Root]
+   └[Specialize| @test_function_pointer::%0 is 3w32 ]
+     └[Ret| ident(@panic) -> Global::@buf::0;
+          | ident(@ret) -> Global::@buf::8;
+          | ident(@rotate) -> Global::@buf::16;
+          | ident(@test_function_pointer) -> Global::@buf::24;
+          | return havoc; ]

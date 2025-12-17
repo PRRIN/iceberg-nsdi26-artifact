@@ -1,0 +1,22 @@
+[package]
+name = "llvm_frontend"
+version = "0.1.0"
+authors = ["EchoStone <echostone@gmail.com>"]
+edition = "2021"
+
+[build-dependencies]
+lalrpop = "0.20.0"
+cargo-emit = "0.2.1"
+
+[dependencies]
+lalrpop-util = { version = "0.20.0", features = ["lexer"] }
+log = { version = "0.4.19", features = ["max_level_trace", "release_max_level_warn"] }
+# log = "0.4.19"
+env_logger = "0.10.0"
+
+[lib]
+crate-type = ["dylib"]
+
+[features]
+default = ["test"]
+test = [] # For exporting test functions across the workspace

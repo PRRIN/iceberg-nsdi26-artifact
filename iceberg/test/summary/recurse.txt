@@ -1,0 +1,110 @@
+@sum: Apply
+ └[Root]
+   └[Ret| return 32w32; ]
+@rsum: Apply
+ └[Root]
+   ├[Assume| (<@rsum::%1> == 0w32) ]
+     └[Specialize| @rsum::%0 is &[0]~256::0 ]
+       └[Ret| return (0w32 + <[0]::0>); ]
+   └[Assume| (<@rsum::%1> != 0w32) ]
+     └[Specialize| @rsum::%0 is &[0]~256::0 ]
+       └[Specialize| @rsum::%1 is 63w32 ]
+         └[Ret| return ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((0w32 + <[0]::252>) + <[0]::248>) + <[0]::244>) + <[0]::240>) + <[0]::236>) + <[0]::232>) + <[0]::228>) + <[0]::224>) + <[0]::220>) + <[0]::216>) + <[0]::212>) + <[0]::208>) + <[0]::204>) + <[0]::200>) + <[0]::196>) + <[0]::192>) + <[0]::188>) + <[0]::184>) + <[0]::180>) + <[0]::176>) + <[0]::172>) + <[0]::168>) + <[0]::164>) + <[0]::160>) + <[0]::156>) + <[0]::152>) + <[0]::148>) + <[0]::144>) + <[0]::140>) + <[0]::136>) + <[0]::132>) + <[0]::128>) + <[0]::124>) + <[0]::120>) + <[0]::116>) + <[0]::112>) + <[0]::108>) + <[0]::104>) + <[0]::100>) + <[0]::96>) + <[0]::92>) + <[0]::88>) + <[0]::84>) + <[0]::80>) + <[0]::76>) + <[0]::72>) + <[0]::68>) + <[0]::64>) + <[0]::60>) + <[0]::56>) + <[0]::52>) + <[0]::48>) + <[0]::44>) + <[0]::40>) + <[0]::36>) + <[0]::32>) + <[0]::28>) + <[0]::24>) + <[0]::20>) + <[0]::16>) + <[0]::12>) + <[0]::8>) + <[0]::4>) + <[0]::0>); ]
+@gcd: Empty
+@test_tree: Apply
+ └[Root]
+   └[Ret| null -> Global::@nodes::0;
+        | 0w32 -> Global::@nodes::8;
+        | null -> Global::@nodes::16;
+        | &Global::@nodes::0 -> Global::@nodes::24;
+        | 1w32 -> Global::@nodes::32;
+        | &Global::@nodes::72 -> Global::@nodes::40;
+        | null -> Global::@nodes::48;
+        | 2w32 -> Global::@nodes::56;
+        | null -> Global::@nodes::64;
+        | &Global::@nodes::48 -> Global::@nodes::72;
+        | 3w32 -> Global::@nodes::80;
+        | null -> Global::@nodes::88;
+        | return 7w32; ]
+@add: Apply
+ └[Root]
+   └[Specialize| @add::%0 is &[0]~8::0 ]
+     ├[Specialize| [0]::0 is null ]
+       └[Ret| <@add::%1> -> [0]::0;
+            | return none; ]
+     └[Specialize| [0]::0 is &Global::@nodes::24 ]
+       ├[Specialize| @add::%1 is &Global::@nodes::0 ]
+         ├[Assume| (<@add::Global::@nodes::8> < <@add::Global::@nodes::32>) ]
+           └[Specialize| @add::Global::@nodes::24 is null ]
+             └[Ret| &Global::@nodes::0 -> Global::@nodes::24;
+                  | return none; ]
+         └[Assume| (<@add::Global::@nodes::8> >= <@add::Global::@nodes::32>) ]
+           ├[Assume| (<@add::Global::@nodes::8> > <@add::Global::@nodes::32>) ]
+             └[Specialize| @add::Global::@nodes::40 is null ]
+               └[Ret| &Global::@nodes::0 -> Global::@nodes::40;
+                    | return none; ]
+           └[Assume| (<@add::Global::@nodes::8> <= <@add::Global::@nodes::32>) ]
+             └[Ret| return none; ]
+       ├[Specialize| @add::%1 is &Global::@nodes::72 ]
+         ├[Assume| (<@add::Global::@nodes::80> < <@add::Global::@nodes::32>) ]
+           └[Specialize| @add::Global::@nodes::24 is &Global::@nodes::0 ]
+             ├[Assume| (<@add::Global::@nodes::80> < <@add::Global::@nodes::8>) ]
+               └[Specialize| @add::Global::@nodes::0 is null ]
+                 └[Ret| &Global::@nodes::72 -> Global::@nodes::0;
+                      | return none; ]
+             └[Assume| (<@add::Global::@nodes::80> >= <@add::Global::@nodes::8>) ]
+               ├[Assume| (<@add::Global::@nodes::80> > <@add::Global::@nodes::8>) ]
+                 └[Specialize| @add::Global::@nodes::16 is null ]
+                   └[Ret| &Global::@nodes::72 -> Global::@nodes::16;
+                        | return none; ]
+               └[Assume| (<@add::Global::@nodes::80> <= <@add::Global::@nodes::8>) ]
+                 └[Ret| return none; ]
+         └[Assume| (<@add::Global::@nodes::80> >= <@add::Global::@nodes::32>) ]
+           ├[Assume| (<@add::Global::@nodes::80> > <@add::Global::@nodes::32>) ]
+             └[Specialize| @add::Global::@nodes::40 is null ]
+               └[Ret| &Global::@nodes::72 -> Global::@nodes::40;
+                    | return none; ]
+           └[Assume| (<@add::Global::@nodes::80> <= <@add::Global::@nodes::32>) ]
+             └[Ret| return none; ]
+       └[Specialize| @add::%1 is &Global::@nodes::48 ]
+         ├[Assume| (<@add::Global::@nodes::56> < <@add::Global::@nodes::32>) ]
+           └[Specialize| @add::Global::@nodes::24 is &Global::@nodes::0 ]
+             ├[Assume| (<@add::Global::@nodes::56> < <@add::Global::@nodes::8>) ]
+               └[Specialize| @add::Global::@nodes::0 is null ]
+                 └[Ret| &Global::@nodes::48 -> Global::@nodes::0;
+                      | return none; ]
+             └[Assume| (<@add::Global::@nodes::56> >= <@add::Global::@nodes::8>) ]
+               ├[Assume| (<@add::Global::@nodes::56> > <@add::Global::@nodes::8>) ]
+                 └[Specialize| @add::Global::@nodes::16 is null ]
+                   └[Ret| &Global::@nodes::48 -> Global::@nodes::16;
+                        | return none; ]
+               └[Assume| (<@add::Global::@nodes::56> <= <@add::Global::@nodes::8>) ]
+                 └[Ret| return none; ]
+         └[Assume| (<@add::Global::@nodes::56> >= <@add::Global::@nodes::32>) ]
+           ├[Assume| (<@add::Global::@nodes::56> > <@add::Global::@nodes::32>) ]
+             └[Specialize| @add::Global::@nodes::40 is &Global::@nodes::72 ]
+               ├[Assume| (<@add::Global::@nodes::56> < <@add::Global::@nodes::80>) ]
+                 └[Specialize| @add::Global::@nodes::72 is null ]
+                   └[Ret| &Global::@nodes::48 -> Global::@nodes::72;
+                        | return none; ]
+               └[Assume| (<@add::Global::@nodes::56> >= <@add::Global::@nodes::80>) ]
+                 ├[Assume| (<@add::Global::@nodes::56> > <@add::Global::@nodes::80>) ]
+                   └[Specialize| @add::Global::@nodes::88 is null ]
+                     └[Ret| &Global::@nodes::48 -> Global::@nodes::88;
+                          | return none; ]
+                 └[Assume| (<@add::Global::@nodes::56> <= <@add::Global::@nodes::80>) ]
+                   └[Ret| return none; ]
+           └[Assume| (<@add::Global::@nodes::56> <= <@add::Global::@nodes::32>) ]
+             └[Ret| return none; ]
+@wsum: Apply
+ └[Root]
+   └[Specialize| @wsum::%0 is &Global::@nodes::24 ]
+     └[Specialize| @wsum::Global::@nodes::24 is &Global::@nodes::0 ]
+       └[Specialize| @wsum::Global::@nodes::0 is null ]
+         └[Specialize| @wsum::Global::@nodes::16 is null ]
+           └[Specialize| @wsum::Global::@nodes::40 is &Global::@nodes::72 ]
+             └[Specialize| @wsum::Global::@nodes::72 is &Global::@nodes::48 ]
+               └[Specialize| @wsum::Global::@nodes::48 is null ]
+                 └[Specialize| @wsum::Global::@nodes::64 is null ]
+                   └[Specialize| @wsum::Global::@nodes::88 is null ]
+                     └[Ret| return (0w32 + (((0w32 + ((0w32 + (<@wsum::Global::@nodes::56> * ((<@wsum::%1> + 1w32) + 1w32))) + 0w32)) + (<@wsum::Global::@nodes::80> * (<@wsum::%1> + 1w32))) + (((0w32 + ((0w32 + (<@wsum::Global::@nodes::8> * (<@wsum::%1> + 1w32))) + 0w32)) + (<@wsum::Global::@nodes::32> * <@wsum::%1>)) + 0w32))); ]

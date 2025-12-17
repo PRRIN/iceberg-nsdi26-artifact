@@ -1,0 +1,16 @@
+action = ""
+
+[builtin]
+target = "c"
+nop = []
+panic = []
+
+[builtin.type_hint]
+
+[summary]
+inlined = []
+spec_file = ""
+
+[summary.preconds]
+
+[summary.oracles]

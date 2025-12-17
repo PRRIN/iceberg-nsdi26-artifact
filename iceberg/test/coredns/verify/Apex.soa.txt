@@ -1,0 +1,21 @@
+@go.coredns.Apex.soa: Apply
+ └[Root]
+   └[Specialize| @go.coredns.Apex.soa::%pointer is &Const::Apex.soa::zone::48 ]
+     ├[Assume| ((<@go.coredns.Apex.soa::%do> & 1w8) == 0w8) ]
+       └[Specialize| @go.coredns.Apex.soa::%sret.formal.9 is &Global::Apex.soa::Sret::0 ]
+         └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+              | &[0]~512::0 -> Global::Apex.soa::Sret::0;
+              | 1w64 -> Global::Apex.soa::Sret::8;
+              | 1w64 -> Global::Apex.soa::Sret::16;
+              | &Const::@pimt..interface.4Header.0func.8.9.8.1go.coredns.RR_Header.9.2.go.coredns.copy.0func.8.9.8go.coredns.RR.9.5..go.coredns.SOA::0 -> [0]::0;
+              | &Const::4000124190::0 -> [0]::8;
+              | return none; ]
+     └[Assume| ((<@go.coredns.Apex.soa::%do> & 1w8) != 0w8) ]
+       └[Specialize| @go.coredns.Apex.soa::%sret.formal.9 is &Global::Apex.soa::Sret::0 ]
+         └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+              | &[0]~512::0 -> Global::Apex.soa::Sret::0;
+              | 1w64 -> Global::Apex.soa::Sret::8;
+              | 1w64 -> Global::Apex.soa::Sret::16;
+              | &Const::@pimt..interface.4Header.0func.8.9.8.1go.coredns.RR_Header.9.2.go.coredns.copy.0func.8.9.8go.coredns.RR.9.5..go.coredns.SOA::0 -> [0]::0;
+              | &Const::4000124190::0 -> [0]::8;
+              | return none; ]

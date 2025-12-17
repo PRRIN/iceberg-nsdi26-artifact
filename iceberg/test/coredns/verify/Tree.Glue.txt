@@ -1,0 +1,9 @@
+@go.coredns.Tree.Glue: Apply
+ └[Root]
+   └[Specialize| @go.coredns.Tree.Glue::%nsrrs is &Const::Tree.Glue::zone::56 ]
+     └[Specialize| @go.coredns.Tree.Glue::%sret.formal.2 is &Global::Tree.Glue::Sret::0 ]
+       └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+            | &[0]~512::0 -> Global::Tree.Glue::Sret::0;
+            | 0w64 -> Global::Tree.Glue::Sret::8;
+            | 0w64 -> Global::Tree.Glue::Sret::16;
+            | return none; ]

@@ -1,0 +1,110 @@
+@go.coredns.Join: Apply
+ └[Root]
+   └[Specialize| @go.coredns.Join::%labels is &Const::Join::labels::0 ]
+     └[Specialize| @go.coredns.Join::Global::Join::labels::Raw::8 is 3w64 ]
+       └[Specialize| @go.coredns.Join::Global::Join::labels::Raw::24 is 6w64 ]
+         └[Specialize| @go.coredns.Join::Global::Join::labels::Raw::40 is 9w64 ]
+           └[Specialize| @go.coredns.Join::Global::Join::labels::Raw::0 is &Const::Join::s0::0 ]
+             └[Specialize| @go.coredns.Join::Global::Join::labels::Raw::16 is &Const::Join::s1::0 ]
+               └[Specialize| @go.coredns.Join::Global::Join::labels::Raw::32 is &Const::Join::s2::0 ]
+                 ├[Assume| (<Global::Join::s0::0> != 92w8) ]
+                   ├[Assume| (<Global::Join::s0::1> != 92w8) ]
+                     ├[Assume| (<Global::Join::s0::2> != 92w8) ]
+                       ├[Assume| (<Global::Join::s1::0> != 92w8) ]
+                         ├[Assume| (<Global::Join::s1::1> != 92w8) ]
+                           ├[Assume| (<Global::Join::s1::2> != 92w8) ]
+                             ├[Assume| (<Global::Join::s1::3> != 92w8) ]
+                               ├[Assume| (<Global::Join::s1::4> != 92w8) ]
+                                 ├[Assume| (<Global::Join::s1::5> != 92w8) ]
+                                   ├[Assume| (<Global::Join::s2::0> != 92w8) ]
+                                     ├[Assume| (<Global::Join::s2::1> != 92w8) ]
+                                       ├[Assume| (<Global::Join::s2::2> != 92w8) ]
+                                         ├[Assume| (<Global::Join::s2::3> != 92w8) ]
+                                           ├[Assume| (<Global::Join::s2::4> != 92w8) ]
+                                             ├[Assume| (<Global::Join::s2::5> != 92w8) ]
+                                               ├[Assume| (<Global::Join::s2::6> != 92w8) ]
+                                                 ├[Assume| (<Global::Join::s2::7> != 92w8) ]
+                                                   ├[Assume| (<Global::Join::s2::8> != 92w8) ]
+                                                     ├[Assume| (<Global::Join::s2::8> == 46w8) ]
+                                                       └[Ret| [0] := malloc [i8; 32], zero;
+                                                            | <Global::Join::s0::0> -> [0]::0;
+                                                            | <Global::Join::s0::1> -> [0]::1;
+                                                            | <Global::Join::s0::2> -> [0]::2;
+                                                            | 46w8 -> [0]::3;
+                                                            | <Global::Join::s1::0> -> [0]::4;
+                                                            | <Global::Join::s1::1> -> [0]::5;
+                                                            | <Global::Join::s1::2> -> [0]::6;
+                                                            | <Global::Join::s1::3> -> [0]::7;
+                                                            | <Global::Join::s1::4> -> [0]::8;
+                                                            | <Global::Join::s1::5> -> [0]::9;
+                                                            | 46w8 -> [0]::10;
+                                                            | <Global::Join::s2::0> -> [0]::11;
+                                                            | <Global::Join::s2::1> -> [0]::12;
+                                                            | <Global::Join::s2::2> -> [0]::13;
+                                                            | <Global::Join::s2::3> -> [0]::14;
+                                                            | <Global::Join::s2::4> -> [0]::15;
+                                                            | <Global::Join::s2::5> -> [0]::16;
+                                                            | <Global::Join::s2::6> -> [0]::17;
+                                                            | <Global::Join::s2::7> -> [0]::18;
+                                                            | <Global::Join::s2::8> -> [0]::19;
+                                                            | return { &[0]~32::0, 20w64 }; ]
+                                                     └[Assume| (<Global::Join::s2::8> != 46w8) ]
+                                                       └[Ret| [2] := malloc [i8; 21], zero;
+                                                            | <Global::Join::s0::0> -> [2]::0;
+                                                            | <Global::Join::s0::1> -> [2]::1;
+                                                            | <Global::Join::s0::2> -> [2]::2;
+                                                            | 46w8 -> [2]::3;
+                                                            | <Global::Join::s1::0> -> [2]::4;
+                                                            | <Global::Join::s1::1> -> [2]::5;
+                                                            | <Global::Join::s1::2> -> [2]::6;
+                                                            | <Global::Join::s1::3> -> [2]::7;
+                                                            | <Global::Join::s1::4> -> [2]::8;
+                                                            | <Global::Join::s1::5> -> [2]::9;
+                                                            | 46w8 -> [2]::10;
+                                                            | <Global::Join::s2::0> -> [2]::11;
+                                                            | <Global::Join::s2::1> -> [2]::12;
+                                                            | <Global::Join::s2::2> -> [2]::13;
+                                                            | <Global::Join::s2::3> -> [2]::14;
+                                                            | <Global::Join::s2::4> -> [2]::15;
+                                                            | <Global::Join::s2::5> -> [2]::16;
+                                                            | <Global::Join::s2::6> -> [2]::17;
+                                                            | <Global::Join::s2::7> -> [2]::18;
+                                                            | <Global::Join::s2::8> -> [2]::19;
+                                                            | 46w8 -> [2]::20;
+                                                            | return { &[2]~21::0, 21w64 }; ]
+                                                   └[Assume| (<Global::Join::s2::8> == 92w8) ]
+                                                     └[Panic| failed precondition ]
+                                                 └[Assume| (<Global::Join::s2::7> == 92w8) ]
+                                                   └[Panic| failed precondition ]
+                                               └[Assume| (<Global::Join::s2::6> == 92w8) ]
+                                                 └[Panic| failed precondition ]
+                                             └[Assume| (<Global::Join::s2::5> == 92w8) ]
+                                               └[Panic| failed precondition ]
+                                           └[Assume| (<Global::Join::s2::4> == 92w8) ]
+                                             └[Panic| failed precondition ]
+                                         └[Assume| (<Global::Join::s2::3> == 92w8) ]
+                                           └[Panic| failed precondition ]
+                                       └[Assume| (<Global::Join::s2::2> == 92w8) ]
+                                         └[Panic| failed precondition ]
+                                     └[Assume| (<Global::Join::s2::1> == 92w8) ]
+                                       └[Panic| failed precondition ]
+                                   └[Assume| (<Global::Join::s2::0> == 92w8) ]
+                                     └[Panic| failed precondition ]
+                                 └[Assume| (<Global::Join::s1::5> == 92w8) ]
+                                   └[Panic| failed precondition ]
+                               └[Assume| (<Global::Join::s1::4> == 92w8) ]
+                                 └[Panic| failed precondition ]
+                             └[Assume| (<Global::Join::s1::3> == 92w8) ]
+                               └[Panic| failed precondition ]
+                           └[Assume| (<Global::Join::s1::2> == 92w8) ]
+                             └[Panic| failed precondition ]
+                         └[Assume| (<Global::Join::s1::1> == 92w8) ]
+                           └[Panic| failed precondition ]
+                       └[Assume| (<Global::Join::s1::0> == 92w8) ]
+                         └[Panic| failed precondition ]
+                     └[Assume| (<Global::Join::s0::2> == 92w8) ]
+                       └[Panic| failed precondition ]
+                   └[Assume| (<Global::Join::s0::1> == 92w8) ]
+                     └[Panic| failed precondition ]
+                 └[Assume| (<Global::Join::s0::0> == 92w8) ]
+                   └[Panic| failed precondition ]

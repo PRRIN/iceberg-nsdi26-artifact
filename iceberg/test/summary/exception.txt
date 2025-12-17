@@ -1,0 +1,61 @@
+@_Z9throw_inti: Apply
+ └[Root]
+   ├[Assume| (<@_Z9throw_inti::%0> > 20w32) ]
+     └[Ret| [0] := malloc { i32, i32, ptr, i32 }, havoc;
+          | 3w32 -> [0]::0;
+          | 0w32 -> [0]::4;
+          | null -> [0]::8;
+          | <@_Z9throw_inti::%0> -> [0]::16;
+          | throw { &[0]~24::16, 3w32 }; ]
+   └[Assume| (<@_Z9throw_inti::%0> <= 20w32) ]
+     └[Ret| return <@_Z9throw_inti::%0>; ]
+@_Z3bari: Apply
+ └[Root]
+   ├[Assume| (<@_Z3bari::%0> > 10w32) ]
+     ├[Assume| (<@_Z3bari::%0> > 20w32) ]
+       └[Ret| [0] := malloc { i32, i32, ptr, i32 }, havoc;
+            | 3w32 -> [0]::0;
+            | 0w32 -> [0]::4;
+            | null -> [0]::8;
+            | <@_Z3bari::%0> -> [0]::16;
+            | throw { &[0]~24::16, 3w32 }; ]
+     └[Assume| (<@_Z3bari::%0> <= 20w32) ]
+       └[Ret| return <@_Z3bari::%0>; ]
+   └[Assume| (<@_Z3bari::%0> <= 10w32) ]
+     ├[Assume| (<@_Z3bari::%0> == 5w32) ]
+       └[Ret| [1] := malloc { i32, i32, ptr, i8 }, havoc;
+            | 7w32 -> [1]::0;
+            | 0w32 -> [1]::4;
+            | null -> [1]::8;
+            | 99w8 -> [1]::16;
+            | throw { &[1]~24::16, 7w32 }; ]
+     └[Assume| (<@_Z3bari::%0> != 5w32) ]
+       ├[Assume| (<@_Z3bari::%0> < 5w32) ]
+         └[Ret| [1] := malloc { i32, i32, ptr, { i32 } }, havoc;
+              | 6w32 -> [1]::0;
+              | 0w32 -> [1]::4;
+              | ident(@_ZN3FooD2Ev) -> [1]::8;
+              | (<@_Z3bari::%0> - 5w32) -> [1]::16;
+              | throw { &[1]~24::16, 6w32 }; ]
+       └[Assume| (<@_Z3bari::%0> >= 5w32) ]
+         └[Ret| [0] := malloc { i32, i32, ptr, { i32 } }, havoc;
+              | 6w32 -> [0]::0;
+              | -2147483648w32 -> [0]::4;
+              | ident(@_ZN3FooD2Ev) -> [0]::8;
+              | <@_Z3bari::%0> -> [0]::16;
+              | throw { &[0]~24::16, 6w32 }; ]
+@_Z4testi: Apply
+ └[Root]
+   ├[Assume| (<@_Z4testi::%0> > 10w32) ]
+     ├[Assume| (<@_Z4testi::%0> > 20w32) ]
+       └[Ret| return (<@_Z4testi::%0> * 4w32); ]
+     └[Assume| (<@_Z4testi::%0> <= 20w32) ]
+       └[Ret| return (2w32 * <@_Z4testi::%0>); ]
+   └[Assume| (<@_Z4testi::%0> <= 10w32) ]
+     ├[Assume| (<@_Z4testi::%0> == 5w32) ]
+       └[Ret| return 0w32; ]
+     └[Assume| (<@_Z4testi::%0> != 5w32) ]
+       ├[Assume| (<@_Z4testi::%0> < 5w32) ]
+         └[Ret| return (<@_Z4testi::%0> - 5w32); ]
+       └[Assume| (<@_Z4testi::%0> >= 5w32) ]
+         └[Ret| return <@_Z4testi::%0>; ]

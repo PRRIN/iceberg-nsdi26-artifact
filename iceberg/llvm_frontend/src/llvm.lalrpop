@@ -1,0 +1,459 @@
+use std::str::FromStr;
+use std::rc::Rc;
+use crate::ast::*;
+
+//! A subset of LLVM grammar. See https://llvm.org/docs/LangRef.html.
+//! Specifically, we only handles integers.
+
+grammar;
+
+match {
+    // Skip whitespaces, but keep Newline ('\n')
+    r"[ \t\r]*" => {},
+    // Comments
+    r";[^\n\r]*[\n\r]*" => {},
+    // Go default for the rest
+    _
+}
+
+// Newline character.
+NL: () = "\n";
+NLs: () = NL*;
+
+IntLiteral: Int = r"[0-9]+" => UInt::from_str(<>).unwrap() as Int;
+GlobalIdent: Ident = r#"@[-a-zA-Z$._"][-a-zA-Z$._0-9"]*"# => Rc::from(<>);
+LocalIdent: Ident = r#"%[-a-zA-Z$._][-a-zA-Z$._0-9]*|%[0-9]+|%"[^"]*""# => Rc::from(<>);
+GlobalAndLocalIdent: Value = {
+    GlobalIdent => Value::GlobalIdent( <> ), 
+    LocalIdent => Value::LocalIdent( <> ),
+};
+MetaIdent: () = r#"![-a-zA-Z$._][-a-zA-Z$._0-9]*|![0-9]+"#;
+Label: Ident = r#"[-a-zA-Z$._][-a-zA-Z$._0-9]*:|[0-9]+:|"[^"]*":"# => Rc::from(&<>[..<>.len()-1]);
+AttrId: () = r"#[0-9]+";
+Quote = r#""[^"]*""#;
+
+TargetDataLayout: String = "target" "datalayout" "=" <Quote> => <>[1..<>.len()-1].to_string();
+
+/// Macro for a list of `T`, separated by `SEP`.
+/// #[inline] is required by LALRPOP because of its conflict nonsense.
+#[inline]
+List<T, SEP>: Vec<T> = {
+    <mut v:(<T> SEP)*> <e:T?> => match e {
+        None => v,
+        Some(e) => {
+            v.push(e);
+            v
+        }
+    }
+};
+
+pub Prog: Prog = <layout: TargetDataLayout> NLs <decls: (<Decl> NLs)*> => Prog { <> };
+
+Decl: Decl = {
+    FuncDef => Decl::FuncDef( <> ),
+    FuncDecl => Decl::FuncDecl( <> ),
+    TypeDecl => Decl::TypeDecl( <> ),
+    VarDecl => Decl::VarDecl( <> ),
+};
+
+_NAMED_ADDR: () = {
+    "unnamed_addr",
+    "local_unnamed_addr",
+};
+
+_LINKAGE_TYPE: () = {
+    "private",
+    "internal",
+    "external",
+    "available_externally",
+    "linkonce",
+    "linkonce_odr",
+    "weak",
+    "weak_odr",
+    "common",
+    "appending",
+    "extern_weak",
+};
+
+_VISIBILITY: () = {
+    "default",
+    "hidden",
+    "protected",
+};
+
+_PREEMPTION_SPECIFIER: () = {
+    "dso_local", 
+    "dso_preemptable",
+};
+
+_SECTION: () = "section" Quote;
+
+_PERSONALITY: () = "personality" Type GlobalIdent;
+
+FuncDef: FuncDef = "define" _LINKAGE_TYPE? _PREEMPTION_SPECIFIER? _VISIBILITY? _CCONV? ParamAttr*
+    <ty: Type> <id: GlobalIdent> "(" <params: List<FuncParam, ",">> ")" _NAMED_ADDR? AttrId? _SECTION? ("align" IntLiteral)? _PERSONALITY?
+    "{" NLs <body: Blocks> "}" => FuncDef { <> };
+
+FuncDecl: FuncDecl = "declare" _LINKAGE_TYPE? _PREEMPTION_SPECIFIER? _VISIBILITY? _CCONV? ParamAttr*
+    <ty: Type> <id: GlobalIdent> "(" <params: List<(<Type> ParamAttr*), ",">> ")" _NAMED_ADDR? AttrId? _SECTION? ("align" IntLiteral)? _PERSONALITY?
+    => FuncDecl { <> };
+
+Blocks: Vec<Block> = {
+    (<Block> NLs)+ => <>,
+    // clang for C may generate the first block without an `entry` label
+    <insts: Inst+> NLs <mut v: (<Block> NLs)*> => {
+        let entry_bb = Block { label: Rc::from(ENTRY_LABEL), insts };
+        v.insert(0, entry_bb);
+        v
+    },
+};
+
+ParamAttr: ParamAttr = {
+    "nest" => ParamAttr::Nest,
+    "nocapture" => ParamAttr::NoCapture,
+    "noalias" => ParamAttr::NoAlias,
+    "readnone" => ParamAttr::ReadNone,
+    "readonly" => ParamAttr::ReadOnly,
+    "writeonly" => ParamAttr::WriteOnly,
+    "zeroext" => ParamAttr::ZeroExt,
+    "signext" => ParamAttr::SignExt,
+    "nonnull" => ParamAttr::NonNull,
+    "noundef" => ParamAttr::NoUndef,
+    "sret" <("(" <Type> ")")?> => ParamAttr::SRet( <> ),
+    "align" <IntLiteral> => ParamAttr::Align( <> ),
+    "dereferenceable" "(" <IntLiteral> ")" => ParamAttr::Dereferenceable( <> ),
+    "dereferenceable_or_null" "(" <IntLiteral> ")" => ParamAttr::DereferenceableOrNull( <> ),
+    "byval" <("(" <Type> ")")?> => ParamAttr::ByVal( <> ),
+    "returned" => ParamAttr::Returned,
+    "immarg" => ParamAttr::Immarg,
+};
+
+MathFlag: MathFlag = {
+    "nsw" => MathFlag::Nsw,
+    "nuw" => MathFlag::Nuw,
+    "exact" => MathFlag::Exact,
+};
+
+FuncParam: FuncParam = <ty: Type> <attrs: ParamAttr*> <id: LocalIdent?> => FuncParam { <> };
+
+FuncArg: FuncArg = <ty: Type> <attrs: ParamAttr*> <value: Value> => FuncArg { <> };
+
+TypeDecl: TypeDecl = <id: LocalIdent> "=" "type" <ty: Type> => TypeDecl { <> };
+
+Type: Type = {
+    "void" => Type::Void,
+    r"i[0-9]+" => Type::Int(usize::from_str(&<>[1..]).unwrap()),
+    <ret_ty: Type> "(" <arg_list: List<Type, ",">> ")" "*" => Type::FuncPtr(Box::new(ret_ty), arg_list), 
+    <Type> "*" => Type::ExplicitPtr(Box::new( <> )),
+    "ptr" => Type::Ptr,
+    "<" <len: IntLiteral> "x" <ty: Type> ">" => Type::Vector(Box::new(ty), len as usize),
+    "[" <len: IntLiteral> "x" <ty: Type> "]" => Type::Array(Box::new(ty), len as usize),
+    "{" <List<Type, ",">> "}" => Type::Struct( <>, false ),
+    "<{" <List<Type, ",">> "}>" => Type::Struct( <>, true ),
+    LocalIdent => Type::Named( <> ),
+    "opaque" => Type::Opaque,
+    "..." => Type::VaArgs,
+};
+
+VarDeclType: VarDeclType = {
+    "global" => VarDeclType::Global,
+    "constant" => VarDeclType::Constant,
+};
+
+VarDecl: VarDecl = <id: GlobalIdent> "=" _LINKAGE_TYPE? _PREEMPTION_SPECIFIER? _VISIBILITY? _NAMED_ADDR? "externally_initialized"?
+    <decl_ty: VarDeclType> <ty: Type> <init: Value?> _COMDAT? _ALIGN? METADATA NL
+    => VarDecl { <> };
+
+Block: Block = <label: Label> NLs <insts: Inst+> => Block { <> };
+
+IcmpInstOp: IcmpInstOp = {
+    "eq" => <>.into(),
+    "ne" => <>.into(),
+    "ugt" => <>.into(),
+    "uge" => <>.into(),
+    "ult" => <>.into(),
+    "ule" => <>.into(),
+    "sgt" => <>.into(),
+    "sge" => <>.into(),
+    "slt" => <>.into(),
+    "sle" => <>.into(),
+};
+
+CastInstOp: CastInstOp = {
+    "zext" => <>.into(),
+    "sext" => <>.into(),
+    "trunc" => <>.into(),
+    "bitcast" => <>.into(),
+    "ptrtoint" => <>.into(),
+    "inttoptr" => <>.into(),
+};
+
+BinaryInstOp: BinaryInstOp = {
+    "add" => <>.into(),
+    "sub" => <>.into(),
+    "and" => <>.into(),
+    "or" => <>.into(),
+    "xor" => <>.into(),
+    "lshr" => <>.into(),
+    "ashr" => <>.into(),
+    "shl" => <>.into(),
+    "mul" => <>.into(),
+    "sdiv" => <>.into(),
+    "udiv" => <>.into(),
+    "srem" => <>.into(),
+    "urem" => <>.into(),
+};
+
+AtomicRmwOp: AtomicRmwOp = {
+    "xchg" => <>.into(),
+    "add" => <>.into(),
+    "sub" => <>.into(),
+    "and" => <>.into(),
+    "nand" => <>.into(),
+    "or" => <>.into(),
+    "xor" => <>.into(),
+    "max" => <>.into(),
+    "min" => <>.into(),
+    "umax" => <>.into(),
+    "umin" => <>.into(),
+};
+
+PHI_SEP: () = "]" "," "[";
+
+/// Maybe a better way to do this?
+METADATA: () = ("," MetaIdent MetaIdent)*;
+
+/// Make sure each instruction ends with a NL.
+/// This is to avoid painful conflicts without an
+/// delimiter.
+Inst: Inst = <_Inst> NL;
+
+// Calling conventions
+_CCONV: () = {
+    "ccc",
+    "fastcc",
+    "coldcc",
+};
+
+// Tail markers
+_TAIL_MARKER: () = {
+    "tail",
+    "musttail",
+    "notail",
+};
+
+// Memory ordering
+_ORDERING: () = {
+    "unordered",
+    "monotonic",
+    "acquire",
+    "release",
+    "acq_rel",
+    "seq_cst",
+};
+
+// Alignment
+_ALIGN: () = "," "align" IntLiteral;
+
+_COMDAT: () = "," "comdat";
+
+_Inst: Inst = {
+    "ret" <ty: Type> <retval: Value?> 
+    METADATA => Inst::Ret(RetInst { <> }),
+
+    <assign: (<LocalIdent> "=")?> _TAIL_MARKER? "call" _CCONV? ParamAttr* <ty: Type> ("(" List<Type, ","> ")")? // <fnty>
+    <fid: GlobalAndLocalIdent> "(" <args: List<FuncArg, ",">> ")" AttrId?
+    METADATA => Inst::Call(CallInst { <> }),
+
+    <assign: LocalIdent> "=" "icmp" <op: IcmpInstOp> 
+    <ty: Type> <lhs: Value> "," <rhs: Value> 
+    METADATA => Inst::Icmp(IcmpInst { <> }),
+
+    <assign: LocalIdent> "=" <op: CastInstOp> <old_ty: Type> <value: Value> 
+    "to" <new_ty: Type> 
+    METADATA => Inst::Cast(CastInst { <> }),
+
+    <assign: LocalIdent> "=" <op: BinaryInstOp> <math_flags: MathFlag*>
+    <ty: Type> <lhs: Value> "," <rhs: Value> 
+    METADATA => Inst::Binary(BinaryInst { <> }),
+
+    // Atomic read-modify-write
+    <assign: LocalIdent> "=" "atomicrmw" "volatile"? <op: AtomicRmwOp>
+    <ptr_ty: Type> <ptr: Value> "," <ty: Type> <value: Value> _ORDERING _ALIGN?
+    METADATA => Inst::AtomicBinary(AtomicBinaryInst { <> }),
+
+    // Compare-exchange
+    <assign: LocalIdent> "=" "cmpxchg" "weak"? "volatile"? Type <pointer: Value> "," 
+    <ty: Type> <cmp: Value> "," Type <new: Value> _ORDERING _ORDERING _ALIGN?
+    METADATA => Inst::CmpXchg(CmpXchgInst { <> }),
+
+    <assign: LocalIdent> "=" "getelementptr" <inbounds: "inbounds"?> <btype: Type> ","
+    <ptr_ty: Type> <ptr: Value> <indices: ("," "inrange"? <Type> <Value>)*> 
+    METADATA => {
+        Inst::Gep(GepInst {
+            assign,
+            value: Gep { btype, ptr_ty, ptr, indices, inbounds: inbounds.is_some() },
+        })
+    },
+
+    <assign: LocalIdent> "=" "load" "volatile"? <ty: Type> "," <ptr_ty: Type>
+    <ptr: Value> _ALIGN? 
+    METADATA => Inst::Load(LoadInst { <> }),
+
+    // Atomic load
+    <assign: LocalIdent> "=" "load" "atomic" <ty: Type> "," <ptr_ty: Type>
+    <ptr: Value> _ORDERING _ALIGN? 
+    METADATA => Inst::Load(LoadInst { <> }),
+
+    "store" "volatile"? <ty: Type> <value: Value> "," <ptr_ty: Type>
+    <ptr: Value> _ALIGN? 
+    METADATA => Inst::Store(StoreInst { <> }),
+
+    // Atomic store
+    "store" "atomic" <ty: Type> <value: Value> "," <ptr_ty: Type>
+    <ptr: Value> _ORDERING _ALIGN? 
+    METADATA => Inst::Store(StoreInst { <> }),
+
+    "br" Type <cond: Value> "," "label" <if_label: LocalIdent> 
+    "," "label" <else_label: LocalIdent> 
+    METADATA => Inst::Branch(BranchInst { <> }),
+
+    "br" "label" <target: LocalIdent> 
+    METADATA => Inst::Jump(JumpInst { <> }),
+
+    "switch" <ty: Type> <value: Value> "," "label" <def_label: LocalIdent>
+    "[" NLs <branches: (Type <Value> "," "label" <LocalIdent> NLs)*> "]" 
+    METADATA => Inst::Switch(SwitchInst { <> }),
+
+    <assign: LocalIdent> "=" "phi" <ty: Type>
+    "[" < values: List<(<Value> "," <LocalIdent>), PHI_SEP> > "]" 
+    METADATA => Inst::Phi(PhiInst { <> }),
+
+    "unreachable" 
+    METADATA => Inst::Unreachable,
+
+    <assign: LocalIdent> "=" "alloca" <ty: Type> _ALIGN? 
+    METADATA => Inst::Alloca(AllocaInst { <> }),
+
+    <assign: LocalIdent> "=" "extractvalue" <ty: Type> <agg: Value> 
+    <indices: ("," <Value>)+> 
+    METADATA => Inst::ExtractValue(ExtractValueInst { <> }),
+
+    <assign: LocalIdent> "=" "insertvalue" <ty: Type> <agg: Value> "," <vty: Type> <value: Value>
+    <indices: ("," <Value>)+>
+    METADATA => Inst::InsertValue(InsertValueInst { <> }),
+
+    <assign: LocalIdent> "=" "extractelement" <ty: Type> <agg: Value> "," Type <idx: Value> 
+    METADATA => Inst::ExtractValue(ExtractValueInst {
+        assign,
+        ty,
+        agg,
+        indices: vec![idx],
+    }),
+
+    <assign: LocalIdent> "=" "insertelement" <ty: Type> <agg: Value> "," 
+    <vty: Type> <value: Value> "," Type <idx: Value> 
+    METADATA => Inst::InsertValue(InsertValueInst {
+        assign,
+        ty,
+        agg,
+        vty,
+        value,
+        indices: vec![idx],
+    }),
+
+    <assign: LocalIdent> "=" "shufflevector" <v1ty: Type> <v1: Value> "," <v2ty: Type> <v2: Value> "," 
+    <mty: Type> <mask: Value>
+    METADATA => Inst::ShuffleVector(ShuffleVectorInst { <> }),
+
+    <assign: LocalIdent> "=" "select" Type <cond: Value> ","
+    <ty: Type> <if_value: Value> "," Type <else_value: Value> 
+    METADATA => Inst::Select(SelectInst { <> }),
+
+    <assign: LocalIdent> "=" "freeze" <ty: Type> <value: Value>
+    METADATA => Inst::Freeze(FreezeInst { <> }),
+
+    <assign: (<LocalIdent> "=")?> "invoke" _CCONV? ParamAttr* <ty: Type> ("(" List<Type, ","> ")")? // <fnty>
+    <fid: GlobalAndLocalIdent> "(" <args: List<FuncArg, ",">> ")" AttrId?
+    <exception_labels: (NL "to" "label" <LocalIdent> "unwind" "label" <LocalIdent>)> 
+    METADATA => Inst::Invoke(InvokeInst { <> }),
+
+    <assign: LocalIdent> "=" "landingpad" <ty: Type> => Inst::LandingPad(LandingPadInst { <> }),
+    // FIXME: These should be part of `landingpad`. 
+    // Due to confliction, we ignore them separately.
+    "cleanup" => Inst::Ignored,
+    "catch" Type Value => Inst::Ignored,
+    "filter" Type Value => Inst::Ignored,
+
+    "fence" _ORDERING METADATA => Inst::Ignored,
+
+    "resume" <ty: Type> <value: Value> => Inst::Resume(ResumeInst { <> }),
+};
+
+AggregateElem = Type Value;
+
+Value: Value = {
+    "undef" => Value::Undef,
+    "null" => Value::Null,
+    "poison" => Value::Poison,
+    "zeroinitializer" => Value::ZeroInit,
+    LocalIdent => Value::LocalIdent( <> ),
+    GlobalIdent => Value::GlobalIdent( <> ),
+    IntLiteral => Value::Int( <> ),
+    "-" <IntLiteral> => Value::Int( Int::wrapping_neg(<>) ),
+    "true" => Value::Int(-1),
+    "false" => Value::Int(0),
+
+    // Constant expressions
+    "getelementptr" <inbounds: "inbounds"?> "(" <btype: Type> ","
+    <ptr_ty: Type> <ptr: Value> <indices: ("," "inrange"? <Type> <Value>)*> ")" => Value::Gep(Box::new(Gep { 
+        btype, ptr_ty, ptr, indices, inbounds: inbounds.is_some() 
+    })),
+    "bitcast" "(" <old_ty: Type> <value: Value> "to" <new_ty: Type> ")" => Value::Bitcast(Box::new(Bitcast { <> })),
+    "inttoptr" "(" <old_ty: Type> <value: Value> "to" <new_ty: Type> ")" => Value::Bitcast(Box::new(Bitcast { <> })),
+    "ptrtoint" "(" <old_ty: Type> <value: Value> "to" <new_ty: Type> ")" => Value::Bitcast(Box::new(Bitcast { <> })),
+    <op: BinaryInstOp> "(" <ty: Type> <lhs: Value> "," Type <rhs: Value> ")" => Value::Binary(Box::new(Binary { <> })),
+
+    // Into `ast::Aggregate`s
+    "{" <elems: List<AggregateElem, ",">> "}" => Value::Aggregate(Box::new(Aggregate { is_array: false, packed: false, <> })), // struct
+    "<{" <elems: List<AggregateElem, ",">> "}>" => Value::Aggregate(Box::new(Aggregate { is_array: false, packed: true, <> })), // packed struct
+    "[" <elems: List<AggregateElem, ",">> "]" => Value::Aggregate(Box::new(Aggregate { is_array: true, packed: false, <> })), // array
+    "<" <elems: List<AggregateElem, ",">> ">" => Value::Aggregate(Box::new(Aggregate { is_array: true, packed: false, <> })), // vector
+    // Character array
+    <string: r"c\x22([\x20-\x21\x23-\x5B\x5D-\x7E]|\\[0-9A-Fa-f]{2}|\\\\)+\x22"> => {
+        let string = string.as_bytes();
+        let mut chars = Vec::<&[u8]>::new();
+        let mut i = 2;
+        while i < string.len()-1 {
+            if *string.get(i).unwrap() == b'\\' {
+                if *string.get(i+1).unwrap() == b'\\' {
+                    chars.push(&string[i..i+2]);
+                    i += 2;
+                }
+                else {
+                    chars.push(&string[i..i+3]);
+                    i += 3;
+                }
+            }
+            else {
+                chars.push(&string[i..i+1]);
+                i += 1;
+            }
+        }
+        let elems = chars
+            .into_iter()
+            .map(|s| {
+                let value = if s.len() == 3 {
+                    // Slash escaped
+                    Int::from_str_radix(std::str::from_utf8(&s[1..]).unwrap(), 16).unwrap()
+                } else if s.len() == 2 {
+                    b'\\' as Int
+                } else {
+                    *s.get(0).unwrap() as Int
+                };
+                (Type::Int(8), Value::Int(value as i8 as Int))
+            })
+            .collect();
+        Value::Aggregate(Box::new(Aggregate { is_array: true, packed: false, elems }))
+    },
+};

@@ -1,0 +1,9 @@
+# Treat these files as `vendored`
+# Don't use `generated` because we still want them in diff
+*.ll linguist-vendored
+*.txt linguist-vendored
+*.go linguist-vendored
+*.c linguist-vendored
+*.h linguist-vendored
+*.cc linguist-vendored
+*.hh linguist-vendored

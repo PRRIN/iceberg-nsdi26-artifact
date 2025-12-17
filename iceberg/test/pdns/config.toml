@@ -1,0 +1,263 @@
+action = "summarize"
+
+[builtin]
+target = "cpp"
+nop = [
+    "@_ZNSaIcEC2Ev",                            # std::allocator<char>::allocator()
+    "@_ZNSaIcED2Ev",                            # std::allocator<char>::~allocator()
+    "@_ZNSaIcEC2ERKS_",                         # std::allocator<char>::allocator(std::allocator<char> const&)
+    "@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderC2EPcRKS3_",
+                                                # std::basic_string::_Alloc_hider()
+    "@_ZNSt8ios_base4InitC1Ev",                 # std::ios_base::Init::Init()
+    "@_ZNSt8ios_base4InitD1Ev",                 # std::ios_base::Init::~Init()
+    "@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13get_allocatorEv",
+                                                # std::basic_string::get_allocator()
+    "@_ZNSt6localeC1Ev",                        # std::locale::locale()
+    "@_ZNSt6localeD1Ev",                        # std::locale::~locale()
+    "@_ZNSt6localeC1ERKS_",                     # std::locale::locale(std::locale const&)
+    "@_ZNSt18condition_variableC1Ev",           # std::condition_variable::condition_variable()
+    "@_ZNSt18condition_variableD1Ev",           # std::condition_variable::~condition_variable()
+    "@_ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE",
+                                                # std::condition_variable::wait(std::unique_lock<std::mutex>&)
+    # Exception ctors & dtors
+    "@_ZNSt13runtime_errorC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE",
+                                                # std::runtime_error::runtime_error
+    "@_ZNSt13runtime_errorC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE",
+                                                # std::runtime_error::runtime_error
+    "@_ZNSt13runtime_errorC1EPKc",              # std::runtime_error::runtime_error(char const*)
+    "@_ZNSt13runtime_errorC2EPKc",              # std::runtime_error::runtime_error(char const*)
+    "@_ZNSt13runtime_errorC2ERKS_",             # std::runtime_error::runtime_error(std::runtime_error const&)
+    "@_ZNSt13runtime_errorD1Ev",                # std::runtime_error::~runtime_error
+    "@_ZNSt13runtime_errorD2Ev",                # std::runtime_error::~runtime_error
+    "@_ZNSt12out_of_rangeC1EPKc",               # std::out_of_range::out_of_range(char const*)
+    "@_ZNSt12out_of_rangeD1Ev",                 # std::out_of_range::~out_of_range()
+    "@_ZSt24__throw_out_of_range_fmtPKcz",      # std::__throw_out_of_range_fmt(char const*, ...)
+    "@_ZNSt16invalid_argumentC1EPKc",           # std::invalid_argument::invalid_argument(char const*)
+    "@_ZNSt16invalid_argumentD1Ev",             # std::invalid_argument::~invalid_argument()
+    "@_ZNSt12out_of_rangeC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE",
+                                                # std::out_of_range::out_of_range()
+    "@_ZNSt11range_errorC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE",
+                                                # std::range_error::range_error()
+    "@_ZNSt11range_errorD1Ev",                  # std::range_error::~range_error()
+    "@_ZNSt11range_errorC1EPKc",                # std::range_error::range_error(char const*)
+    "@_ZNSt11logic_errorC1EPKc",                # std::logic_error::logic_error(char const*)
+    "@_ZNSt11logic_errorD1Ev",                  # std::logic_error::~logic_error()
+    "@_ZNSt9exceptionD2Ev",                     # std::exception::~exception()
+
+    # Logging related
+    "@_Z9getLoggerv",
+    "@_ZN6LoggerD2Ev",
+    "@_ZN6LoggerlsEPKc",
+    "@_ZN6Logger4openEv",
+    "@_ZN6LoggerlsERFRSoS0_E",
+    "@_ZN6LoggerlsIiEERS_RKT_",
+    "@_ZN6LoggerlsIjEERS_RKT_",
+    "@_ZN6LoggerlsImEERS_RKT_",
+    "@_ZN6LoggerlsERK7DNSName",
+    "@_ZN6LoggerlsERK12ComboAddress",
+    "@_ZN6LoggerlsENS_7UrgencyE",
+    "@_ZN6Logger12getPerThreadEv",
+    "@_ZN6Logger9PerThreadC2Ev",
+    "@_ZN6Logger9PerThreadD2Ev",
+    "@_ZN6LoggerC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEi",
+    "@_ZN6LoggerlsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE",
+    "@_ZN6Logger3logERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS_7UrgencyE",
+
+    # Customized
+    "@_ZN13BB2DomainInfoD2Ev",                  # BB2DomainInfo::~BB2DomainInfo()
+    "@_ZN7StatBag3incERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE",
+                                                # StatBag::inc
+    "@_ZN7StatBag11ringAccountEPKcRK7DNSNameRK5QType",
+                                                # StatBag::ringAccount
+    "@_Z11fillSOADataRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEER7SOAData",
+                                                # fillSOAData
+    "@_ZNSt3setI7DNSNameSt4lessIS0_ESaIS0_EE6insertERKS0_",
+                                                # std::set<DNSName>::insert
+]     
+panic = [
+    "@_ZSt9terminatev",                         # std::terminate
+
+    # TODO: exceptions should not be panics
+    "@_ZSt28__throw_bad_array_new_lengthv",     # std::__throw_bad_array_new_length
+    "@_ZSt17__throw_bad_allocv",                # std::__throw_bad_alloc
+    "@_ZSt19__throw_logic_errorPKc",            # std::__throw_logic_error
+    "@_ZSt20__throw_length_errorPKc",           # std::__throw_length_error
+    "@_ZSt20__throw_system_errori",             # std::__throw_system_error(int)
+    "@_ZSt25__throw_bad_function_callv",        # std::__throw_bad_function_call()
+    "@_ZSt24__throw_invalid_argumentPKc",       # std::__throw_invalid_argument(char const*)
+    "@_ZSt20__throw_out_of_rangePKc",           # std::__throw_out_of_range(char const*)   
+]
+
+[builtin.type_hint]
+"@_ZSt11make_uniqueI9DNSPacketJbEENSt9_MakeUniqIT_E15__single_objectEDpOT0_::%3" = [
+    "%class.DNSPacket",
+    "!"
+]
+"@_ZN9__gnu_cxx13new_allocatorISt4pairIm7SOADataEE8allocateEmPKv::%9" = [
+    '%"struct.std::pair.5414"',
+    "*"
+]
+"@_ZN9__gnu_cxx13new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv::%9" = [
+    '%"class.std::__cxx11::basic_string"',
+    "*"
+]
+"@_ZNK7DNSName8isPartOfERKS_::%11" = [
+    "%class.NetworkError",
+    "!"
+]
+"@_ZNK7DNSName8isPartOfERKS_::%77" = [
+    "%class.NetworkError",
+    "!"
+]
+"@_ZN9__gnu_cxx13new_allocatorISt23_Sp_counted_ptr_inplaceI16SOARecordContentSaIS2_ELNS_12_Lock_policyE2EEE8allocateEmPKv::%1" = [
+    '%"class.std::_Sp_counted_ptr_inplace.1238"',
+    "!"
+]
+"@_ZN9__gnu_cxx13new_allocatorI13DNSZoneRecordE8allocateEmPKv::%9" = [
+    "%struct.DNSZoneRecord",
+    "*"
+]
+"@_ZN9__gnu_cxx13new_allocatorI7DNSNameE8allocateEmPKv::%9" = [
+    "%class.PDNSException",
+    "*"
+]
+"@_ZN9__gnu_cxx13new_allocatorIP13DNSZoneRecordE8allocateEmPKv::%9" = [
+    "ptr",
+    "*"
+]
+"@_ZN7DNSName14appendRawLabelEPKcj::%7" = [
+    "%class.NetworkError",
+    "!"
+]
+"@_ZN7DNSName14appendRawLabelEPKcj::%15" = [
+    "%class.NetworkError",
+    "!"
+]
+"@_ZN7DNSName14appendRawLabelEPKcj::%27" = [
+    "%class.NetworkError",
+    "!"
+]
+"@_ZN9__gnu_cxx13new_allocatorISt23_Sp_counted_ptr_inplaceI18CNAMERecordContentSaIS2_ELNS_12_Lock_policyE2EEE8allocateEmPKv::%1" = [
+    '%"class.std::shared_ptr<DNSRecordContent>"',
+    "!"
+]
+
+[summary]
+inlined = [
+    "@_ZNSt6vectorI13DNSZoneRecordSaIS0_EE9push_backERKS0_",        # std::vector<DNSZoneRecord>::push_back
+    "@_ZN12UeberBackend11addNegCacheERKNS_8QuestionE",              # UeberBackend::addNegCache
+    "@_ZN12UeberBackend8addCacheERKNS_8QuestionEOSt6vectorI13DNSZoneRecordSaIS4_EE",
+                                                                    # UeberBackend::addCache
+
+    "@_ZN13PacketHandler22doAdditionalProcessingER9DNSPacketRSt10unique_ptrIS0_St14default_deleteIS0_EE",
+                                                                    # PacketHandler::doAdditionalProcessing
+
+    "@_ZN13PacketHandler8tryDNAMEER9DNSPacketRSt10unique_ptrIS0_St14default_deleteIS0_EER7DNSName",
+                                                                    # PacketHandler::tryDNAME
+    "@_ZN13PacketHandler17getBestDNAMESynthER9DNSPacketR7DNSNameRSt6vectorI13DNSZoneRecordSaIS5_EE",
+                                                                    # PacketHandler::getBestDNAMESynth
+
+    "@_ZN13PacketHandler11tryWildcardER9DNSPacketRSt10unique_ptrIS0_St14default_deleteIS0_EER7DNSNameS8_RbS9_",
+                                                                    # PacketHandler::tryWildcard
+    "@_ZN13PacketHandler15getBestWildcardER9DNSPacketRK7DNSNameRS2_PSt6vectorI13DNSZoneRecordSaIS7_EE",
+                                                                    # PacketHandler::getBestWildcard
+]
+spec_file = "test/pdns/pdns.spec"
+
+[summary.preconds]
+"@_ZN13PacketHandler10doQuestionER9DNSPacket" = "do_question_precond"
+"@_ZN13PacketHandler12makeNXDomainER9DNSPacketRSt10unique_ptrIS0_St14default_deleteIS0_EERK7DNSNameS9_" = "make_nxdomain_precond"
+"@_ZN13PacketHandler11makeNOErrorER9DNSPacketRSt10unique_ptrIS0_St14default_deleteIS0_EERK7DNSNameS9_i" = "make_noerror_precond"
+"@_ZN12UeberBackend7getAuthERK7DNSNameRK5QTypeP7SOADatab" = "ueber_backend_get_auth_precond"
+"@_ZN12UeberBackend3getER13DNSZoneRecord" = "ueber_backend_get_precond"
+"@_ZN12UeberBackend6lookupERK5QTypeRK7DNSNameiP9DNSPacket" = "ueber_backend_lookup_precond"
+
+"@_ZN12Bind2Backend6lookupERK5QTypeRK7DNSNameiP9DNSPacket" = "bind_backend_lookup_precond"
+"@_ZN12Bind2Backend3getER17DNSResourceRecord" = "bind_backend_get_precond"
+"@_ZN12Bind2Backend6handle3getER17DNSResourceRecord" = "bind_backend_handle_get_precond"
+
+"@_ZNK5boost11multi_index6detail12hashed_indexINS0_6memberI14Bind2DNSRecord7DNSNameXadL_ZNS4_5qnameEEEEE6NoHashSt8equal_toIS5_ENS1_9nth_layerILi2ES4_NS0_10indexed_byINS0_18ordered_non_uniqueINS0_8identityIS4_EE15Bind2DNSCompareN4mpl_2naEEENS0_17hashed_non_uniqueINS0_3tagI16UnorderedNameTagSH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_EES6_S7_SH_EENSC_INSK_I8NSEC3TagSH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_EENS3_IS4_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEXadL_ZNS4_9nsec3hashEEEEESH_EESH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_SH_EESaIS4_EEENS_3mpl6v_itemISL_NS11_7vector0ISH_EELi0EEENS1_21hashed_non_unique_tagEE11equal_rangeIS5_S7_S9_EESt4pairINS1_21hashed_index_iteratorINS1_17hashed_index_nodeINS1_18ordered_index_nodeINS1_19null_augment_policyENS1_15index_node_baseIS4_SZ_EEEEEENS1_12bucket_arrayISZ_EES16_NS1_32hashed_index_global_iterator_tagEEES1L_ERKT_RKT0_RKT1_NSG_5bool_ILb0EEE" = "multi_index_equal_range_precond"
+"@_ZN5boost11multi_index6detail17bucket_array_baseILb1EE8positionEmm" = "bucket_array_position_precond"
+"@_ZNK7DNSName8isPartOfERKS_" = "is_part_of_precond"
+
+[summary.oracles]
+"@_ZL12validDNSNameRK7DNSName" = "valid_dns_name"
+"@_ZNK9DNSPacket7hasEDNSEv" = "has_edns"
+"@_ZN12UeberBackend8cacheHasERKNS_8QuestionERSt6vectorI13DNSZoneRecordSaIS4_EE" = "cache_has"
+"@_Z11dns_tolowerh" = "dns_tolower"
+"@_ZN12Bind2Backend19safeGetBBDomainInfoERK7DNSNameP13BB2DomainInfo" = "safe_get_bbdomaininfo"
+"@_ZN12Bind2Backend19safeGetBBDomainInfoEiP13BB2DomainInfo" = "safe_get_bbdomaininfo2"
+"@_ZN13BB2DomainInfo7currentEv" = "bbdomaininfo_current"
+"@_ZN12DNSSECKeeper11isPresignedERK7DNSNameb" = "is_presigned"
+"@_Z16calculateEditSOAjR12DNSSECKeeperRK7DNSName" = "calculate_edit_soa"
+"@_ZN15AuthPacketCache7enabledEv" = "auth_packet_cache_enabled"
+"@_ZN16DNSRecordContent10mastermakeEttRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE" = "master_make"
+"@_ZN12DNSSECKeeper13isSecuredZoneERK7DNSNameb" = "is_secured_zone"
+
+"@__dynamic_cast" = "__dynamic_cast"
+"@strlen" = "__strlen"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2Ev" = "string_new"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS3_" = "string_new_alloc"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcmRKS3_" = "string_new_buffer"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_" = "string_new_cstr"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_" = "string_new_copy"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_" = "string_new_move"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev" = "string_drop"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareERKS4_" = "string_compare"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEPKc" = "string_compare_cstr"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_local_dataEv" = "string_local_data"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEPc" = "string_data_set"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_capacityEm" = "string_capacity_set"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7_M_dataEv" = "string_data"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc" = "string_construct"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_S_copy_charsEPcPKcS7_" = "string_copy_chars"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_S_copy_charsEPcN9__gnu_cxx17__normal_iteratorIPKcS4_EESA_" = "string_copy_chars"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13_M_set_lengthEm" = "string_length_set"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5emptyEv" = "string_empty"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4sizeEv" = "string_length"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4dataEv" = "string_data"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6lengthEv" = "string_length"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm" = "string_find"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE17find_first_not_ofEPKcm" = "string_find_first_not_of"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13find_first_ofEPKcm" = "string_find_first_of"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm" = "string_substr"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm" = "string_reserve"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5c_strEv" = "string_data"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv" = "string_capcity"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5beginEv" = "string_begin"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5beginEv" = "string_begin"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6cbeginEv" = "string_begin"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE3endEv" = "string_end"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE3endEv" = "string_end"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4cendEv" = "string_end"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEcvSt17basic_string_viewIcS2_EEv" = "string_view"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6rbeginEv" = "string_rbegin"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6rbeginEv" = "string_rbegin"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4rendEv" = "string_rend"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm" = "string_resize"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmRKS4_mm" = "string_compare_substr"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4dataEv" = "string_data"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5clearEv" = "string_clear"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8pop_backEv" = "string_pop_back"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6assignEmc" = "string_assign_fill"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc" = "string_assign_cstr_op"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_" = "string_assign_move_op"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_" = "string_assign_copy_op"
+"@_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE2atEm" = "string_at"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEixEm" = "string_at_op"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm" = "string_erase_seq"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_" = "string_append_string"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEmc" = "string_append_fill"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm" = "string_append_buffer"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc" = "string_append_cstr"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_" = "string_append_string_op"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc" = "string_append_cstr_op"
+"@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7replaceEmmRKS4_" = "string_replace"
+
+# TODO
+# "@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm" = "string_grow"
+# "@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEN9__gnu_cxx17__normal_iteratorIPKcS4_EES9_" = "string_erase"
+# "@_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEC1Ev" = "sstream_new"
+# "@_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv" = "sstream_str"
+# "@_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev" = "sstream_drop"
+

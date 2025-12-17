@@ -1,0 +1,184 @@
+action = "summarize"
+
+[builtin]
+target = "rust"
+nop = [
+    "@llvm.assume",
+    "@\"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$9allocator17h6b7c10bfaed71126E\"",
+    "@\"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h588d8e96cabf1c9aE\"",
+    "@\"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h0ef080f3e38a794fE\"",
+
+    #"@_ZN5tokio4sync15batch_semaphore9Semaphore7acquire17h38e95d5d166de1f2E",
+    #"@\"_ZN79_$LT$tokio..sync..batch_semaphore..Acquire$u20$as$u20$core..ops..drop..Drop$GT$4drop17he0070d8fd8218069E\""
+]
+panic = [
+    "@llvm.trap",
+    "@_ZN4core9panicking5panic17h9533b2fee90b999eE",
+    "@_ZN4core5slice5index22slice_index_order_fail17h1f8a4ffeb1c00eb3E",
+    "@_ZN4core5slice5index24slice_end_index_len_fail17h954ac87ccda54c62E",
+    "@_ZN3std9panicking11begin_panic17hb75a50981456ecb6E",
+    "@_ZN4core9panicking19assert_failed_inner17haf9816227b20b6f2E",
+]
+
+[builtin.type_hint]
+"@\"_ZN14hickory_server9authority7catalog14build_response28_$u7b$$u7b$closure$u7d$$u7d$17heee809c70942ce10E\"::%281" = [
+    "%\"hickory_server::authority::auth_lookup::AuthLookup::Ret\"",
+    "!"
+]
+"@\"_ZN14hickory_server9authority7catalog14build_response28_$u7b$$u7b$closure$u7d$$u7d$17heee809c70942ce10E\"::%293" = [
+    "%\"hickory_server::authority::auth_lookup::AuthLookup::Ret\"",
+    "!"
+]
+"@\"_ZN14hickory_server9authority7catalog14build_response28_$u7b$$u7b$closure$u7d$$u7d$17heee809c70942ce10E\"::%299" = [
+    "%\"hickory_server::authority::auth_lookup::AuthLookup::Ret\"",
+    "!"
+]
+"@\"_ZN14hickory_server9authority7catalog14build_response28_$u7b$$u7b$closure$u7d$$u7d$17heee809c70942ce10E\"::%305" = [
+    "%\"hickory_server::authority::auth_lookup::AuthLookup::Ret\"",
+    "!"
+]
+"@\"_ZN14hickory_server9authority7catalog14build_response28_$u7b$$u7b$closure$u7d$$u7d$17heee809c70942ce10E\"::%508" = [
+    "%\"hickory_server::authority::auth_lookup::AuthLookup::Ret\"",
+    "!"
+]
+"@\"_ZN14hickory_server9authority7catalog14build_response28_$u7b$$u7b$closure$u7d$$u7d$17heee809c70942ce10E\"::%514" = [
+    "%\"hickory_server::authority::auth_lookup::AuthLookup::Ret\"",
+    "!"
+]
+"@\"_ZN14hickory_server9authority7catalog14build_response28_$u7b$$u7b$closure$u7d$$u7d$17heee809c70942ce10E\"::%526" = [
+    "%\"hickory_server::authority::auth_lookup::AuthLookup::Ret\"",
+    "!"
+]
+"@\"_ZN14hickory_server9authority7catalog14build_response28_$u7b$$u7b$closure$u7d$$u7d$17heee809c70942ce10E\"::%536" = [
+    "%\"hickory_server::authority::auth_lookup::AuthLookup::Ret\"",
+    "!"
+]
+"@\"_ZN14hickory_server9authority7catalog14build_response28_$u7b$$u7b$closure$u7d$$u7d$17heee809c70942ce10E\"::%546" = [
+    "%\"hickory_server::authority::auth_lookup::AuthLookup::Ret\"",
+    "!"
+]
+"@\"_ZN128_$LT$hickory_server..authority..auth_lookup..AuthLookup$u20$as$u20$hickory_server..authority..authority_object..LookupObject$GT$16take_additionals17hd6db4355721ed955E\"::%4" = [
+    "%\"core::option::Option<hickory_server::authority::auth_lookup::LookupRecords>::ManyRecords\"",
+    "!"
+]
+"@\"_ZN106_$LT$alloc..sync..Arc$LT$A$GT$$u20$as$u20$hickory_server..authority..authority_object..AuthorityObject$GT$6search17he2d171c81711d4a6E\"::%1" = [
+    "FileAuthoritySearchBlock",
+    "!"
+]
+"@\"_ZN106_$LT$alloc..sync..Arc$LT$A$GT$$u20$as$u20$hickory_server..authority..authority_object..AuthorityObject$GT$6search28_$u7b$$u7b$closure$u7d$$u7d$17h0aa0c270003c03b7E\"::%22" = [
+    "%\"[async block@crates/server/src/store/file/authority.rs:178:44: 180:6]\"",
+    "!"
+]
+"@\"_ZN106_$LT$alloc..sync..Arc$LT$A$GT$$u20$as$u20$hickory_server..authority..authority_object..AuthorityObject$GT$6lookup28_$u7b$$u7b$closure$u7d$$u7d$17h3f15498e14ee6b43E\"::%36" = [
+    "%\"hickory_server::authority::auth_lookup::AuthLookup::Ret\"",
+    "!"
+]
+"@\"_ZN106_$LT$alloc..sync..Arc$LT$A$GT$$u20$as$u20$hickory_server..authority..authority_object..AuthorityObject$GT$6search28_$u7b$$u7b$closure$u7d$$u7d$17h0aa0c270003c03b7E\"::%60" = [
+    "%\"hickory_server::authority::auth_lookup::AuthLookup::Ret\"",
+    "!"
+]
+"@\"_ZN121_$LT$hickory_server..store..file..authority..FileAuthority$u20$as$u20$hickory_server..authority..authority..Authority$GT$6lookup28_$u7b$$u7b$closure$u7d$$u7d$17h69a2ab9bd90d0b79E\"::%10" = [
+    "%\"[async block@crates/server/src/store/in_memory/authority.rs:1025:44: 1193:6]\"",
+    "!"
+]
+"@\"_ZN121_$LT$hickory_server..store..file..authority..FileAuthority$u20$as$u20$hickory_server..authority..authority..Authority$GT$6search28_$u7b$$u7b$closure$u7d$$u7d$17h60e3c7ba4505be80E\"::%8" = [
+    "AuthoritySearchBlock",
+    "!"
+]
+"@\"_ZN130_$LT$hickory_server..store..in_memory..authority..InMemoryAuthority$u20$as$u20$hickory_server..authority..authority..Authority$GT$6search28_$u7b$$u7b$closure$u7d$$u7d$17h4601eb151c27af44E\"::%121" = [
+    "%\"[async block@crates/server/src/store/in_memory/authority.rs:1025:44: 1193:6]\"",
+    "!"
+]
+"@\"_ZN130_$LT$hickory_server..store..in_memory..authority..InMemoryAuthority$u20$as$u20$hickory_server..authority..authority..Authority$GT$6search28_$u7b$$u7b$closure$u7d$$u7d$17h4601eb151c27af44E\"::%131" = [
+    "%\"[async block@crates/server/src/store/in_memory/authority.rs:1025:44: 1193:6]\"",
+    "!"
+]
+"@\"_ZN130_$LT$hickory_server..store..in_memory..authority..InMemoryAuthority$u20$as$u20$hickory_server..authority..authority..Authority$GT$6lookup28_$u7b$$u7b$closure$u7d$$u7d$17h20e49b06d1511995E\"::%172" = [
+    "ptr",
+    "!"
+]
+"@_ZN14hickory_server9authority16authority_object15AuthorityObject2ns17h97686b92491e5658E::%1" = [
+    "%\"[async block@<alloc::sync::Arc<hickory_server::store::file::authority::FileAuthority> as hickory_server::authority::authority_object::AuthorityObject>::soa_secure<'_, '_>::{closure#0}]\"",
+    "!"
+]
+"@_ZN14hickory_server9authority16authority_object15AuthorityObject10soa_secure17had9e227aa7c2b316E::%1" = [
+    "%\"[async block@<alloc::sync::Arc<hickory_server::store::file::authority::FileAuthority> as hickory_server::authority::authority_object::AuthorityObject>::soa_secure<'_, '_>::{closure#0}]\"",
+    "!"
+]
+"@\"_ZN14hickory_server9authority16authority_object15AuthorityObject2ns28_$u7b$$u7b$closure$u7d$$u7d$17ha84972c1dd60c6c1E\"::%8" = [
+    "%\"[async block@<alloc::sync::Arc<hickory_server::store::file::authority::FileAuthority> as hickory_server::authority::authority_object::AuthorityObject>::lookup<'_, '_, '_>::{closure#0}]\"",
+    "!"
+]
+"@\"_ZN106_$LT$alloc..sync..Arc$LT$A$GT$$u20$as$u20$hickory_server..authority..authority_object..AuthorityObject$GT$6lookup28_$u7b$$u7b$closure$u7d$$u7d$17h3f15498e14ee6b43E\"::%11" = [
+    "%\"[async block@<alloc::sync::Arc<hickory_server::store::file::authority::FileAuthority> as hickory_server::authority::authority_object::AuthorityObject>::lookup<'_, '_, '_>::{closure#0}]\"",
+    "!"
+]
+"@\"_ZN14hickory_server9authority16authority_object15AuthorityObject10soa_secure28_$u7b$$u7b$closure$u7d$$u7d$17ha9c21a9c2ac893e0E\"::%8" = [
+    "%\"[async block@<alloc::sync::Arc<hickory_server::store::file::authority::FileAuthority> as hickory_server::authority::authority_object::AuthorityObject>::lookup<'_, '_, '_>::{closure#0}]\"",
+    "!"
+]
+"@_ZN14hickory_server5store9in_memory9authority13InnerInMemory21inner_lookup_wildcard17h8faa57653b9fab19E::%54" = [
+    "%\"alloc::sync::ArcInner<hickory_proto::rr::rr_set::RecordSet>\"",
+    "!"
+]
+
+[summary]
+inlined = [
+    #"@_ZN14hickory_server9authority7catalog27send_authoritative_response17hd48c3ae1c3ff4da2E",
+    #"@\"_ZN106_$LT$alloc..sync..Arc$LT$A$GT$$u20$as$u20$hickory_server..authority..authority_object..AuthorityObject$GT$6search17he2d171c81711d4a6E\"",
+    #"@\"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17hc1f51f894979d89eE\"",
+    #"@_ZN13hickory_proto2rr6domain4name4Name13into_wildcard17h93209e8d48c558e7E",
+    "@_ZN13hickory_proto2rr6domain4name4Name10cmp_with_f17h0121b0602e9d6c59E",
+    "@_ZN13hickory_proto2rr6domain5label5Label10cmp_with_f17hdfa88f20003ea4a5E",
+    "@\"_ZN116_$LT$hickory_proto..rr..domain..name..LabelIter$u20$as$u20$core..iter..traits..double_ended..DoubleEndedIterator$GT$9next_back17hf3ea2bed27355fecE\""
+]
+spec_file = "test/hickory-dns/hickory-dns.spec"
+
+[summary.preconds]
+#"@\"_ZN14hickory_server9authority7catalog6lookup28_$u7b$$u7b$closure$u7d$$u7d$17hc2d55b3443725289E\"" = "catalog_lookup_precond"
+"@\"_ZN14hickory_server9authority7catalog14build_response28_$u7b$$u7b$closure$u7d$$u7d$17heee809c70942ce10E\"" = "build_response_precond"
+"@\"_ZN14hickory_server9authority16authority_object15AuthorityObject2ns28_$u7b$$u7b$closure$u7d$$u7d$17ha84972c1dd60c6c1E\"" = "authority_object_ns_precond"
+"@\"_ZN106_$LT$alloc..sync..Arc$LT$A$GT$$u20$as$u20$hickory_server..authority..authority_object..AuthorityObject$GT$6search28_$u7b$$u7b$closure$u7d$$u7d$17h0aa0c270003c03b7E\"" = "authority_object_search_precond"
+"@\"_ZN106_$LT$alloc..sync..Arc$LT$A$GT$$u20$as$u20$hickory_server..authority..authority_object..AuthorityObject$GT$6lookup28_$u7b$$u7b$closure$u7d$$u7d$17h3f15498e14ee6b43E\"" = "authority_object_lookup_precond"
+"@\"_ZN130_$LT$hickory_server..store..in_memory..authority..InMemoryAuthority$u20$as$u20$hickory_server..authority..authority..Authority$GT$6search28_$u7b$$u7b$closure$u7d$$u7d$17h4601eb151c27af44E\"" = "authority_search_precond"
+"@\"_ZN130_$LT$hickory_server..store..in_memory..authority..InMemoryAuthority$u20$as$u20$hickory_server..authority..authority..Authority$GT$6lookup28_$u7b$$u7b$closure$u7d$$u7d$17h20e49b06d1511995E\"" = "authority_lookup_precond"
+"@_ZN14hickory_server5store9in_memory9authority13InnerInMemory12inner_lookup17h5dd219c06a926ef3E" = "authority_inner_lookup_precond"
+"@_ZN14hickory_server5store9in_memory9authority13InnerInMemory21inner_lookup_wildcard17h8faa57653b9fab19E" = "authority_inner_lookup_precond"
+"@_ZN14hickory_server5store9in_memory9authority15maybe_next_name17h622fb147ac845466E" = "maybe_next_name_precond"
+"@\"_ZN67_$LT$hickory_proto..rr..rr_key..RrKey$u20$as$u20$core..cmp..Ord$GT$3cmp17hcb4107529da3b7ecE\"" = "rr_key_cmp_precond"
+"@_ZN14hickory_server5store9in_memory9authority13InnerInMemory17additional_search17h0ad93b42ff8077ebE" = "authority_additional_search_precond"
+"@\"_ZN121_$LT$hickory_server..store..file..authority..FileAuthority$u20$as$u20$hickory_server..authority..authority..Authority$GT$6lookup28_$u7b$$u7b$closure$u7d$$u7d$17h69a2ab9bd90d0b79E\"" = "file_authority_lookup_precond"
+"@\"_ZN121_$LT$hickory_server..store..file..authority..FileAuthority$u20$as$u20$hickory_server..authority..authority..Authority$GT$6search28_$u7b$$u7b$closure$u7d$$u7d$17h60e3c7ba4505be80E\"" = "file_authority_search_precond"
+"@\"_ZN4core3ptr104drop_in_place$LT$alloc..vec..Vec$LT$alloc..sync..Arc$LT$hickory_proto..rr..rr_set..RecordSet$GT$$GT$$GT$17hcb96b63b438b52a1E\"" = "drop_vec_recordset_precond"
+"@\"_ZN4core3ptr187drop_in_place$LT$$LT$hickory_server..store..in_memory..authority..InMemoryAuthority$u20$as$u20$hickory_server..authority..authority..Authority$GT$..search..$u7b$$u7b$closure$u7d$$u7d$$GT$17h4e0140a5047e6349E\"" = "drop_in_memory_authority_precond"
+"@\"_ZN128_$LT$hickory_server..authority..auth_lookup..AuthLookup$u20$as$u20$hickory_server..authority..authority_object..LookupObject$GT$16take_additionals17hd6db4355721ed955E\"" = "take_additionals_precond"
+"@\"_ZN4core3ptr419drop_in_place$LT$hickory_server..authority..catalog..send_authoritative_response$LT$core..pin..Pin$LT$alloc..boxed..Box$LT$dyn$u20$core..future..future..Future$u2b$Output$u20$$u3d$$u20$core..result..Result$LT$alloc..boxed..Box$LT$dyn$u20$hickory_server..authority..authority_object..LookupObject$GT$$C$hickory_server..authority..error..LookupError$GT$$u2b$core..marker..Send$GT$$GT$$GT$..$u7b$$u7b$closure$u7d$$u7d$$GT$17h23127907af27cfe2E\"" = "drop_lookup_object_precond"
+"@_ZN13hickory_proto2rr6domain4name4Name13into_wildcard17h93209e8d48c558e7E" = "into_wildcard_precond"
+"@_ZN13hickory_proto2rr10lower_name9LowerName7zone_of17h3c8c66d110ca1da4E" = "zone_of_precond"
+"@_ZN13hickory_proto2rr6domain4name4Name10cmp_with_f17h0121b0602e9d6c59E" = "name_cmp_precond"
+"@_ZN13hickory_proto2rr6rr_set9RecordSet10insert_ref17h3589b6fd63d06fa3E" = "insert_record_precond"
+#"@_ZN13hickory_proto2rr8resource6Record4with17hac3c60b6892ac85dE" = "record_with_precond"
+"@\"_ZN77_$LT$alloc..raw_vec..RawVec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17hd3935aac76cbd8ceE\"" = "drop_raw_vec_precond"
+"@\"_ZN4core3ptr58drop_in_place$LT$hickory_proto..rr..record_data..RData$GT$17h59589ee247d3bdf3E\"" = "drop_rdata_precond"
+"@\"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h81fc2883de1f7231E\"" = "drop_error_precond"
+"@\"_ZN4core3ptr66drop_in_place$LT$hickory_server..authority..error..LookupError$GT$17h0db9af4de69386e3E\"" = "drop_error_precond"
+
+[summary.oracles]
+"@\"_ZN67_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$core..default..Default$GT$7default17h98e5f1dc01110f1eE\"" = "vec_default"
+"@\"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$11allocate_in17hfd217f66e2527b65E\"" = "alloc_raw_vec"
+"@_ZN13hickory_proto2rr6domain5label5Label14from_raw_bytes17hb2e9f65def03421dE" = "label_from_raw_bytes"
+"@\"_ZN4core4iter8adapters3zip16Zip$LT$A$C$B$GT$3new17hc2d0d2e3e83a7212E\"" = "zip_new"
+"@\"_ZN77_$LT$alloc..raw_vec..RawVec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h0828433482f5b733E\"" = "drop_string"
+"@\"_ZN77_$LT$alloc..raw_vec..RawVec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17hea0f9592e90b0c0cE\"" = "drop_vec_usize"
+"@\"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$16reserve_for_push17h77f41cfefee6fbefE\"" = "realloc_string"
+"@\"_ZN5alloc3vec16Vec$LT$T$C$A$GT$7reserve17hece23b74fa67c7a0E\"" = "alloc_string"
+"@\"_ZN111_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$alloc..vec..spec_from_iter_nested..SpecFromIterNested$LT$T$C$I$GT$$GT$9from_iter17h6a1d4cd412626378E\"" = "alloc_string_from_iter"
+"@\"_ZN5alloc3vec16Vec$LT$T$C$A$GT$17extend_from_slice17hc0b0501bd38e6055E\"" = "extend_from_slice"
+"@\"_ZN67_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..clone..Clone$GT$5clone17hc1f51f894979d89eE\"" = "vec_clone"
+"@\"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$16reserve_for_push17hdfbc750df1f60df8E\"" = "realloc_vec_name"
+"@\"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$16reserve_for_push17hd64f2634303c0471E\"" = "realloc_vec_record_set"
+"@\"_ZN4core3ptr84drop_in_place$LT$alloc..vec..Vec$LT$hickory_proto..rr..lower_name..LowerName$GT$$GT$17hef2fc07df56b42f1E\"" = "drop_vec_name"
+"@\"_ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17h84dc0a4e26041c4fE\"" = "convert_ptr"
+"@\"_ZN73_$LT$$u5b$A$u5d$$u20$as$u20$core..slice..cmp..SlicePartialEq$LT$B$GT$$GT$5equal17he6aae7ee84aaecdaE\"" = "cmp_u8_slice"
+"@_ZN13hickory_proto2rr6rr_set9RecordSet13add_rdata_ref17h4bedf4a844adca6dE" = "add_rdata"
+"@_ZN13hickory_proto2rr6rr_set9RecordSet11replace_ref17hf94473261fcd0defE" = "replace_record"

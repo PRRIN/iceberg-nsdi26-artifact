@@ -1,0 +1,179 @@
+@go.coredns.Tree.searchGlue: Apply
+ └[Root]
+   └[Specialize| @go.coredns.Tree.searchGlue::%t is &Const::Tree::0 ]
+     └[Specialize| @go.coredns.Tree.searchGlue::%name.chunk1 is 8w64 ]
+       └[Specialize| @go.coredns.Tree.searchGlue::%name.chunk0 is &Global::Tree.searchGlue::qname::0 ]
+         ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::0> != 92w8) ]
+           ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::1> != 92w8) ]
+             ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::2> != 92w8) ]
+               ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::3> != 92w8) ]
+                 ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::4> != 92w8) ]
+                   ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::5> != 92w8) ]
+                     ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::6> != 92w8) ]
+                       ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::7> != 92w8) ]
+                         ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::6> == 46w8) ]
+                           └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                             └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                  | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                  | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                  | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                  | return none; ]
+                         └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::6> != 46w8) ]
+                           ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::5> == 46w8) ]
+                             ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::6> <u 98w8) ]
+                               └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                 └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                      | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                      | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                      | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                      | return none; ]
+                             └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::6> >=u 98w8) ]
+                               ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::6> >u 98w8) ]
+                                 └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                   └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                        | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                        | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                        | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                        | return none; ]
+                               └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::6> <=u 98w8) ]
+                                 ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::7> <u 46w8) ]
+                                   └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                     └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                          | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                          | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                          | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                          | return none; ]
+                                 └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::7> >=u 46w8) ]
+                                   ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::7> >u 46w8) ]
+                                     └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                       └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                            | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                            | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                            | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                            | return none; ]
+                                   └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::7> <=u 46w8) ]
+                                     ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::4> == 46w8) ]
+                                       └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                         └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                              | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                              | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                              | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                              | return none; ]
+                                     └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::4> != 46w8) ]
+                                       ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::3> == 46w8) ]
+                                         ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::4> <u 97w8) ]
+                                           └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                             └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                  | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                  | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                  | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                  | return none; ]
+                                         └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::4> >=u 97w8) ]
+                                           ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::4> >u 97w8) ]
+                                             └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                               └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                    | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                    | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                    | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                    | return none; ]
+                                           └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::4> <=u 97w8) ]
+                                             ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::2> == 46w8) ]
+                                               └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                                 └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                      | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                      | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                      | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                      | return none; ]
+                                             └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::2> != 46w8) ]
+                                               ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::1> == 46w8) ]
+                                                 ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::2> <u 104w8) ]
+                                                   └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                                     └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                          | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                          | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                          | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                          | return none; ]
+                                                 └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::2> >=u 104w8) ]
+                                                   ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::2> >u 104w8) ]
+                                                     └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                                       └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                            | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                            | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                            | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                            | return none; ]
+                                                   └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::2> <=u 104w8) ]
+                                                     ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::0> == 46w8) ]
+                                                       └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                                         └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                              | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                              | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                              | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                              | return none; ]
+                                                     └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::0> != 46w8) ]
+                                                       ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::0> <u 105w8) ]
+                                                         └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                                           └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                                | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                                | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                                | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                                | return none; ]
+                                                       └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::0> >=u 105w8) ]
+                                                         ├[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::0> >u 105w8) ]
+                                                           └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                                             └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                                  | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                                  | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                                  | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                                  | return none; ]
+                                                         └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::0> <=u 105w8) ]
+                                                           ├[Assume| ((<@go.coredns.Tree.searchGlue::%do> & 1w8) == 0w8) ]
+                                                             └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                                               └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                                    | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                                    | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                                    | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                                    | return none; ]
+                                                           └[Assume| ((<@go.coredns.Tree.searchGlue::%do> & 1w8) != 0w8) ]
+                                                             └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                                               └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                                    | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                                    | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                                    | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                                    | return none; ]
+                                               └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::1> != 46w8) ]
+                                                 └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                                   └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                        | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                        | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                        | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                        | return none; ]
+                                       └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::3> != 46w8) ]
+                                         └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                                           └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                                | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                                | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                                | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                                | return none; ]
+                           └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::5> != 46w8) ]
+                             └[Specialize| @go.coredns.Tree.searchGlue::%sret.formal.3 is &Global::Tree.searchGlue::Sret::0 ]
+                               └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+                                    | &[0]~512::0 -> Global::Tree.searchGlue::Sret::0;
+                                    | 0w64 -> Global::Tree.searchGlue::Sret::8;
+                                    | 0w64 -> Global::Tree.searchGlue::Sret::16;
+                                    | return none; ]
+                       └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::7> == 92w8) ]
+                         └[Panic| failed precondition ]
+                     └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::6> == 92w8) ]
+                       └[Panic| failed precondition ]
+                   └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::5> == 92w8) ]
+                     └[Panic| failed precondition ]
+                 └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::4> == 92w8) ]
+                   └[Panic| failed precondition ]
+               └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::3> == 92w8) ]
+                 └[Panic| failed precondition ]
+             └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::2> == 92w8) ]
+               └[Panic| failed precondition ]
+           └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::1> == 92w8) ]
+             └[Panic| failed precondition ]
+         └[Assume| (<@go.coredns.Tree.searchGlue::Global::Tree.searchGlue::qname::0> == 92w8) ]
+           └[Panic| failed precondition ]

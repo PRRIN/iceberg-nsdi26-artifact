@@ -1,0 +1,27 @@
+@go.coredns.Elem.TypeForWildcard: Apply
+ └[Root]
+   └[Specialize| @go.coredns.Elem.TypeForWildcard::%e is &Const::Elem::0 ]
+     ├[Assume| !(false || (<@go.coredns.Elem.TypeForWildcard::%qtype> == 2w16)) ]
+       └[Specialize| @go.coredns.Elem.TypeForWildcard::%sret.formal.6 is &Global::Elem.TypeForWildcard::Sret::0 ]
+         └[Ret| null -> Global::Elem.TypeForWildcard::Sret::0;
+              | 0w64 -> Global::Elem.TypeForWildcard::Sret::8;
+              | 0w64 -> Global::Elem.TypeForWildcard::Sret::16;
+              | return none; ]
+     └[Assume| (<@go.coredns.Elem.TypeForWildcard::%qtype> == 2w16) ]
+       └[Specialize| @go.coredns.Elem.TypeForWildcard::%sret.formal.6 is &Global::Elem.TypeForWildcard::Sret::0 ]
+         └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+              | [1] := malloc { { { ptr, i64 }, i16, i16, i32, i16 }, { ptr, i64 } }, zero;
+              | &[0]~512::0 -> Global::Elem.TypeForWildcard::Sret::0;
+              | 1w64 -> Global::Elem.TypeForWildcard::Sret::8;
+              | 1w64 -> Global::Elem.TypeForWildcard::Sret::16;
+              | &Const::@pimt..interface.4Header.0func.8.9.8.1go.coredns.RR_Header.9.2.go.coredns.copy.0func.8.9.8go.coredns.RR.9.5..go.coredns.NS::0 -> [0]::0;
+              | &[1]~48::0 -> [0]::8;
+              | <@go.coredns.Elem.TypeForWildcard::%qname.chunk0> -> [1]::0;
+              | <@go.coredns.Elem.TypeForWildcard::%qname.chunk1> -> [1]::8;
+              | 2w16 -> [1]::16;
+              | 1w16 -> [1]::18;
+              | 500w32 -> [1]::20;
+              | 0w16 -> [1]::24;
+              | &Const::string$3::0 -> [1]::32;
+              | 4w64 -> [1]::40;
+              | return none; ]

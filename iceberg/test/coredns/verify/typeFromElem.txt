@@ -1,0 +1,42 @@
+@go.coredns.typeFromElem: Apply
+ └[Root]
+   └[Specialize| @go.coredns.typeFromElem::%elem is &Const::Elem::0 ]
+     ├[Assume| !(false || (<@go.coredns.typeFromElem::%tp> == 2w16)) ]
+       ├[Assume| ((<@go.coredns.typeFromElem::%do> & 1w8) == 0w8) ]
+         └[Specialize| @go.coredns.typeFromElem::%sret.formal.8 is &Global::typeFromElem::Sret::0 ]
+           └[Ret| null -> Global::typeFromElem::Sret::0;
+                | 0w64 -> Global::typeFromElem::Sret::8;
+                | 0w64 -> Global::typeFromElem::Sret::16;
+                | return none; ]
+       └[Assume| ((<@go.coredns.typeFromElem::%do> & 1w8) != 0w8) ]
+         └[Specialize| @go.coredns.typeFromElem::%sret.formal.8 is &Global::typeFromElem::Sret::0 ]
+           └[Ret| null -> Global::typeFromElem::Sret::0;
+                | 0w64 -> Global::typeFromElem::Sret::8;
+                | 0w64 -> Global::typeFromElem::Sret::16;
+                | return none; ]
+     └[Assume| (<@go.coredns.typeFromElem::%tp> == 2w16) ]
+       ├[Assume| ((<@go.coredns.typeFromElem::%do> & 1w8) == 0w8) ]
+         └[Specialize| @go.coredns.typeFromElem::%sret.formal.8 is &Global::typeFromElem::Sret::0 ]
+           └[Ret| &Const::Slice(400069d280)::0 -> Global::typeFromElem::Sret::0;
+                | 1w64 -> Global::typeFromElem::Sret::8;
+                | 1w64 -> Global::typeFromElem::Sret::16;
+                | return none; ]
+       └[Assume| ((<@go.coredns.typeFromElem::%do> & 1w8) != 0w8) ]
+         └[Specialize| @go.coredns.typeFromElem::%sret.formal.8 is &Global::typeFromElem::Sret::0 ]
+           └[Ret| &Const::Slice(400069d280)::0 -> Global::typeFromElem::Sret::0;
+                | 1w64 -> Global::typeFromElem::Sret::8;
+                | 1w64 -> Global::typeFromElem::Sret::16;
+                | return none; ]
+@go.coredns.SubTypeSignature: Apply
+ └[Root]
+   └[Specialize| @go.coredns.SubTypeSignature::%rrs is &[1]~24::0 ]
+     ├[Assume| (<[1]::8> > 0w64) ]
+       └[Specialize| [1]::0 is null ]
+         └[Panic| null pointer access of @go.coredns.SubTypeSignature::%t..t.2433.sroa_cast ]
+     └[Assume| (<[1]::8> <= 0w64) ]
+       └[Specialize| @go.coredns.SubTypeSignature::%sret.formal.7 is &[2]~24::0 ]
+         └[Ret| [0] := malloc [{ ptr, ptr }; 32], zero;
+              | &[0]~512::0 -> [2]::0;
+              | 0w64 -> [2]::8;
+              | 0w64 -> [2]::16;
+              | return none; ]

@@ -1,0 +1,12 @@
+@func2: Apply
+ └[Root]
+   ├[Assume| (<@func2::%0> == 0w32) ]
+     └[Ret| return -1w32; ]
+   └[Assume| (<@func2::%0> != 0w32) ]
+     ├[Assume| (<@func2::%0> == 1w32) ]
+       └[Ret| return (<@func2::%0> + <@func2::%1>); ]
+     └[Assume| (<@func2::%0> != 1w32) ]
+       ├[Assume| (<@func2::%0> == 2w32) ]
+         └[Ret| return 3w32; ]
+       └[Assume| (<@func2::%0> != 2w32) ]
+         └[Ret| return 4w32; ]

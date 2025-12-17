@@ -1,0 +1,10 @@
+@caller: Apply
+ └[Root]
+   └[Ret| 2w32 -> Global::@global::0;
+        | return none; ]
+@leak: Apply
+ └[Root]
+   └[Specialize| @leak::%0 is &[1]~8::0 ]
+     └[Ret| 1w32 -> Global::@global::0;
+          | &[0]~4::0 -> [1]::0;
+          | return none; ]

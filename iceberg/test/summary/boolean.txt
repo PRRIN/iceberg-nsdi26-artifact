@@ -1,0 +1,7 @@
+@test: Apply
+ └[Root]
+   ├[Assume| (((<@test::%0> == 92w32) as i8) == 0w8) ]
+     └[Ret| return none; ]
+   └[Assume| (((<@test::%0> == 92w32) as i8) != 0w8) ]
+     └[Ret| 1w32 -> Global::@glb::0;
+          | return none; ]

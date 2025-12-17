@@ -1,0 +1,42 @@
+@go.coredns.Fqdn: Apply
+ └[Root]
+   └[Specialize| @go.coredns.Fqdn::%s.chunk1 is 8w64 ]
+     └[Specialize| @go.coredns.Fqdn::%s.chunk0 is &Const::Fqdn::s::0 ]
+       ├[Assume| (<Global::Fqdn::s::0> != 92w8) ]
+         ├[Assume| (<Global::Fqdn::s::1> != 92w8) ]
+           ├[Assume| (<Global::Fqdn::s::2> != 92w8) ]
+             ├[Assume| (<Global::Fqdn::s::3> != 92w8) ]
+               ├[Assume| (<Global::Fqdn::s::4> != 92w8) ]
+                 ├[Assume| (<Global::Fqdn::s::5> != 92w8) ]
+                   ├[Assume| (<Global::Fqdn::s::6> != 92w8) ]
+                     ├[Assume| (<Global::Fqdn::s::7> != 92w8) ]
+                       ├[Assume| (<Global::Fqdn::s::7> == 46w8) ]
+                         └[Ret| return { &Const::Fqdn::s::0, 8w64 }; ]
+                       └[Assume| (<Global::Fqdn::s::7> != 46w8) ]
+                         └[Ret| [0] := malloc [i8; 9], zero;
+                              | <Global::Fqdn::s::0> -> [0]::0;
+                              | <Global::Fqdn::s::1> -> [0]::1;
+                              | <Global::Fqdn::s::2> -> [0]::2;
+                              | <Global::Fqdn::s::3> -> [0]::3;
+                              | <Global::Fqdn::s::4> -> [0]::4;
+                              | <Global::Fqdn::s::5> -> [0]::5;
+                              | <Global::Fqdn::s::6> -> [0]::6;
+                              | <Global::Fqdn::s::7> -> [0]::7;
+                              | 46w8 -> [0]::8;
+                              | return { &[0]~9::0, 9w64 }; ]
+                     └[Assume| (<Global::Fqdn::s::7> == 92w8) ]
+                       └[Panic| failed precondition ]
+                   └[Assume| (<Global::Fqdn::s::6> == 92w8) ]
+                     └[Panic| failed precondition ]
+                 └[Assume| (<Global::Fqdn::s::5> == 92w8) ]
+                   └[Panic| failed precondition ]
+               └[Assume| (<Global::Fqdn::s::4> == 92w8) ]
+                 └[Panic| failed precondition ]
+             └[Assume| (<Global::Fqdn::s::3> == 92w8) ]
+               └[Panic| failed precondition ]
+           └[Assume| (<Global::Fqdn::s::2> == 92w8) ]
+             └[Panic| failed precondition ]
+         └[Assume| (<Global::Fqdn::s::1> == 92w8) ]
+           └[Panic| failed precondition ]
+       └[Assume| (<Global::Fqdn::s::0> == 92w8) ]
+         └[Panic| failed precondition ]

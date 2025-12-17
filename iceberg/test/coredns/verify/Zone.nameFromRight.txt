@@ -1,0 +1,196 @@
+@go.coredns.Zone.nameFromRight: Apply
+ └[Root]
+   └[Specialize| @go.coredns.Zone.nameFromRight::%qname.chunk1 is 8w64 ]
+     └[Specialize| @go.coredns.Zone.nameFromRight::%i is 1w64 ]
+       └[Specialize| @go.coredns.Zone.nameFromRight::%z is &Const::nameFromRight::zone::0 ]
+         └[Specialize| @go.coredns.Zone.nameFromRight::%qname.chunk0 is &Const::nameFromRight::qname::0 ]
+           ├[Assume| (<Global::nameFromRight::qname::0> != 92w8) ]
+             ├[Assume| (<Global::nameFromRight::qname::1> != 92w8) ]
+               ├[Assume| (<Global::nameFromRight::qname::2> != 92w8) ]
+                 ├[Assume| (<Global::nameFromRight::qname::3> != 92w8) ]
+                   ├[Assume| (<Global::nameFromRight::qname::4> != 92w8) ]
+                     ├[Assume| (<Global::nameFromRight::qname::5> != 92w8) ]
+                       ├[Assume| (<Global::nameFromRight::qname::6> != 92w8) ]
+                         ├[Assume| (<Global::nameFromRight::qname::7> != 92w8) ]
+                           ├[Assume| (<Global::nameFromRight::qname::6> == 46w8) ]
+                             ├[Assume| (<Global::nameFromRight::qname::5> == 46w8) ]
+                               ├[Assume| (<Global::nameFromRight::qname::4> == 46w8) ]
+                                 └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                   └[Ret| &Const::nameFromRight::qname::5 -> Global::Zone.nameFromRight::Sret::0;
+                                        | 3w64 -> Global::Zone.nameFromRight::Sret::8;
+                                        | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                        | return none; ]
+                               └[Assume| (<Global::nameFromRight::qname::4> != 46w8) ]
+                                 ├[Assume| (<Global::nameFromRight::qname::3> == 46w8) ]
+                                   └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                     └[Ret| &Const::nameFromRight::qname::4 -> Global::Zone.nameFromRight::Sret::0;
+                                          | 4w64 -> Global::Zone.nameFromRight::Sret::8;
+                                          | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                          | return none; ]
+                                 └[Assume| (<Global::nameFromRight::qname::3> != 46w8) ]
+                                   ├[Assume| (<Global::nameFromRight::qname::2> == 46w8) ]
+                                     └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                       └[Ret| &Const::nameFromRight::qname::3 -> Global::Zone.nameFromRight::Sret::0;
+                                            | 5w64 -> Global::Zone.nameFromRight::Sret::8;
+                                            | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                            | return none; ]
+                                   └[Assume| (<Global::nameFromRight::qname::2> != 46w8) ]
+                                     ├[Assume| (<Global::nameFromRight::qname::1> == 46w8) ]
+                                       └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                         └[Ret| &Const::nameFromRight::qname::2 -> Global::Zone.nameFromRight::Sret::0;
+                                              | 6w64 -> Global::Zone.nameFromRight::Sret::8;
+                                              | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                              | return none; ]
+                                     └[Assume| (<Global::nameFromRight::qname::1> != 46w8) ]
+                                       ├[Assume| (<Global::nameFromRight::qname::0> == 46w8) ]
+                                         └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                           └[Ret| &Const::nameFromRight::qname::1 -> Global::Zone.nameFromRight::Sret::0;
+                                                | 7w64 -> Global::Zone.nameFromRight::Sret::8;
+                                                | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                                | return none; ]
+                                       └[Assume| (<Global::nameFromRight::qname::0> != 46w8) ]
+                                         └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                           └[Ret| &Const::nameFromRight::qname::0 -> Global::Zone.nameFromRight::Sret::0;
+                                                | 8w64 -> Global::Zone.nameFromRight::Sret::8;
+                                                | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                                | return none; ]
+                             └[Assume| (<Global::nameFromRight::qname::5> != 46w8) ]
+                               ├[Assume| (<Global::nameFromRight::qname::4> == 46w8) ]
+                                 └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                   └[Ret| &Const::nameFromRight::qname::5 -> Global::Zone.nameFromRight::Sret::0;
+                                        | 3w64 -> Global::Zone.nameFromRight::Sret::8;
+                                        | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                        | return none; ]
+                               └[Assume| (<Global::nameFromRight::qname::4> != 46w8) ]
+                                 ├[Assume| (<Global::nameFromRight::qname::3> == 46w8) ]
+                                   └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                     └[Ret| &Const::nameFromRight::qname::4 -> Global::Zone.nameFromRight::Sret::0;
+                                          | 4w64 -> Global::Zone.nameFromRight::Sret::8;
+                                          | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                          | return none; ]
+                                 └[Assume| (<Global::nameFromRight::qname::3> != 46w8) ]
+                                   ├[Assume| (<Global::nameFromRight::qname::2> == 46w8) ]
+                                     └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                       └[Ret| &Const::nameFromRight::qname::3 -> Global::Zone.nameFromRight::Sret::0;
+                                            | 5w64 -> Global::Zone.nameFromRight::Sret::8;
+                                            | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                            | return none; ]
+                                   └[Assume| (<Global::nameFromRight::qname::2> != 46w8) ]
+                                     ├[Assume| (<Global::nameFromRight::qname::1> == 46w8) ]
+                                       └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                         └[Ret| &Const::nameFromRight::qname::2 -> Global::Zone.nameFromRight::Sret::0;
+                                              | 6w64 -> Global::Zone.nameFromRight::Sret::8;
+                                              | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                              | return none; ]
+                                     └[Assume| (<Global::nameFromRight::qname::1> != 46w8) ]
+                                       ├[Assume| (<Global::nameFromRight::qname::0> == 46w8) ]
+                                         └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                           └[Ret| &Const::nameFromRight::qname::1 -> Global::Zone.nameFromRight::Sret::0;
+                                                | 7w64 -> Global::Zone.nameFromRight::Sret::8;
+                                                | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                                | return none; ]
+                                       └[Assume| (<Global::nameFromRight::qname::0> != 46w8) ]
+                                         └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                           └[Ret| &Const::nameFromRight::qname::0 -> Global::Zone.nameFromRight::Sret::0;
+                                                | 8w64 -> Global::Zone.nameFromRight::Sret::8;
+                                                | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                                | return none; ]
+                           └[Assume| (<Global::nameFromRight::qname::6> != 46w8) ]
+                             ├[Assume| (<Global::nameFromRight::qname::5> == 46w8) ]
+                               ├[Assume| (<Global::nameFromRight::qname::4> == 46w8) ]
+                                 └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                   └[Ret| &Const::nameFromRight::qname::5 -> Global::Zone.nameFromRight::Sret::0;
+                                        | 3w64 -> Global::Zone.nameFromRight::Sret::8;
+                                        | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                        | return none; ]
+                               └[Assume| (<Global::nameFromRight::qname::4> != 46w8) ]
+                                 ├[Assume| (<Global::nameFromRight::qname::3> == 46w8) ]
+                                   └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                     └[Ret| &Const::nameFromRight::qname::4 -> Global::Zone.nameFromRight::Sret::0;
+                                          | 4w64 -> Global::Zone.nameFromRight::Sret::8;
+                                          | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                          | return none; ]
+                                 └[Assume| (<Global::nameFromRight::qname::3> != 46w8) ]
+                                   ├[Assume| (<Global::nameFromRight::qname::2> == 46w8) ]
+                                     └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                       └[Ret| &Const::nameFromRight::qname::3 -> Global::Zone.nameFromRight::Sret::0;
+                                            | 5w64 -> Global::Zone.nameFromRight::Sret::8;
+                                            | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                            | return none; ]
+                                   └[Assume| (<Global::nameFromRight::qname::2> != 46w8) ]
+                                     ├[Assume| (<Global::nameFromRight::qname::1> == 46w8) ]
+                                       └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                         └[Ret| &Const::nameFromRight::qname::2 -> Global::Zone.nameFromRight::Sret::0;
+                                              | 6w64 -> Global::Zone.nameFromRight::Sret::8;
+                                              | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                              | return none; ]
+                                     └[Assume| (<Global::nameFromRight::qname::1> != 46w8) ]
+                                       ├[Assume| (<Global::nameFromRight::qname::0> == 46w8) ]
+                                         └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                           └[Ret| &Const::nameFromRight::qname::1 -> Global::Zone.nameFromRight::Sret::0;
+                                                | 7w64 -> Global::Zone.nameFromRight::Sret::8;
+                                                | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                                | return none; ]
+                                       └[Assume| (<Global::nameFromRight::qname::0> != 46w8) ]
+                                         └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                           └[Ret| &Const::nameFromRight::qname::0 -> Global::Zone.nameFromRight::Sret::0;
+                                                | 8w64 -> Global::Zone.nameFromRight::Sret::8;
+                                                | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                                | return none; ]
+                             └[Assume| (<Global::nameFromRight::qname::5> != 46w8) ]
+                               ├[Assume| (<Global::nameFromRight::qname::4> == 46w8) ]
+                                 └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                   └[Ret| &Const::nameFromRight::qname::5 -> Global::Zone.nameFromRight::Sret::0;
+                                        | 3w64 -> Global::Zone.nameFromRight::Sret::8;
+                                        | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                        | return none; ]
+                               └[Assume| (<Global::nameFromRight::qname::4> != 46w8) ]
+                                 ├[Assume| (<Global::nameFromRight::qname::3> == 46w8) ]
+                                   └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                     └[Ret| &Const::nameFromRight::qname::4 -> Global::Zone.nameFromRight::Sret::0;
+                                          | 4w64 -> Global::Zone.nameFromRight::Sret::8;
+                                          | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                          | return none; ]
+                                 └[Assume| (<Global::nameFromRight::qname::3> != 46w8) ]
+                                   ├[Assume| (<Global::nameFromRight::qname::2> == 46w8) ]
+                                     └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                       └[Ret| &Const::nameFromRight::qname::3 -> Global::Zone.nameFromRight::Sret::0;
+                                            | 5w64 -> Global::Zone.nameFromRight::Sret::8;
+                                            | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                            | return none; ]
+                                   └[Assume| (<Global::nameFromRight::qname::2> != 46w8) ]
+                                     ├[Assume| (<Global::nameFromRight::qname::1> == 46w8) ]
+                                       └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                         └[Ret| &Const::nameFromRight::qname::2 -> Global::Zone.nameFromRight::Sret::0;
+                                              | 6w64 -> Global::Zone.nameFromRight::Sret::8;
+                                              | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                              | return none; ]
+                                     └[Assume| (<Global::nameFromRight::qname::1> != 46w8) ]
+                                       ├[Assume| (<Global::nameFromRight::qname::0> == 46w8) ]
+                                         └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                           └[Ret| &Const::nameFromRight::qname::1 -> Global::Zone.nameFromRight::Sret::0;
+                                                | 7w64 -> Global::Zone.nameFromRight::Sret::8;
+                                                | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                                | return none; ]
+                                       └[Assume| (<Global::nameFromRight::qname::0> != 46w8) ]
+                                         └[Specialize| @go.coredns.Zone.nameFromRight::%sret.formal.4 is &Global::Zone.nameFromRight::Sret::0 ]
+                                           └[Ret| &Const::nameFromRight::qname::0 -> Global::Zone.nameFromRight::Sret::0;
+                                                | 8w64 -> Global::Zone.nameFromRight::Sret::8;
+                                                | 0w8 -> Global::Zone.nameFromRight::Sret::16;
+                                                | return none; ]
+                         └[Assume| (<Global::nameFromRight::qname::7> == 92w8) ]
+                           └[Panic| failed precondition ]
+                       └[Assume| (<Global::nameFromRight::qname::6> == 92w8) ]
+                         └[Panic| failed precondition ]
+                     └[Assume| (<Global::nameFromRight::qname::5> == 92w8) ]
+                       └[Panic| failed precondition ]
+                   └[Assume| (<Global::nameFromRight::qname::4> == 92w8) ]
+                     └[Panic| failed precondition ]
+                 └[Assume| (<Global::nameFromRight::qname::3> == 92w8) ]
+                   └[Panic| failed precondition ]
+               └[Assume| (<Global::nameFromRight::qname::2> == 92w8) ]
+                 └[Panic| failed precondition ]
+             └[Assume| (<Global::nameFromRight::qname::1> == 92w8) ]
+               └[Panic| failed precondition ]
+           └[Assume| (<Global::nameFromRight::qname::0> == 92w8) ]
+             └[Panic| failed precondition ]

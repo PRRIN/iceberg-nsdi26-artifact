@@ -1,0 +1,4 @@
+@go.coredns.Elem.Name: Apply
+ └[Root]
+   └[Specialize| @go.coredns.Elem.Name::%e is &Const::Elem::0 ]
+     └[Ret| return { &Const::string$4::0, 8w64 }; ]

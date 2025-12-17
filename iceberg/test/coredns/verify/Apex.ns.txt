@@ -1,0 +1,15 @@
+@go.coredns.Apex.ns: Apply
+ └[Root]
+   └[Specialize| @go.coredns.Apex.ns::%pointer is &Const::Apex.ns::zone::48 ]
+     ├[Assume| ((<@go.coredns.Apex.ns::%do> & 1w8) == 0w8) ]
+       └[Specialize| @go.coredns.Apex.ns::%sret.formal.10 is &Global::Apex.ns::Sret::0 ]
+         └[Ret| &Const::Slice(400069d260)::0 -> Global::Apex.ns::Sret::0;
+              | 1w64 -> Global::Apex.ns::Sret::8;
+              | 1w64 -> Global::Apex.ns::Sret::16;
+              | return none; ]
+     └[Assume| ((<@go.coredns.Apex.ns::%do> & 1w8) != 0w8) ]
+       └[Specialize| @go.coredns.Apex.ns::%sret.formal.10 is &Global::Apex.ns::Sret::0 ]
+         └[Ret| &Const::Slice(400069d260)::0 -> Global::Apex.ns::Sret::0;
+              | 1w64 -> Global::Apex.ns::Sret::8;
+              | 1w64 -> Global::Apex.ns::Sret::16;
+              | return none; ]

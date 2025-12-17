@@ -1,0 +1,15 @@
+@go.coredns.Elem.Type: Apply
+ └[Root]
+   └[Specialize| @go.coredns.Elem.Type::%e is &Const::Elem::0 ]
+     ├[Assume| !(false || (<@go.coredns.Elem.Type::%qtype> == 2w16)) ]
+       └[Specialize| @go.coredns.Elem.Type::%sret.formal.5 is &Global::Elem.Type::Sret::0 ]
+         └[Ret| null -> Global::Elem.Type::Sret::0;
+              | 0w64 -> Global::Elem.Type::Sret::8;
+              | 0w64 -> Global::Elem.Type::Sret::16;
+              | return none; ]
+     └[Assume| (<@go.coredns.Elem.Type::%qtype> == 2w16) ]
+       └[Specialize| @go.coredns.Elem.Type::%sret.formal.5 is &Global::Elem.Type::Sret::0 ]
+         └[Ret| &Const::Slice(400069d280)::0 -> Global::Elem.Type::Sret::0;
+              | 1w64 -> Global::Elem.Type::Sret::8;
+              | 1w64 -> Global::Elem.Type::Sret::16;
+              | return none; ]

@@ -1,0 +1,5 @@
+LALRPOP
+    filter rm_comments_in_strings " // 
+    filter call_regexp_common C++
+    extension lalrpop
+    3rd_gen_scale 1.00

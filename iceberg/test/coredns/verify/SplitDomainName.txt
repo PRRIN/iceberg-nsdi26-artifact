@@ -1,0 +1,27 @@
+@go.coredns.SplitDomainName: Apply
+ └[Root]
+   ├[Assume| (<@go.coredns.SplitDomainName::%s.chunk1> == 0w64) ]
+     └[Specialize| @go.coredns.SplitDomainName::%sret.formal.16 is &Global::SplitDomainName::Sret::0 ]
+       └[Ret| null -> Global::SplitDomainName::Sret::0;
+            | 0w64 -> Global::SplitDomainName::Sret::8;
+            | 0w64 -> Global::SplitDomainName::Sret::16;
+            | return none; ]
+   └[Assume| (<@go.coredns.SplitDomainName::%s.chunk1> != 0w64) ]
+     ├[Assume| (<@go.coredns.SplitDomainName::%s.chunk1> == 1w64) ]
+       └[Specialize| @go.coredns.SplitDomainName::%s.chunk0 is &Const::SplitDomainName::Test::0 ]
+         └[Specialize| @go.coredns.SplitDomainName::%s.chunk1 is 11w64 ]
+     └[Assume| (<@go.coredns.SplitDomainName::%s.chunk1> != 1w64) ]
+       └[Specialize| @go.coredns.SplitDomainName::%s.chunk1 is 11w64 ]
+         └[Specialize| @go.coredns.SplitDomainName::%s.chunk0 is &Const::SplitDomainName::Test::0 ]
+           └[Specialize| @go.coredns.SplitDomainName::%sret.formal.16 is &Global::SplitDomainName::Sret::0 ]
+             └[Ret| [1] := malloc [{ ptr, i64 }; 32], zero;
+                  | &[1]~512::0 -> Global::SplitDomainName::Sret::0;
+                  | 3w64 -> Global::SplitDomainName::Sret::8;
+                  | 32w64 -> Global::SplitDomainName::Sret::16;
+                  | &Const::SplitDomainName::Test::0 -> [1]::0;
+                  | 3w64 -> [1]::8;
+                  | &Const::SplitDomainName::Test::4 -> [1]::16;
+                  | 3w64 -> [1]::24;
+                  | &Const::SplitDomainName::Test::8 -> [1]::32;
+                  | 2w64 -> [1]::40;
+                  | return none; ]

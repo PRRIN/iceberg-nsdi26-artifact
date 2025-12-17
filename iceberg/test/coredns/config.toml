@@ -1,0 +1,62 @@
+action = "summarize"
+
+[builtin]
+target = "golang"
+nop = [
+    "@runtime.gcWriteBarrier",
+    "@sync.RWMutex.RLock",
+    "@sync.RWMutex.rUnlockSlow",
+    "@sync.RWMutex.Lock",
+    "@sync.RWMutex.RUnlock",
+    "@sync.RWMutex.Unlock",
+]
+panic = [
+    "@runtime.panicmem",
+    "@runtime.gopanic",
+    "@runtime.goPanicSliceAlen",
+    "@runtime.goPanicSliceAcap",
+    "@runtime.goPanicSliceB",
+    "@runtime.goPanicSlice3Acap",
+    "@runtime.goPanicSlice3B",
+    "@runtime.goPanicIndex",
+    "@runtime.panicdottype",
+]
+
+[builtin.type_hint]
+
+[summary]
+inlined = [
+    # "@go.coredns.doDDD",
+    "@go.coredns.BytesCompare",
+    "@go.coredns.equal",
+    "@go.coredns.Split",
+    "@go.coredns.SplitDomainName",
+    "@go.coredns.Join",
+    "@go.coredns.StringsJoin",
+    "@go.coredns.Zone.externalLookup",
+    "@go.coredns.Zone.doLookup",
+    "@go.coredns.Upstream.Lookup",
+]
+
+spec_file = "test/coredns/coredns.spec"
+
+[summary.preconds]
+"@go.coredns.IsFqdn" = "go_coredns_is_fqdn_precond"
+"@go.coredns.doDDD" = "go_coredns_doddd_precond"
+"@go.coredns.PrevLabel" = "go_coredns_prev_label_precond"
+"@go.coredns.NextLabel" = "go_coredns_next_label_precond"
+"@go.coredns.Less" = "go_coredns_less_precond"
+"@go.coredns.CountLabel" = "go_coredns_count_label_precond"
+"@go.coredns.IsSubDomain" = "go_coredns_is_subdomain_precond"
+"@go.coredns.Join" = "go_coredns_join_precond"
+"@go.coredns.sprintName" = "go_coredns_sprint_name_precond"
+"@go.coredns.Zone.nameFromRight" = "go_coredns_zone_name_from_right_precond"
+"@go.coredns.Node.search" = "go_coredns_node_search_precond"
+"@go.coredns.Tree.Next" = "go_coredns_tree_next_precond"
+"@go.coredns.Tree.Prev" = "go_coredns_tree_prev_precond"
+"@go.coredns.Zone.Lookup" = "go_coredns_zone_lookup_precond"
+
+[summary.oracles]
+"@go.coredns.CompareDomainName" = "go_coredns_compare_domain_name_oracle"
+"@go.coredns.Request.Size" = "go_coredns_request_size_oracle"
+"@go.coredns.Request.Name" = "go_coredns_request_name_oracle"

@@ -1,0 +1,18 @@
+action = ""
+
+[builtin]
+target = "c"
+nop = []
+panic = []
+
+[builtin.type_hint]
+"@leak3::%4" = ["i64", "!"]
+"@leak3::%5" = ["i64", "!"]
+
+[summary]
+inlined = []
+spec_file = ""
+
+[summary.preconds]
+
+[summary.oracles]

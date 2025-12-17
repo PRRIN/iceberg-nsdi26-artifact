@@ -1,0 +1,45 @@
+@test_basic: Apply
+ └[Root]
+   └[Ret| return none; ]
+@test_return: Apply
+ └[Root]
+   └[Specialize| @test_return::%0 is &Global::Test::0::0 ]
+     └[Ret| [0] := malloc i32, havoc;
+          | [1] := malloc { i32, i8 }, havoc;
+          | &[1]~8::0 -> Global::Test::0::0;
+          | return (bitcast &[0]~4::0 to i64); ]
+@test_local: Apply
+ └[Root]
+   └[Ret| return (<@test_local::%0> + ((<@test_local::%1> as i8) as i32)); ]
+@new: Apply
+ └[Root]
+   └[Ret| [0] := malloc { i32, i8 }, havoc;
+        | 0w32 -> [0]::0;
+        | 0w8 -> [0]::4;
+        | return &[0]~8::0; ]
+@test_construct: Apply
+ └[Root]
+   ├[Assume| (<@test_construct::%0> > 0w32) ]
+     └[Ret| [0] := malloc { i32, i8 }, havoc;
+          | 0w32 -> [0]::0;
+          | (<@test_construct::%0> as i8) -> [0]::4;
+          | return &[0]~8::0; ]
+   └[Assume| (<@test_construct::%0> <= 0w32) ]
+     └[Ret| [1] := malloc { i32, i8 }, havoc;
+          | 0w32 -> [1]::0;
+          | 0w8 -> [1]::4;
+          | return &[1]~8::0; ]
+@test_free: Apply
+ └[Root]
+   ├[Assume| (<@test_free::%0> == 1w32) ]
+     └[Panic| using freed region Heap::(i32, havoc #1) ]
+   └[Assume| (<@test_free::%0> != 1w32) ]
+     ├[Assume| (<@test_free::%0> == 2w32) ]
+       └[Panic| using freed region Heap::(i32, havoc #1) ]
+     └[Assume| (<@test_free::%0> != 2w32) ]
+       └[Ret| return none; ]
+@foo: Apply
+ └[Root]
+   └[Specialize| @foo::%0 is &[0]~4::0 ]
+     └[Ret| free [0]
+          | return none; ]

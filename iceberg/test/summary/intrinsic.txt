@@ -1,0 +1,18 @@
+@llvm_memcpy1: Apply
+ └[Root]
+   └[Specialize| @llvm_memcpy1::%0 is 0w32 ]
+     └[Ret| return 1w32; ]
+@llvm_memcpy2: Apply
+ └[Root]
+   └[Specialize| @llvm_memcpy2::%0 is 0w32 ]
+     └[Ret| return (4w32 + (<@llvm_memcpy2::Global::@glb::8> as i32)); ]
+@llvm_memset1: Apply
+ └[Root]
+   └[Specialize| @llvm_memset1::%0 is 1w32 ]
+     └[Specialize| @llvm_memset1::%1 is 1w32 ]
+       └[Ret| return 1w32; ]
+@llvm_memset2: Apply
+ └[Root]
+   └[Specialize| @llvm_memset2::%0 is 1w32 ]
+     └[Specialize| @llvm_memset2::%1 is 1w32 ]
+       └[Ret| return 1w64; ]

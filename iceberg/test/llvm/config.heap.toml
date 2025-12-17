@@ -1,0 +1,22 @@
+action = ""
+
+[builtin]
+target = "c"
+nop = []
+panic = []
+
+[builtin.type_hint]
+"@test_basic::%2" = ["i32", "!"]
+"@test_return::%4" = ["i32", "!"]
+"@test_return::%6" = ["%struct.S", "!"]
+"@test_local::%6" = ["%struct.S", "!"]
+"@new::%2" = ["%struct.S", "!"]
+"@test_free::%4" = ["i32", "!"]
+
+[summary]
+inlined = []
+spec_file = ""
+
+[summary.preconds]
+
+[summary.oracles]
