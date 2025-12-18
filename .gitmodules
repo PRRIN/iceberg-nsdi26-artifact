@@ -1,0 +1,4 @@
+[submodule "hickory-dns"]
+	path = hickory-dns
+	url = https://github.com/EchoStone1101/hickory-dns.git
+	branch = dev-dump
