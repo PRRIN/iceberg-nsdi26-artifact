@@ -1,0 +1,14 @@
+{
+"file": {"_Zones": {"Z": {"ptr": "Slice(40007f0028)", "len": 1, "cap": 1, "__type__": "[]*file._Zone"}, "__type__": "file._Zones"}, "__type__": "file._File"},
+"40004ab070": {"Elem": "40009b6ec0", "Left": "zeroVal", "Right": "zeroVal", "Color": 1, "__type__": "tree.Node"},
+"Slice(40004ab090)": [{"itab": "Itab(*dns.DNAME)", "data": "Iface(40008016b0)", "__type__": "dns.RR"}],
+"Iface(40008016b0)": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 39, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Target": {"value": "g.", "__type__": "string"}, "__type__": "dns.DNAME"},
+"40005c6030": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 6, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.c.d.", "__type__": "string"}, "Mbox": {"value": "e.f.d.", "__type__": "string"}, "Serial": 3, "Refresh": 604800, "Retry": 86400, "Expire": 2419200, "Minttl": 604800, "__type__": "dns.SOA"},
+"Slice(40004ab080)": [{"itab": "Itab(*dns.NS)", "data": "Iface(4000801650)", "__type__": "dns.RR"}],
+"Iface(4000801650)": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.c.d.", "__type__": "string"}, "__type__": "dns.NS"},
+"40005c60a8": {"__type__": "upstream.Upstream"},
+"Slice(40007f0028)": ["40007f0028"],
+"40007f0028": {"Origin": {"value": "a.", "__type__": "string"}, "OrigLen": 1, "File": {"value": "Zones/Simple/241.txt", "__type__": "string"}, "Tree": "40005c6028", "Apex": {"SOA": "40005c6030", "NS": {"ptr": "Slice(40004ab080)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "SIGSOA": "zeroVal", "SIGNS": "zeroVal", "__type__": "file.Apex"}, "Expired": 0, "Lock": {"__type__": "struct {}"}, "StartupOnce": {"__type__": "struct {}"}, "TransferFrom": "zeroVal", "ReloadInterval": 60000000000, "ReloadShutdown": {"__type__": "struct {}"}, "Upstream": "40005c60a8", "__type__": "file._Zone"},
+"40005c6028": {"Root": "40004ab070", "Count": 1, "__type__": "tree.Tree"},
+"40009b6ec0": {"m": {"39": {"ptr": "Slice(40004ab090)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "a.", "__type__": "string"}, "__type__": "tree.Elem"}
+}

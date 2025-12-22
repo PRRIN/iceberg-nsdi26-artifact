@@ -2,3 +2,6 @@
 	path = hickory-dns
 	url = https://github.com/EchoStone1101/hickory-dns.git
 	branch = dev-dump
+[submodule "coredns"]
+	path = coredns
+	url = https://github.com/PRRIN/coredns.git

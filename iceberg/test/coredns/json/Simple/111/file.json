@@ -1,0 +1,14 @@
+{
+"Iface(40002b82a0)": {"Hdr": {"Name": {"value": "f.a.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "i.", "__type__": "string"}, "__type__": "dns.NS"},
+"40001bdd10": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 6, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.c.d.", "__type__": "string"}, "Mbox": {"value": "e.f.d.", "__type__": "string"}, "Serial": 3, "Refresh": 604800, "Retry": 86400, "Expire": 2419200, "Minttl": 604800, "__type__": "dns.SOA"},
+"Slice(4000187500)": [{"itab": "Itab(*dns.NS)", "data": "Iface(40002b8240)", "__type__": "dns.RR"}],
+"40001bdd88": {"__type__": "upstream.Upstream"},
+"file": {"_Zones": {"Z": {"ptr": "Slice(40006c6130)", "len": 1, "cap": 1, "__type__": "[]*file._Zone"}, "__type__": "file._Zones"}, "__type__": "file._File"},
+"Slice(40006c6130)": ["40006c6130"],
+"400045a660": {"m": {"2": {"ptr": "Slice(4000187510)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "f.a.", "__type__": "string"}, "__type__": "tree.Elem"},
+"Slice(4000187510)": [{"itab": "Itab(*dns.NS)", "data": "Iface(40002b82a0)", "__type__": "dns.RR"}],
+"Iface(40002b8240)": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "g.f.f.h.", "__type__": "string"}, "__type__": "dns.NS"},
+"40006c6130": {"Origin": {"value": "a.", "__type__": "string"}, "OrigLen": 1, "File": {"value": "Zones/Simple/111.txt", "__type__": "string"}, "Tree": "40001bdd08", "Apex": {"SOA": "40001bdd10", "NS": {"ptr": "Slice(4000187500)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "SIGSOA": "zeroVal", "SIGNS": "zeroVal", "__type__": "file.Apex"}, "Expired": 0, "Lock": {"__type__": "struct {}"}, "StartupOnce": {"__type__": "struct {}"}, "TransferFrom": "zeroVal", "ReloadInterval": 60000000000, "ReloadShutdown": {"__type__": "struct {}"}, "Upstream": "40001bdd88", "__type__": "file._Zone"},
+"40001bdd08": {"Root": "40001874f0", "Count": 1, "__type__": "tree.Tree"},
+"40001874f0": {"Elem": "400045a660", "Left": "zeroVal", "Right": "zeroVal", "Color": 1, "__type__": "tree.Node"}
+}

@@ -1,0 +1,14 @@
+{
+"400099a318": {"Origin": {"value": "a.", "__type__": "string"}, "OrigLen": 1, "File": {"value": "Zones/Simple/348.txt", "__type__": "string"}, "Tree": "400095e188", "Apex": {"SOA": "400095e190", "NS": {"ptr": "Slice(40006c0050)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "SIGSOA": "zeroVal", "SIGNS": "zeroVal", "__type__": "file.Apex"}, "Expired": 0, "Lock": {"__type__": "struct {}"}, "StartupOnce": {"__type__": "struct {}"}, "TransferFrom": "zeroVal", "ReloadInterval": 60000000000, "ReloadShutdown": {"__type__": "struct {}"}, "Upstream": "400095e208", "__type__": "file._Zone"},
+"40006c0030": {"Elem": "40007183a0", "Left": "zeroVal", "Right": "zeroVal", "Color": 1, "__type__": "tree.Node"},
+"40007183a0": {"m": {"5": {"ptr": "Slice(40006c0070)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "*.a.", "__type__": "string"}, "__type__": "tree.Elem"},
+"Slice(40006c0070)": [{"itab": "Itab(*dns.CNAME)", "data": "Iface(4000181710)", "__type__": "dns.RR"}],
+"Iface(4000181710)": {"Hdr": {"Name": {"value": "*.a.", "__type__": "string"}, "Rrtype": 5, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Target": {"value": "f.g.h.", "__type__": "string"}, "__type__": "dns.CNAME"},
+"Iface(40001816b0)": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.c.d.", "__type__": "string"}, "__type__": "dns.NS"},
+"file": {"_Zones": {"Z": {"ptr": "Slice(400099a318)", "len": 1, "cap": 1, "__type__": "[]*file._Zone"}, "__type__": "file._Zones"}, "__type__": "file._File"},
+"Slice(400099a318)": ["400099a318"],
+"400095e188": {"Root": "40006c0030", "Count": 1, "__type__": "tree.Tree"},
+"400095e190": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 6, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.c.d.", "__type__": "string"}, "Mbox": {"value": "e.a.d.", "__type__": "string"}, "Serial": 3, "Refresh": 604800, "Retry": 86400, "Expire": 2419200, "Minttl": 604800, "__type__": "dns.SOA"},
+"Slice(40006c0050)": [{"itab": "Itab(*dns.NS)", "data": "Iface(40001816b0)", "__type__": "dns.RR"}],
+"400095e208": {"__type__": "upstream.Upstream"}
+}

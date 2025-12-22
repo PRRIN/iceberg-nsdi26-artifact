@@ -1,0 +1,14 @@
+{
+"Slice(400058e900)": [{"itab": "Itab(*dns.DNAME)", "data": "Iface(40007cbcb0)", "__type__": "dns.RR"}],
+"40007fc030": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 6, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.c.d.", "__type__": "string"}, "Mbox": {"value": "e.f.d.", "__type__": "string"}, "Serial": 3, "Refresh": 604800, "Retry": 86400, "Expire": 2419200, "Minttl": 604800, "__type__": "dns.SOA"},
+"file": {"_Zones": {"Z": {"ptr": "Slice(400007a030)", "len": 1, "cap": 1, "__type__": "[]*file._Zone"}, "__type__": "file._Zones"}, "__type__": "file._File"},
+"Slice(400007a030)": ["400007a030"],
+"400007a030": {"Origin": {"value": "a.", "__type__": "string"}, "OrigLen": 1, "File": {"value": "Zones/Simple/618.txt", "__type__": "string"}, "Tree": "40007fc028", "Apex": {"SOA": "40007fc030", "NS": {"ptr": "Slice(400058e8f0)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "SIGSOA": "zeroVal", "SIGNS": "zeroVal", "__type__": "file.Apex"}, "Expired": 0, "Lock": {"__type__": "struct {}"}, "StartupOnce": {"__type__": "struct {}"}, "TransferFrom": "zeroVal", "ReloadInterval": 60000000000, "ReloadShutdown": {"__type__": "struct {}"}, "Upstream": "40007fc0a8", "__type__": "file._Zone"},
+"40007fc028": {"Root": "400058e8e0", "Count": 1, "__type__": "tree.Tree"},
+"400058e8e0": {"Elem": "40006504e0", "Left": "zeroVal", "Right": "zeroVal", "Color": 1, "__type__": "tree.Node"},
+"40006504e0": {"m": {"39": {"ptr": "Slice(400058e900)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "a.", "__type__": "string"}, "__type__": "tree.Elem"},
+"Iface(40007cbcb0)": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 39, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Target": {"value": "g.h.", "__type__": "string"}, "__type__": "dns.DNAME"},
+"Slice(400058e8f0)": [{"itab": "Itab(*dns.NS)", "data": "Iface(40007cbc50)", "__type__": "dns.RR"}],
+"Iface(40007cbc50)": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.c.d.", "__type__": "string"}, "__type__": "dns.NS"},
+"40007fc0a8": {"__type__": "upstream.Upstream"}
+}

@@ -1,0 +1,14 @@
+{
+"40004588e0": {"m": {"39": {"ptr": "Slice(40006a5170)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "g.a.", "__type__": "string"}, "__type__": "tree.Elem"},
+"Iface(400066b8f0)": {"Hdr": {"Name": {"value": "g.a.", "__type__": "string"}, "Rrtype": 39, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Target": {"value": "h.i.a.", "__type__": "string"}, "__type__": "dns.DNAME"},
+"40001bdc60": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 6, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.c.d.", "__type__": "string"}, "Mbox": {"value": "e.f.d.", "__type__": "string"}, "Serial": 3, "Refresh": 604800, "Retry": 86400, "Expire": 2419200, "Minttl": 604800, "__type__": "dns.SOA"},
+"Slice(40006a5160)": [{"itab": "Itab(*dns.NS)", "data": "Iface(400066b890)", "__type__": "dns.RR"}],
+"Slice(400090a478)": ["400090a478"],
+"40001bdc58": {"Root": "40006a5150", "Count": 1, "__type__": "tree.Tree"},
+"40006a5150": {"Elem": "40004588e0", "Left": "zeroVal", "Right": "zeroVal", "Color": 1, "__type__": "tree.Node"},
+"Slice(40006a5170)": [{"itab": "Itab(*dns.DNAME)", "data": "Iface(400066b8f0)", "__type__": "dns.RR"}],
+"Iface(400066b890)": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.c.d.", "__type__": "string"}, "__type__": "dns.NS"},
+"40001bdcd8": {"__type__": "upstream.Upstream"},
+"file": {"_Zones": {"Z": {"ptr": "Slice(400090a478)", "len": 1, "cap": 1, "__type__": "[]*file._Zone"}, "__type__": "file._Zones"}, "__type__": "file._File"},
+"400090a478": {"Origin": {"value": "a.", "__type__": "string"}, "OrigLen": 1, "File": {"value": "Zones/Simple/336.txt", "__type__": "string"}, "Tree": "40001bdc58", "Apex": {"SOA": "40001bdc60", "NS": {"ptr": "Slice(40006a5160)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "SIGSOA": "zeroVal", "SIGNS": "zeroVal", "__type__": "file.Apex"}, "Expired": 0, "Lock": {"__type__": "struct {}"}, "StartupOnce": {"__type__": "struct {}"}, "TransferFrom": "zeroVal", "ReloadInterval": 60000000000, "ReloadShutdown": {"__type__": "struct {}"}, "Upstream": "40001bdcd8", "__type__": "file._Zone"}
+}

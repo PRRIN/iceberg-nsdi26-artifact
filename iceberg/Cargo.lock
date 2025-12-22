@@ -313,7 +313,6 @@ dependencies = [
  "itertools 0.11.0",
  "llvm_frontend",
  "log",
- "panicky",
  "serde",
  "serde_json",
  "spice_frontend",
@@ -497,10 +496,6 @@ name = "once_cell"
 version = "1.18.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dd8b5dd2ae5ed71462c540258bedcb51965123ad7e7ccf4b9a8cafaa4a63576d"
-
-[[package]]
-name = "panicky"
-version = "0.1.0"
 
 [[package]]
 name = "parking_lot"

@@ -1,0 +1,15 @@
+{
+"4000622028": {"Root": "400088fc50", "Count": 1, "__type__": "tree.Tree"},
+"40008d84e0": {"m": {"1": {"ptr": "Slice(400088fc70)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "*.a.b.", "__type__": "string"}, "__type__": "tree.Elem"},
+"Iface(4000520180)": {"Hdr": {"Name": {"value": "a.b.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "c.d.e.", "__type__": "string"}, "__type__": "dns.NS"},
+"file": {"_Zones": {"Z": {"ptr": "Slice(40008890a0)", "len": 1, "cap": 1, "__type__": "[]*file._Zone"}, "__type__": "file._Zones"}, "__type__": "file._File"},
+"Slice(40008890a0)": ["40008890a0"],
+"40008890a0": {"Origin": {"value": "a.b.", "__type__": "string"}, "OrigLen": 2, "File": {"value": "Zones/Simple/29.txt", "__type__": "string"}, "Tree": "4000622028", "Apex": {"SOA": "4000622030", "NS": {"ptr": "Slice(400088fc60)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "SIGSOA": "zeroVal", "SIGNS": "zeroVal", "__type__": "file.Apex"}, "Expired": 0, "Lock": {"__type__": "struct {}"}, "StartupOnce": {"__type__": "struct {}"}, "TransferFrom": "zeroVal", "ReloadInterval": 60000000000, "ReloadShutdown": {"__type__": "struct {}"}, "Upstream": "40006220a8", "__type__": "file._Zone"},
+"40006220a8": {"__type__": "upstream.Upstream"},
+"400088fc50": {"Elem": "40008d84e0", "Left": "zeroVal", "Right": "zeroVal", "Color": 1, "__type__": "tree.Node"},
+"Slice(400088fc60)": [{"itab": "Itab(*dns.NS)", "data": "Iface(4000520180)", "__type__": "dns.RR"}],
+"4000622030": {"Hdr": {"Name": {"value": "a.b.", "__type__": "string"}, "Rrtype": 6, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "c.d.e.", "__type__": "string"}, "Mbox": {"value": "f.g.e.", "__type__": "string"}, "Serial": 3, "Refresh": 604800, "Retry": 86400, "Expire": 2419200, "Minttl": 604800, "__type__": "dns.SOA"},
+"Slice(400088fc70)": [{"itab": "Itab(*dns.A)", "data": "Iface(4000898d80)", "__type__": "dns.RR"}],
+"Iface(4000898d80)": {"Hdr": {"Name": {"value": "*.a.b.", "__type__": "string"}, "Rrtype": 1, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "A": {"ptr": "Slice(40004ef4b0)", "len": 16, "cap": 16, "__type__": "net.IP"}, "__type__": "dns.A"},
+"Slice(40004ef4b0)": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 1, 1, 1, 1]
+}

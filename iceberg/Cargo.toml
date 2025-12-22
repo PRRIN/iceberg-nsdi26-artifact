@@ -15,7 +15,6 @@ doctest = false
 [dependencies]
 llvm_frontend = { path = "./llvm_frontend", features = ["test"] }
 spice_frontend = { path = "./spice_frontend", features = ["test"] }
-panicky = { path = "./panicky" }
 itertools = "0.11.0"
 log = { version = "0.4.19", features = ["max_level_trace", "release_max_level_warn"] }
 # log = "0.4.19"

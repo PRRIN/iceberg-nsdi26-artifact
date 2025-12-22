@@ -1,0 +1,14 @@
+{
+"40007e3350": {"Elem": "400028a740", "Left": "zeroVal", "Right": "zeroVal", "Color": 1, "__type__": "tree.Node"},
+"400028a740": {"m": {"39": {"ptr": "Slice(40007e3370)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "a.b.", "__type__": "string"}, "__type__": "tree.Elem"},
+"Slice(40007e3370)": [{"itab": "Itab(*dns.DNAME)", "data": "Iface(40000c49c0)", "__type__": "dns.RR"}],
+"Iface(40000c49c0)": {"Hdr": {"Name": {"value": "a.b.", "__type__": "string"}, "Rrtype": 39, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Target": {"value": "b.", "__type__": "string"}, "__type__": "dns.DNAME"},
+"40001bd580": {"Hdr": {"Name": {"value": "a.b.", "__type__": "string"}, "Rrtype": 6, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "c.d.e.", "__type__": "string"}, "Mbox": {"value": "f.g.e.", "__type__": "string"}, "Serial": 3, "Refresh": 604800, "Retry": 86400, "Expire": 2419200, "Minttl": 604800, "__type__": "dns.SOA"},
+"Slice(40007e3360)": [{"itab": "Itab(*dns.NS)", "data": "Iface(40000c4450)", "__type__": "dns.RR"}],
+"40001bd5f8": {"__type__": "upstream.Upstream"},
+"40007cc350": {"Origin": {"value": "a.b.", "__type__": "string"}, "OrigLen": 2, "File": {"value": "Zones/Simple/643.txt", "__type__": "string"}, "Tree": "40001bd578", "Apex": {"SOA": "40001bd580", "NS": {"ptr": "Slice(40007e3360)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "SIGSOA": "zeroVal", "SIGNS": "zeroVal", "__type__": "file.Apex"}, "Expired": 0, "Lock": {"__type__": "struct {}"}, "StartupOnce": {"__type__": "struct {}"}, "TransferFrom": "zeroVal", "ReloadInterval": 60000000000, "ReloadShutdown": {"__type__": "struct {}"}, "Upstream": "40001bd5f8", "__type__": "file._Zone"},
+"Slice(40007cc350)": ["40007cc350"],
+"40001bd578": {"Root": "40007e3350", "Count": 1, "__type__": "tree.Tree"},
+"Iface(40000c4450)": {"Hdr": {"Name": {"value": "a.b.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "c.d.e.", "__type__": "string"}, "__type__": "dns.NS"},
+"file": {"_Zones": {"Z": {"ptr": "Slice(40007cc350)", "len": 1, "cap": 1, "__type__": "[]*file._Zone"}, "__type__": "file._Zones"}, "__type__": "file._File"}
+}

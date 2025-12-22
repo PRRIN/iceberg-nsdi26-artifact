@@ -1,0 +1,14 @@
+{
+"Iface(400044dd70)": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.c.d.", "__type__": "string"}, "__type__": "dns.NS"},
+"4000588368": {"__type__": "upstream.Upstream"},
+"file": {"_Zones": {"Z": {"ptr": "Slice(40004d2040)", "len": 1, "cap": 1, "__type__": "[]*file._Zone"}, "__type__": "file._Zones"}, "__type__": "file._File"},
+"40004d2040": {"Origin": {"value": "a.", "__type__": "string"}, "OrigLen": 1, "File": {"value": "Zones/Simple/325.txt", "__type__": "string"}, "Tree": "40005882e8", "Apex": {"SOA": "40005882f0", "NS": {"ptr": "Slice(400004cf10)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "SIGSOA": "zeroVal", "SIGNS": "zeroVal", "__type__": "file.Apex"}, "Expired": 0, "Lock": {"__type__": "struct {}"}, "StartupOnce": {"__type__": "struct {}"}, "TransferFrom": "zeroVal", "ReloadInterval": 60000000000, "ReloadShutdown": {"__type__": "struct {}"}, "Upstream": "4000588368", "__type__": "file._Zone"},
+"40005882e8": {"Root": "400004cf00", "Count": 1, "__type__": "tree.Tree"},
+"400004cf00": {"Elem": "400070c5e0", "Left": "zeroVal", "Right": "zeroVal", "Color": 1, "__type__": "tree.Node"},
+"400070c5e0": {"m": {"39": {"ptr": "Slice(400004cf20)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "g.a.", "__type__": "string"}, "__type__": "tree.Elem"},
+"Slice(400004cf10)": [{"itab": "Itab(*dns.NS)", "data": "Iface(400044dd70)", "__type__": "dns.RR"}],
+"Slice(40004d2040)": ["40004d2040"],
+"Slice(400004cf20)": [{"itab": "Itab(*dns.DNAME)", "data": "Iface(400044ddd0)", "__type__": "dns.RR"}],
+"Iface(400044ddd0)": {"Hdr": {"Name": {"value": "g.a.", "__type__": "string"}, "Rrtype": 39, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Target": {"value": "h.a.", "__type__": "string"}, "__type__": "dns.DNAME"},
+"40005882f0": {"Hdr": {"Name": {"value": "a.", "__type__": "string"}, "Rrtype": 6, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.c.d.", "__type__": "string"}, "Mbox": {"value": "e.f.d.", "__type__": "string"}, "Serial": 3, "Refresh": 604800, "Retry": 86400, "Expire": 2419200, "Minttl": 604800, "__type__": "dns.SOA"}
+}

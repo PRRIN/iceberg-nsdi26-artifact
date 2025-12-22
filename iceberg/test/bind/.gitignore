@@ -1,4 +1,3 @@
 dump.h
 *.json
 verify/*/
-json/*/

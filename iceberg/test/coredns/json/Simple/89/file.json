@@ -1,0 +1,14 @@
+{
+"400012ab80": {"Origin": {"value": "a.b.a.c.", "__type__": "string"}, "OrigLen": 4, "File": {"value": "Zones/Simple/89.txt", "__type__": "string"}, "Tree": "40000fa238", "Apex": {"SOA": "40000fa240", "NS": {"ptr": "Slice(4000649320)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "SIGSOA": "zeroVal", "SIGNS": "zeroVal", "__type__": "file.Apex"}, "Expired": 0, "Lock": {"__type__": "struct {}"}, "StartupOnce": {"__type__": "struct {}"}, "TransferFrom": "zeroVal", "ReloadInterval": 60000000000, "ReloadShutdown": {"__type__": "struct {}"}, "Upstream": "40000fa2b8", "__type__": "file._Zone"},
+"Slice(4000649330)": [{"itab": "Itab(*dns.DNAME)", "data": "Iface(400044f1d0)", "__type__": "dns.RR"}],
+"Iface(400044f1d0)": {"Hdr": {"Name": {"value": "a.b.a.c.", "__type__": "string"}, "Rrtype": 39, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Target": {"value": "a.h.a.c.", "__type__": "string"}, "__type__": "dns.DNAME"},
+"40000fa240": {"Hdr": {"Name": {"value": "a.b.a.c.", "__type__": "string"}, "Rrtype": 6, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "d.e.f.", "__type__": "string"}, "Mbox": {"value": "g.b.f.", "__type__": "string"}, "Serial": 3, "Refresh": 604800, "Retry": 86400, "Expire": 2419200, "Minttl": 604800, "__type__": "dns.SOA"},
+"Iface(400044f0b0)": {"Hdr": {"Name": {"value": "a.b.a.c.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "d.e.f.", "__type__": "string"}, "__type__": "dns.NS"},
+"40000fa2b8": {"__type__": "upstream.Upstream"},
+"file": {"_Zones": {"Z": {"ptr": "Slice(400012ab80)", "len": 1, "cap": 1, "__type__": "[]*file._Zone"}, "__type__": "file._Zones"}, "__type__": "file._File"},
+"Slice(400012ab80)": ["400012ab80"],
+"40000fa238": {"Root": "4000649310", "Count": 1, "__type__": "tree.Tree"},
+"4000649310": {"Elem": "4000882d40", "Left": "zeroVal", "Right": "zeroVal", "Color": 1, "__type__": "tree.Node"},
+"4000882d40": {"m": {"39": {"ptr": "Slice(4000649330)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "a.b.a.c.", "__type__": "string"}, "__type__": "tree.Elem"},
+"Slice(4000649320)": [{"itab": "Itab(*dns.NS)", "data": "Iface(400044f0b0)", "__type__": "dns.RR"}]
+}

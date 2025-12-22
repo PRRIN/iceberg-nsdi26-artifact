@@ -1,0 +1,19 @@
+{
+"Slice(4000674338)": ["4000674338"],
+"Iface(40004ce840)": {"Hdr": {"Name": {"value": "k.a.b.c.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "h.j.l.c.", "__type__": "string"}, "__type__": "dns.NS"},
+"40004dcba8": {"Elem": "40004dcb60", "Left": "zeroVal", "Right": "zeroVal", "Color": 0, "__type__": "tree.Node"},
+"Slice(40004dcb80)": [{"itab": "Itab(*dns.NS)", "data": "Iface(40004ce5a0)", "__type__": "dns.RR"}, {"itab": "Itab(*dns.NS)", "data": "Iface(40004ce7b0)", "__type__": "dns.RR"}],
+"Iface(40004ce5a0)": {"Hdr": {"Name": {"value": "i.a.b.c.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "j.b.k.c.", "__type__": "string"}, "__type__": "dns.NS"},
+"Iface(40004ce7b0)": {"Hdr": {"Name": {"value": "i.a.b.c.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "b.b.c.", "__type__": "string"}, "__type__": "dns.NS"},
+"4000233dc0": {"Hdr": {"Name": {"value": "a.b.c.", "__type__": "string"}, "Rrtype": 6, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "d.e.f.", "__type__": "string"}, "Mbox": {"value": "g.h.f.", "__type__": "string"}, "Serial": 3, "Refresh": 604800, "Retry": 86400, "Expire": 2419200, "Minttl": 604800, "__type__": "dns.SOA"},
+"4000233e38": {"__type__": "upstream.Upstream"},
+"Iface(40004ce4e0)": {"Hdr": {"Name": {"value": "a.b.c.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "d.e.f.", "__type__": "string"}, "__type__": "dns.NS"},
+"4000674338": {"Origin": {"value": "a.b.c.", "__type__": "string"}, "OrigLen": 3, "File": {"value": "Zones/Simple/791.txt", "__type__": "string"}, "Tree": "4000233db8", "Apex": {"SOA": "4000233dc0", "NS": {"ptr": "Slice(400004c330)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "SIGSOA": "zeroVal", "SIGNS": "zeroVal", "__type__": "file.Apex"}, "Expired": 0, "Lock": {"__type__": "struct {}"}, "StartupOnce": {"__type__": "struct {}"}, "TransferFrom": "zeroVal", "ReloadInterval": 60000000000, "ReloadShutdown": {"__type__": "struct {}"}, "Upstream": "4000233e38", "__type__": "file._Zone"},
+"4000233db8": {"Root": "400004c320", "Count": 2, "__type__": "tree.Tree"},
+"40004dcb60": {"m": {"2": {"ptr": "Slice(40004dcb80)", "len": 2, "cap": 2, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "i.a.b.c.", "__type__": "string"}, "__type__": "tree.Elem"},
+"Slice(400004c330)": [{"itab": "Itab(*dns.NS)", "data": "Iface(40004ce4e0)", "__type__": "dns.RR"}],
+"file": {"_Zones": {"Z": {"ptr": "Slice(4000674338)", "len": 1, "cap": 1, "__type__": "[]*file._Zone"}, "__type__": "file._Zones"}, "__type__": "file._File"},
+"400004c320": {"Elem": "40004dcba0", "Left": "40004dcba8", "Right": "zeroVal", "Color": 1, "__type__": "tree.Node"},
+"40004dcba0": {"m": {"2": {"ptr": "Slice(400004c350)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "k.a.b.c.", "__type__": "string"}, "__type__": "tree.Elem"},
+"Slice(400004c350)": [{"itab": "Itab(*dns.NS)", "data": "Iface(40004ce840)", "__type__": "dns.RR"}]
+}

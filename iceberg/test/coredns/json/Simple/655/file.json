@@ -1,0 +1,14 @@
+{
+"Iface(400069b7a0)": {"Hdr": {"Name": {"value": "a.b.", "__type__": "string"}, "Rrtype": 2, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "c.d.e.", "__type__": "string"}, "__type__": "dns.NS"},
+"Slice(40005b82c0)": ["40005b82c0"],
+"Slice(4000905d90)": [{"itab": "Itab(*dns.DNAME)", "data": "Iface(400069b800)", "__type__": "dns.RR"}],
+"Slice(4000905d80)": [{"itab": "Itab(*dns.NS)", "data": "Iface(400069b7a0)", "__type__": "dns.RR"}],
+"4000905d70": {"Elem": "40002b0460", "Left": "zeroVal", "Right": "zeroVal", "Color": 1, "__type__": "tree.Node"},
+"40002b0460": {"m": {"39": {"ptr": "Slice(4000905d90)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "__type__": "map[uint16][]dns.RR"}, "name": {"value": "a.b.", "__type__": "string"}, "__type__": "tree.Elem"},
+"Iface(400069b800)": {"Hdr": {"Name": {"value": "a.b.", "__type__": "string"}, "Rrtype": 39, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Target": {"value": "h.", "__type__": "string"}, "__type__": "dns.DNAME"},
+"400062a240": {"Hdr": {"Name": {"value": "a.b.", "__type__": "string"}, "Rrtype": 6, "Class": 1, "Ttl": 500, "Rdlength": 0, "__type__": "dns.RR_Header"}, "Ns": {"value": "c.d.e.", "__type__": "string"}, "Mbox": {"value": "f.g.e.", "__type__": "string"}, "Serial": 3, "Refresh": 604800, "Retry": 86400, "Expire": 2419200, "Minttl": 604800, "__type__": "dns.SOA"},
+"400062a2b8": {"__type__": "upstream.Upstream"},
+"file": {"_Zones": {"Z": {"ptr": "Slice(40005b82c0)", "len": 1, "cap": 1, "__type__": "[]*file._Zone"}, "__type__": "file._Zones"}, "__type__": "file._File"},
+"40005b82c0": {"Origin": {"value": "a.b.", "__type__": "string"}, "OrigLen": 2, "File": {"value": "Zones/Simple/655.txt", "__type__": "string"}, "Tree": "400062a238", "Apex": {"SOA": "400062a240", "NS": {"ptr": "Slice(4000905d80)", "len": 1, "cap": 1, "__type__": "[]dns.RR"}, "SIGSOA": "zeroVal", "SIGNS": "zeroVal", "__type__": "file.Apex"}, "Expired": 0, "Lock": {"__type__": "struct {}"}, "StartupOnce": {"__type__": "struct {}"}, "TransferFrom": "zeroVal", "ReloadInterval": 60000000000, "ReloadShutdown": {"__type__": "struct {}"}, "Upstream": "400062a2b8", "__type__": "file._Zone"},
+"400062a238": {"Root": "4000905d70", "Count": 1, "__type__": "tree.Tree"}
+}
