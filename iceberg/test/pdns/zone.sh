@@ -5,7 +5,7 @@ test_suite="$1"
 
 mkdir "${zone}"/json -p
 
-for file in "${zone}"/"${test_suite}"/0.txt; do
+for file in "${zone}"/"${test_suite}"/*.txt; do
     filename=$(basename "$file" .txt)
 
     domain=$(head -n 1 "$file" | awk '{print $1}')

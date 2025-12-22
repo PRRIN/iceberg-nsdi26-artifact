@@ -70,7 +70,11 @@ This will run all 106 tests in the main crate in around one minute. All of them 
 > 
 > We recommend simply following the primary instructions in the following sections to reproduce the end-to-end verification results. Curious reviewers may then look into our compilation and dumping process for optional validation.
 
+---
+
 ## Verification: CoreDNS
+
+We verify [CoreDNS](https://github.com/coredns/coredns) version 1.11.1, off of commit `45923b6e12a2eabaf55d7380e6df4e7354a1207d`. 
 
 ### Step 1 - Running Verification
 ```bash
@@ -80,7 +84,7 @@ cargo run --release --bin iceberg coredns simple 0 1000 | tee logs/coredns-simpl
 cargo run --release --bin iceberg coredns complex 0 100 | tee logs/coredns-complex.txt
 cargo run --release --bin iceberg coredns real 0 2 | tee logs/coredns-real.txt
 ```
-For each zone file, check out the top-level summary at `iceberg/test/coredns/verify/`. For example, the summary of `iceberg/test/coredns/json/Simple/0` would be `iceberg/test/coredns/verify/Simple/0.sum`. 
+For each zone file, check out the top-level summary at `iceberg/test/coredns/verify/`. For example, the summary of `iceberg/test/coredns/json/Simple/0` would be `iceberg/test/coredns/verify/Simple/0.sum`. Summaries are presented in the same format as documented in Table 2 of our paper. Specifically, search for `return { false`, which indicates a branch with a bug.
 
 ### Step 2 - Reproducing Bugs
 
@@ -164,8 +168,74 @@ e.			500	IN	SOA	mname.com. rname.com. 3 604800 86400 2419200 604800
 
 ### Optional: Compilation
 
-See `iceberg/test/coredns/README.md`.
+See `iceberg/test/coredns/README.md`. Note that our changes to the codebase can be validated with the `git` history. 
 
 ### Optional: Zone invariants dumping
 
 See `coredns/DUMP.md`.
+
+---
+
+## Verification: Bind 9
+
+TODO
+
+---
+
+## Verification: PowerDNS
+
+We verify [PowerDNS](https://github.com/PowerDNS/pdns) version 4.8, off of commit `98f45e2`.
+
+### Step 1 - Running Verification
+
+```bash
+# In docker; iceberg/
+mkdir -p logs
+cargo run --release --bin iceberg pdns simple 0 1000 | tee logs/pdns-simple.txt
+cargo run --release --bin iceberg pdns complex 0 100 | tee logs/pdns-complex.txt
+cargo run --release --bin iceberg pdns real 0 2 | tee logs/pdns-real.txt
+```
+For each zone file, check out the top-level summary at `iceberg/test/pdns/verify/`. For example, the summary of `iceberg/test/pdns/json/Simple/0` would be `iceberg/test/pdns/verify/Simple/0.sum`. Summaries are presented in the same format as documented in Table 2 of our paper. Specifically, search for `return { false`, which indicates a branch with a bug.
+
+### Step 2 - Reproducing Bugs
+
+TODO: check notes for locatin bugs by zone id
+
+### Step 3 - Validating Manual Effort
+
+TODO: count spec lines and code lines (with `cloc`)
+
+### Step 4 - Measuring Scalability 
+
+The log files (`logs/pdns-simple.txt`, `logs/pdns-complex.txt`, and `logs/pdns-real.txt`) contain the verification time under each zone file. 
+See `plots/scale.py` for plotting Figure 10.
+
+### Optional: Compilation
+
+TODO: build and push the container for this.
+
+See `iceberg/test/pdns/README.md`. Note that our changes to the codebase can be validated with the `git` history. 
+
+### Optional: Zone invariants dumping
+
+TODO: author this file and documment the ddump-cpp tool.
+
+See `pdns/DUMP.md` 
+
+---
+
+## Verification: HickoryDNS
+
+We verify ...
+
+### Step 1 - Running Verification
+
+### Step 2 - Reproducing Bugs
+
+### Step 3 - Validating Manual Effort
+
+### Step 4 - Measuring Scalability 
+
+### Optional: Compilation
+
+### Optional: Zone invariants dumping
