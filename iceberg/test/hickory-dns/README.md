@@ -6,7 +6,7 @@
 
 The file structure is as follows:
 ```
-└ app/
+└ app (or iceberg-nsdi26-artifact)/
     ├ iceberg/
     ├ hickory-dns/
     └ hickory-dns-files/
@@ -173,8 +173,10 @@ Simply prepare all zone files in `zone/ZoneFiles/` to generate `ctx.json` by run
 # in hickory-dns/
 cd zone
 bash zone.sh
-# copy simple/ to iceberg/test/hickory-dns/json/
+# For the example in next step, we rename simple/ to bugs/, and copy bugs/ to iceberg/test/hickory-dns/json/
 ```
+
+If you want to change the target directory of `ctx.json`, you can modify the `zone.sh` script.
 
 # 3. Verify hickory-dns with Iceberg
 
@@ -188,6 +190,8 @@ Example:
 ```bash
 # in iceberg/
 rustup default stable-x86_64-unknown-linux-gnu
-mkdir -p test/hickory-dns/verify/simple/
-cargo run --bin iceberg hickory-dns simple 0 2 --release
+mkdir -p test/hickory-dns/verify/bugs/
+cargo run --bin iceberg hickory-dns bugs 0 2 --release
 ```
+
+This will run tests with id `0` and `1` in `test/hickory-dns/json/bugs/`, and store the summaries in `test/hickory-dns/verify/bugs/`. We also provide the summaries in `hickory-dns-files/verify/bugs/`.

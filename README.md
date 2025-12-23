@@ -226,16 +226,31 @@ See `pdns/DUMP.md`
 
 ## Verification: HickoryDNS
 
-We verify ...
+We verify [HickoryDNS](https://github.com/hickory-dns/hickory-dns) version 0.24.1, off of commit `6334a01430088ead8642cafaee592ec7bf49831f`.
 
 ### Step 1 - Running Verification
 
+TODO: 
+
 ### Step 2 - Reproducing Bugs
+
+The example test suite `bugs` in `iceberg/test/hickory-dns/README.md` actually reproduces the bugs we found in HickoryDNS, as documented in Table 4. We also provide the summaries in `hickory-dns-files/verify/bugs/`.
+
+- 11. Incorrect response for a non-existent SOA query. ([HickoryDNS #2404](https://github.com/hickory-dns/hickory-dns/issues/2404)). Summary: `hickory-dns-files/verify/bugs/0.sum`
+- 12. Wrong record placement for CNAME-related queries. ([HickoryDNS #2412](https://github.com/hickory-dns/hickory-dns/issues/2412)). Summary: `hickory-dns-files/verify/bugs/1.sum`
 
 ### Step 3 - Validating Manual Effort
 
+TODO: count spec lines and code lines (with `cloc`)
+
 ### Step 4 - Measuring Scalability 
+
+TODO: 
 
 ### Optional: Compilation
 
+See the first step of `iceberg/test/hickory-dns/README.md`. Note that our changes to the codebase can be validated with the `git` history. 
+
 ### Optional: Zone invariants dumping
+
+See `iceberg/test/hickory-dns/README.md`.
