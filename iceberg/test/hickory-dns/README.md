@@ -14,6 +14,8 @@ The file structure is as follows:
 
 where `hickory-dns/` contains the source code of hickory-dns, and `hickory-dns-files/` contains all result files of the workflow.
 
+> **Note**: Please make sure the correct version of rust when compiling hickory-dns and Iceberg.
+
 # 1. Compile hickory-dns to LLVM IR
 
 ```
@@ -173,7 +175,7 @@ Simply prepare all zone files in `zone/ZoneFiles/` to generate `ctx.json` by run
 # in hickory-dns/
 cd zone
 bash zone.sh
-# For the example in next step, we rename simple/ to bugs/, and copy bugs/ to iceberg/test/hickory-dns/json/
+# For the example in next step, we rename simple/ to buggy/, and copy buggy/ to iceberg/test/hickory-dns/json/
 ```
 
 If you want to change the target directory of `ctx.json`, you can modify the `zone.sh` script.
@@ -190,8 +192,6 @@ Example:
 ```bash
 # in iceberg/
 rustup default stable-x86_64-unknown-linux-gnu
-mkdir -p test/hickory-dns/verify/bugs/
-cargo run --bin iceberg hickory-dns bugs 0 2 --release
+mkdir -p test/hickory-dns/verify/buggy/
+cargo run --bin iceberg hickory-dns buggy 11 13 --release
 ```
-
-This will run tests with id `0` and `1` in `test/hickory-dns/json/bugs/`, and store the summaries in `test/hickory-dns/verify/bugs/`. We also provide the summaries in `hickory-dns-files/verify/bugs/`.

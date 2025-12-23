@@ -3,7 +3,7 @@
 This tutorial guides PC members through the steps to access and evaluate our artifact for Iceberg, an automated verification framework for DNS authoritative engines. We implement Iceberg in Rust, which then takes the LLVM IR of four open-source DNS engines as input, runs symbolic execution, and achieves automated verification with refinement proof based on Just-in-Time (JIT) summarization.
 
 This artifact contains the source code of Iceberg, as well as the artifacts of  four verification targets (CoreDNS, Bind 9, PowerDNS, and HickoryDNS). 
-We also provide a [Docker image](https://hub.docker.com/r/yatlam/iceberg) with necessary toolchains installed to run verification in. 
+We also provide a [Docker image](https://hub.docker.com/r/sevenchips/iceberg-artifact) with necessary toolchains installed to run verification in. 
 Follow the instructions below to reproduce Section 8 (Evaluation) of our paper.
 
 ## Getting Started
@@ -197,7 +197,7 @@ Language                     files          blank        comment           code
 Go                               8            463           1115           2517
 ```
 
-The spec-to-code ratio is approximately $185 / 2517 < 10%$.
+The spec-to-code ratio is approximately $185 / 2517 < 10\%$.
 
 ### Step 3 - Measuring Scalability 
 
@@ -319,7 +319,7 @@ And we roughly estimate the C LOC of our verified components to be O(10,000):
 12214 query.c
 ```
 
-The spec-to-code ratio is approximately $756 / 10,000 < 10%$.
+The spec-to-code ratio is approximately $756 / 10,000 < 10\%$.
 
 ### Step 3 - Measuring Scalability 
 
@@ -388,7 +388,7 @@ C++                              7            887            475           5157
 C/C++ Header                     3            268            144           1541
 ```
 
-The spec-to-code ratio is approximately $294 / 5,000 < 10%$.
+The spec-to-code ratio is approximately $294 / 5,000 < 10\%$.
 
 ### Step 3 - Measuring Scalability 
 > **Note**: Fully running verification for every zone file below can take a long time (from hours to days). We recommend validating this last.  
@@ -426,27 +426,74 @@ We verify [HickoryDNS](https://github.com/hickory-dns/hickory-dns) version 0.24.
 
 ### Step 1 - Reproducing Bugs
 
-TODO: 
+The example test suite `buggy` in `iceberg/test/hickory-dns/README.md` actually reproduces the bugs we found in HickoryDNS, as documented in Table 4. We also provide the summaries in `hickory-dns-files/verify/buggy/`.
 
-### Step 2 - Reproducing Bugs
+> **Note**: Please make sure the correct version of rust when compiling hickory-dns and Iceberg, and make sure the dictionary `iceberg/test/hickory-dns/verify/buggy/` is created.
 
-The example test suite `bugs` in `iceberg/test/hickory-dns/README.md` actually reproduces the bugs we found in HickoryDNS, as documented in Table 4. We also provide the summaries in `hickory-dns-files/verify/bugs/`.
+```bash
+# In docker; iceberg/
+cargo run --release --bin iceberg hickory-dns buggy 11 13
+```
 
-- 11. Incorrect response for a non-existent SOA query. ([HickoryDNS #2404](https://github.com/hickory-dns/hickory-dns/issues/2404)). Summary: `hickory-dns-files/verify/bugs/0.sum`
-- 12. Wrong record placement for CNAME-related queries. ([HickoryDNS #2412](https://github.com/hickory-dns/hickory-dns/issues/2412)). Summary: `hickory-dns-files/verify/bugs/1.sum`
+**Full bug list.** See `iceberg/test/hickory-dns/BUGS.md` for a writeup of all the bugs in this verification target (2 in total, as in Table 4 in our paper).
 
-### Step 3 - Validating Manual Effort
+**Checking the summaries.**
+For each zone file that triggers a bug, check out the top-level summary at `iceberg/test/hickory-dns/verify/`. For example, the summary of `iceberg/test/hickory-dns/json/buggy/11` would be `iceberg/test/hickory-dns/verify/buggy/11.sum`. Summaries are presented in the same format as documented in Table 2 of our paper. Specifically, search for `return { false`, which indicates a branch with a bug. 
 
-TODO: count spec lines and code lines (with `cloc`)
+See also `iceberg/test/hickory-dns/hickory-dns.spec` for understanding the top-level specification and the summaries.
 
-### Step 4 - Measuring Scalability 
+### Step 2 - Validating Manual Effort
 
-TODO: 
+> **Note**: These numbers are slighly different from those in Table 5, as we've evolved our specification since then.
+
+A quick count of LOCs in `iceberg/test/hickory-dns/hickory-dns.spec` yields:
+* **Library LOC**: 363 (1-133, 648-877)
+* **Stub LOC**: 317 (445-623, 879-1016)
+* **Top-level spec LOC**: 735 (1018-1752)
+
+And we roughly estimate the Rust LOC of our verified components to be O(5,000) by the following components:
+
+- The core components of HickoryDNS (located in `crates/server/src/authority/` and `crates/server/src/store/in_memory/`, without any test module) have approximately 2,500 LOC.
+```txt
+~/iceberg-nsdi26-artifact/hickory-dns$ cloc crates/server/src/authority/ crates/server/src/store/in_memory/
+
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Rust                            11            446            856           2579
+-------------------------------------------------------------------------------
+```
+
+- The DNS record implementation (located in `crates/proto/src/rr/`, not including `rdata` yet) have approximately 5,000 LOC. With **far less than** half of the codebase being test modules, this component accounts for more than 2,500 LOC.
+```txt
+hickory-dns$ cloc crates/proto/src/rr --exclude-dir=dnssec,rdata
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Rust                            14            758           2508           4807
+-------------------------------------------------------------------------------
+```
+
+The spec-to-code ratio is approximately $317 / 5,000 < 10\%$.
+
+### Step 3 - Measuring Scalability 
+
+> **Note**: Fully running verification for every zone file below can take a long time (from hours to days). We recommend validating this last.  
+
+```bash
+# In docker; iceberg/
+mkdir -p logs
+cargo run --release --bin iceberg hickory-dns simple 0 1000 | tee logs/hickory-simple.txt
+cargo run --release --bin iceberg hickory-dns complex 0 100 | tee logs/hickory-complex.txt
+cargo run --release --bin iceberg hickory-dns real 0 2 | tee logs/hickory-real.txt
+```
+The log files (`logs/hickory-simple.txt`, `logs/hickory-complex.txt`, and `logs/hickory-real.txt`) contain the verification time under each zone file. 
+See `plots/scale.py` for plotting Figure 10.
 
 ### Optional: Compilation
 
-See the first step of `iceberg/test/hickory-dns/README.md`. Note that our changes to the codebase can be validated with the `git` history. 
+See the 1st step of `iceberg/test/hickory-dns/README.md`. Note that our changes to the codebase can be validated with the `git` history. 
 
 ### Optional: Zone invariants dumping
 
-See `iceberg/test/hickory-dns/README.md`.
+See the 2nd step of `iceberg/test/hickory-dns/README.md`.
