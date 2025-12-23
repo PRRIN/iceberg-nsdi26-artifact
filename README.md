@@ -466,7 +466,7 @@ Rust                            11            446            856           2579
 
 - The DNS record implementation (located in `crates/proto/src/rr/`, not including `rdata` yet) have approximately 5,000 LOC. With **far less than** half of the codebase being test modules, this component accounts for more than 2,500 LOC.
 ```txt
-hickory-dns$ cloc crates/proto/src/rr --exclude-dir=dnssec,rdata
+~/iceberg-nsdi26-artifact/hickory-dns$ cloc crates/proto/src/rr --exclude-dir=dnssec,rdata
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
@@ -496,4 +496,4 @@ See the 1st step of `iceberg/test/hickory-dns/README.md`. Note that our changes 
 
 ### Optional: Zone invariants dumping
 
-See the 2nd step of `iceberg/test/hickory-dns/README.md`.
+See `hickory-dns/DUMP.md`, or the 2nd step of `iceberg/test/hickory-dns/README.md`.

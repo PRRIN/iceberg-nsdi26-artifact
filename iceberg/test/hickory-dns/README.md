@@ -155,6 +155,12 @@ with
 
 # 2. Prepare `ctx.json` for verification
 
+### Modified Section of HickoryDNS
+
+Implement `Dump` and `Walk` trait for recursive data structure dumping. Dump the necessary fields at the entry function.
+
+### Dumping
+
 Pre-requisite:
 
 * Make sure the code is in branch `dev-dump` of `hickory-dns/`
@@ -167,19 +173,20 @@ rustup default 1.69-x86_64-unknown-linux-gnu
 cargo build --release -p hickory-dns
 ```
 
-In `zone/`, we provide a script `zone.sh` to batch process zone files in the `zone/ZoneFiles`. The output `ctx.json` files are stored in `zone/simple/`, and zones without `CNAME` and `DNAME` are also stored in `zone/simple_filter/`.
+In `zone/`, we provide a script `zone.sh` to batch process zone files.
 
-Simply prepare all zone files in `zone/ZoneFiles/` to generate `ctx.json` by running `zone.sh`.
+Usage: `bash zone.sh <test_suite>`
+
+It will get all zone files in `<test_suite>_zone/`, and generate `ctx.json` in `<test_suite>/`. It will also generate `ctx.json` in `<test_suite>_filter/` for zones without `CNAME` and `DNAME`.
 
 ```bash
 # in hickory-dns/
 cd zone
-bash zone.sh
-# For the example in next step, we rename simple/ to buggy/, and copy buggy/ to iceberg/test/hickory-dns/json/
+# Process buggy_zone/ and generate ctx.json in buggy/ and buggy_filter/
+bash zone.sh buggy
+
+# copy buggy/ to iceberg/test/hickory-dns/json/ for verification
 ```
-
-If you want to change the target directory of `ctx.json`, you can modify the `zone.sh` script.
-
 # 3. Verify hickory-dns with Iceberg
 
 Usage: `cargo run --bin iceberg <test_suite> <start_test_id> <end_test_id> --release`
