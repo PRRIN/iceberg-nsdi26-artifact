@@ -15,6 +15,16 @@ Ensure you have:
 * At least 16 GB DRAM and 64 GB free disk space. **Note**: it would be more ideal to compiler and run Iceberg with 32 GB or more DRAM; verification under large zone files would be significantly slower otherwise.
 * If you are using an VSCode-like IDE, we recommend **not** having the `rust-analyzer` plugin enabled, for its codebase indexing locks the project and may block you from manually running `cargo` for an extended period of time. 
 
+Pull our artifact from GitHub:
+```bash
+git clone https://github.com/PRRIN/iceberg-nsdi26-artifact
+git submodule update --init --recursive
+# Ensure all 4 submodules are at the latest commit of branch `iceberg`; e.g.:
+cd bind9
+git log --oneline -1
+# 39d356718a (HEAD -> iceberg, origin/iceberg) nsdi ae
+```
+
 ### Step 1 - Launch the verification environment
 
 ```bash
@@ -22,7 +32,7 @@ Ensure you have:
 docker run -it \
   -v $(pwd):/app \
  --platform linux/amd64 \
-  sevenchips/iceberg-artifact:hdns
+  sevenchips/iceberg-artifact:latest
 ```
 
 You should then be under `/app` in the container, where the artifact is mounted at. Verify Rust toolchain installation with:
@@ -187,7 +197,7 @@ Language                     files          blank        comment           code
 Go                               8            463           1115           2517
 ```
 
-The spec-to-code ratio is approximately $185 / 2517 < 10\%$.
+The spec-to-code ratio is approximately $185 / 2517 < 10%$.
 
 ### Step 3 - Measuring Scalability 
 
@@ -309,7 +319,7 @@ And we roughly estimate the C LOC of our verified components to be O(10,000):
 12214 query.c
 ```
 
-The spec-to-code ratio is approximately $756 / 10,000 < 10\%$.
+The spec-to-code ratio is approximately $756 / 10,000 < 10%$.
 
 ### Step 3 - Measuring Scalability 
 
@@ -378,7 +388,7 @@ C++                              7            887            475           5157
 C/C++ Header                     3            268            144           1541
 ```
 
-The spec-to-code ratio is approximately $294 / 5,000 < 10\%$.
+The spec-to-code ratio is approximately $294 / 5,000 < 10%$.
 
 ### Step 3 - Measuring Scalability 
 > **Note**: Fully running verification for every zone file below can take a long time (from hours to days). We recommend validating this last.  
