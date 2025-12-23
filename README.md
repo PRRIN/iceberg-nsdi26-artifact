@@ -15,7 +15,7 @@ Ensure you have:
 * At least 16 GB DRAM and 64 GB free disk space. **Note**: it would be more ideal to compiler and run Iceberg with 32 GB or more DRAM; verification under large zone files would be significantly slower otherwise.
 * If you are using an VSCode-like IDE, we recommend **not** having the `rust-analyzer` plugin enabled, for its codebase indexing locks the project and may block you from manually running `cargo` for an extended period of time. 
 
-### Step 1 - Launch the verification container
+### Step 1 - Launch the verification environment
 
 ```bash
 # Under the root of the artifact folder (where iceberg/ is)
@@ -47,7 +47,7 @@ This will run all 106 tests in the main crate in around one minute. All of them 
 
 ### Step 3 - Understanding the artifact
 
-**`plots/`** - Auxiliary plotting scripts.
+**`plots/`** - Auxiliary plotting scripts, and our verification time records.
 
 **`iceberg/`** - Source code of Iceberg
 
@@ -76,7 +76,123 @@ This will run all 106 tests in the main crate in around one minute. All of them 
 
 We verify [CoreDNS](https://github.com/coredns/coredns) version 1.11.1, off of commit `45923b6e12a2eabaf55d7380e6df4e7354a1207d`. 
 
-### Step 1 - Running Verification
+### Step 1 - Reproducing Bugs
+
+```bash
+# In docker; iceberg/
+cargo run --release --bin iceberg coredns buggy 1 9
+```
+
+**Full bug list.** See `iceberg/test/coredns/BUGS.md` for a writeup of all the bugs in this verification target (8 in total, as in Table 4 in our paper).
+
+**Checking the summaries.**
+For each zone file that triggers a bug, check out the top-level summary at `iceberg/test/coredns/verify/`. For example, the summary of `iceberg/test/coredns/json/Buggy/1` would be `iceberg/test/coredns/verify/Buggy/1.sum`. Summaries are presented in the same format as documented in Table 2 of our paper. Specifically, search for `return { false`, which indicates a branch with a bug. 
+
+Here we demonstrate the identification of [BUG 1] (the same goes for the remaining bugs). 
+The zone file for this (`coredns/Zones/Buggy/1.txt`) is:
+```txt
+a.b.			      500 IN SOA	c.d.e. f.b.e. 3 604800 86400 2419200 604800
+a.b.			      500 IN NS		c.d.e.
+g.a.b.			      500 IN DNAME	a.b.
+h.a.b.			      500 IN NS		h.b.
+```
+
+Searching for `return { false` in `1.sum ` yields 5 hits; if we look at the 2nd hit (other hits are different variations of this issue), and simplify its summary condition, we get:
+```txt
+verify_coredns: Apply
+ └[Root]
+   └[Specialize| verify_coredns::file is &Const::Verify::File::0 ]
+     └[Specialize| verify_coredns::request is &Const::Verify::request::0 ]
+       └[Specialize| verify_coredns::Global::Ptr(4000140090)::8 is 0w64 ]
+         └[Specialize| verify_coredns::Global::Ptr(4000140090)::24 is 0w64 ]
+           └[Specialize| verify_coredns::Global::Ptr(4000140090)::48 is 1w64 ]
+             └[Specialize| verify_coredns::Global::Ptr(4000140090)::40 is &Global::Slice(400000c0a8)::0 ]
+               └[Specialize| verify_coredns::Global::Slice(400000c0a8)::8 is 8w64 ]
+                 └[Specialize| verify_coredns::Global::Slice(400000c0a8)::0 is &Global::Verify::qname::0 ]
+                   ├[Assume| (97w8 == <verify_coredns::Global::Verify::qname::4>) ]
+                     ├[Assume| (46w8 == <verify_coredns::Global::Verify::qname::5>) ]
+                       ├[Assume| (98w8 == <verify_coredns::Global::Verify::qname::6>) ]
+                         ├[Assume| (46w8 == <verify_coredns::Global::Verify::qname::7>) ]
+                           └[Assume| (<verify_coredns::Global::Verify::qname::0> != 46w8) ]
+                             ├[Assume| (<verify_coredns::Global::Verify::qname::1> == 46w8) ]
+                               └[Assume| (<verify_coredns::Global::Verify::qname::2> != 46w8) ]
+                                 ├[Assume| (<verify_coredns::Global::Verify::qname::3> == 46w8) ]
+                                   └[Assume| ((((((<verify_coredns::Global::Slice(400000c0a8)::16> != 0w16) & (<verify_coredns::Global::Slice(400000c0a8)::16> != 251w16)) & (<verify_coredns::Global::Slice(400000c0a8)::16> != 252w16)) & (<verify_coredns::Global::Slice(400000c0a8)::16> != 43w16)) & (<verify_coredns::Global::Verify::qname::3> == 46w8)) & (<verify_coredns::Global::Verify::qname::6> != 46w8)) ]
+                                     ├[Assume| (103w8 == <verify_coredns::Global::Verify::qname::2>) ]
+                                       └[Assume| (<verify_coredns::Global::Slice(400000c0a8)::16> != 5w16) ]
+                                         └[Assume| (103w8 != <verify_coredns::Global::Verify::qname::0>) ]
+                                           ├[Assume| (104w8 == <verify_coredns::Global::Verify::qname::0>) ]
+                                             ├[Assume| !(false || (<verify_coredns::Global::Slice(400000c0a8)::16> == 2w16)) ]
+                                               └[Ret| ..return { false, { Enum(DnsRCode)::NOERROR, true, [ { [ 103w8, 46w8, 97w8, 46w8, 98w8, 46w8 ], 39w16, [ 97w8, 46w8, 98w8, 46w8 ] }, { [ <verify_coredns::Global::Verify::qname::0>, <verify_coredns::Global::Verify::qname::1>, <verify_coredns::Global::Verify::qname::2>, <verify_coredns::Global::Verify::qname::3>, <verify_coredns::Global::Verify::qname::4>, <verify_coredns::Global::Verify::qname::5>, <verify_coredns::Global::Verify::qname::6>, <verify_coredns::Global::Verify::qname::7> ], 5w16, [ <verify_coredns::Global::Verify::qname::0>, 46w8, 97w8, 46w8, 98w8, 46w8 ] } ], [ { [ 97w8, 46w8, 98w8, 46w8 ], 2w16, [ 99w8, 46w8, 100w8, 46w8, 101w8, 46w8 ] } ], [  ] }, { Enum(DnsRCode)::NOERROR, true, [ { [ 103w8, 46w8, 97w8, 46w8, 98w8, 46w8 ], 39w16, [ 97w8, 46w8, 98w8, 46w8 ] }, { [ <verify_coredns::Global::Verify::qname::0>, <verify_coredns::Global::Verify::qname::1>, <verify_coredns::Global::Verify::qname::2>, <verify_coredns::Global::Verify::qname::3>, <verify_coredns::Global::Verify::qname::4>, <verify_coredns::Global::Verify::qname::5>, <verify_coredns::Global::Verify::qname::6>, <verify_coredns::Global::Verify::qname::7> ], 5w16, [ <verify_coredns::Global::Verify::qname::0>, <verify_coredns::Global::Verify::qname::1>, 97w8, 46w8, 98w8, 46w8 ] } ], [ { [ 104w8, 46w8, 97w8, 46w8, 98w8, 46w8 ], 2w16, [ 104w8, 46w8, 98w8, 46w8 ] } ], [  ] } }; ]
+```
+We can obtain the path conditions for this bug by looking at the [Specialize] and [Assume] nodes - this bug is triggered when the query `qname` looks like "h.g.a.b." (`97w8` <==> ASCII 'a', `46w8` <==> ASCII '.', etc.), and `qtype` is not `NS` or `CNAME` (`2w16` <==> code for NS, `5w16` <==> code for CNAME). 
+Further, the [Ret] node shows the details of this buggy behavior, where CoreDNS responds with:
+```txt
+{ 
+    # RCODE
+    Enum(DnsRCode)::NOERROR, 
+    # AA
+    true, 
+    # ANSWER
+    [ 
+        { [ 103w8, 46w8, 97w8, 46w8, 98w8, 46w8 ], 39w16, [ 97w8, 46w8, 98w8, 46w8 ] }, 
+        { [ <verify_coredns::Global::Verify::qname::0>, <verify_coredns::Global::Verify::qname::1>, <verify_coredns::Global::Verify::qname::2>, <verify_coredns::Global::Verify::qname::3>, <verify_coredns::Global::Verify::qname::4>, <verify_coredns::Global::Verify::qname::5>, <verify_coredns::Global::Verify::qname::6>, <verify_coredns::Global::Verify::qname::7> ], 5w16, [ <verify_coredns::Global::Verify::qname::0>, 46w8, 97w8, 46w8, 98w8, 46w8 ] } 
+    ], 
+    # AUTHORITY
+    [ 
+        { [ 97w8, 46w8, 98w8, 46w8 ], 2w16, [ 99w8, 46w8, 100w8, 46w8, 101w8, 46w8 ] } 
+    ], 
+    # ADDITIONAL
+    [  ] 
+}
+```
+and the specification's response is:
+```txt
+{ 
+    # RCODE
+    Enum(DnsRCode)::NOERROR, 
+    # AA
+    true, 
+    # ANSWER
+    [ 
+        { [ 103w8, 46w8, 97w8, 46w8, 98w8, 46w8 ], 39w16, [ 97w8, 46w8, 98w8, 46w8 ] }, 
+        { [ <verify_coredns::Global::Verify::qname::0>, <verify_coredns::Global::Verify::qname::1>, <verify_coredns::Global::Verify::qname::2>, <verify_coredns::Global::Verify::qname::3>, <verify_coredns::Global::Verify::qname::4>, <verify_coredns::Global::Verify::qname::5>, <verify_coredns::Global::Verify::qname::6>, <verify_coredns::Global::Verify::qname::7> ], 5w16, [ <verify_coredns::Global::Verify::qname::0>, <verify_coredns::Global::Verify::qname::1>, 97w8, 46w8, 98w8, 46w8 ] } 
+    ], 
+    # AUTHORITY
+    [ 
+        { [ 104w8, 46w8, 97w8, 46w8, 98w8, 46w8 ], 2w16, [ 104w8, 46w8, 98w8, 46w8 ] } 
+    ], 
+    # ADDITIONAL
+    [  ] 
+} 
+```
+Basically, we see that there is a mismatch in the AUTHORITY section: CoreDNS returns `<a.b. NS>` while the correct record should be `<h.a.b. NS>`. See the writeup (`iceberg/test/coredns/BUGS.md`) for the detailed bug report.
+
+> **NOTE**: To further understand why the summary and responses are represented this way, see `iceberg/test/coredns/coredns.spec`. Each summary file is essentially the summary for the `verify_coredns()` function, and the [Ret] values have the `Verdict` type.
+
+### Step 2 - Validating Manual Effort
+> **Note**: These numbers are slighly different from those in Table 5, as we've evolved our specification since then.
+
+A quick count of LOCs in `iceberg/test/coredns/coredns.spec` yields:
+* **Library LOC**: 133 (1-133)
+* **Stub LOC**: 185 (285-469)
+* **Top-level spec LOC**: 794 (472-1265)
+
+And we estimate the Golang LOC of our verified components with `cloc`:
+```txt
+/app/iceberg/test/coredns# cloc .
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Go                               8            463           1115           2517
+```
+
+The spec-to-code ratio is approximately $185 / 2517 < 10\%$.
+
+### Step 3 - Measuring Scalability 
+
+> **Note**: Fully running verification for every zone file below can take a long time (from hours to days). We recommend validating this last.  
+
 ```bash
 # In docker; iceberg/
 mkdir -p logs
@@ -84,17 +200,6 @@ cargo run --release --bin iceberg coredns simple 0 1000 | tee logs/coredns-simpl
 cargo run --release --bin iceberg coredns complex 0 100 | tee logs/coredns-complex.txt
 cargo run --release --bin iceberg coredns real 0 2 | tee logs/coredns-real.txt
 ```
-For each zone file, check out the top-level summary at `iceberg/test/coredns/verify/`. For example, the summary of `iceberg/test/coredns/json/Simple/0` would be `iceberg/test/coredns/verify/Simple/0.sum`. Summaries are presented in the same format as documented in Table 2 of our paper. Specifically, search for `return { false`, which indicates a branch with a bug.
-
-### Step 2 - Reproducing Bugs
-
-TODO: check notes for locatin bugs by zone id
-
-### Step 3 - Validating Manual Effort
-
-TODO: count spec lines and code lines (with `cloc`)
-
-### Step 4 - Measuring Scalability 
 
 The log files (`logs/coredns-simple.txt`, `logs/coredns-complex.txt`, and `logs/coredns-real.txt`) contain the verification time under each zone file. 
 See `plots/scale.py` for plotting Figure 10.
@@ -178,7 +283,61 @@ See `coredns/DUMP.md`.
 
 ## Verification: Bind 9
 
-TODO
+We verify [Bind 9](https://gitlab.isc.org/isc-projects/bind9) version 9.19.18-dev, off of commit `1bd9791`. 
+
+### Step 1 - Reproducing Bugs
+
+> We identify no new issues in Bind 9 with the zone files we used.
+
+### Step 2 - Validating Manual Effort
+
+> **Note**: These numbers are slighly different from those in Table 5, as we've evolved our specification since then.
+
+A quick count of LOCs in `iceberg/test/bind/bind.spec` yields:
+* **Library LOC**: 133 (1-133)
+* **Stub LOC**: 756 (853-1608)
+* **Top-level spec LOC**: 1134 (1610-2743)
+
+And we roughly estimate the C LOC of our verified components to be O(10,000):
+```txt
+# [RATIONALE] 
+# lib/ns/query.c contains the entry function for our verification;
+# most of the file's logic is involved in a DNS lookup;
+# further, the lookup depends on many other modules, making the LOCs easily over 10,000.
+
+/app/bind9/lib/ns# wc -l query.c
+12214 query.c
+```
+
+The spec-to-code ratio is approximately $756 / 10,000 < 10\%$.
+
+### Step 3 - Measuring Scalability 
+
+> **Note**: Fully running verification for every zone file below can take a long time (from hours to days). We recommend validating this last.  
+
+```bash
+# In docker; iceberg/
+mkdir -p logs
+cargo run --release --bin iceberg bind simple 0 1000 | tee logs/bind-simple.txt
+cargo run --release --bin iceberg bind complex 0 100 | tee logs/bind-complex.txt
+cargo run --release --bin iceberg bind real 0 2 | tee logs/bind-real.txt
+```
+The log files (`logs/bind-simple.txt`, `logs/bind-complex.txt`, and `logs/bind-real.txt`) contain the verification time under each zone file. 
+See `plots/scale.py` for plotting Figure 10.
+
+### Optional: Testing Bind 9 with individual zones
+
+See `bind9/zone.sh`.
+
+Basically, one needs to set up `/etc/bind/named.conf`, `/etc/bind/zone`, `/etc/bind/fake.root`, and the `/var/cache/bind` directory. Run with `./bin/named/named -g -c /etc/bind/named.conf &`, then query with `dig @127.0.0.1 ...`.
+
+### Optional: Compilation
+
+See `iceberg/test/bind/README.md`. Note that our changes to the codebase can be validated with the `git` history. 
+
+### Optional: Zone invariants dumping
+
+See `bind/DUMP.md` 
 
 ---
 
@@ -186,7 +345,43 @@ TODO
 
 We verify [PowerDNS](https://github.com/PowerDNS/pdns) version 4.8, off of commit `98f45e2`.
 
-### Step 1 - Running Verification
+### Step 1 - Reproducing Bugs
+
+```bash
+# In docker; iceberg/
+cargo run --release --bin iceberg pdns buggy 9 11
+```
+
+**Full bug list.** See `iceberg/test/pdns/BUGS.md` for a writeup of all the bugs in this verification target (2 in total, as in Table 4 in our paper).
+
+**Checking the summaries.**
+For each zone file that triggers a bug, check out the top-level summary at `iceberg/test/pdns/verify/`. For example, the summary of `iceberg/test/pdns/json/Buggy/9` would be `iceberg/test/pdns/verify/Buggy/9.sum`. Summaries are presented in the same format as documented in Table 2 of our paper. Specifically, search for `return { false`, which indicates a branch with a bug. 
+
+See also `iceberg/test/pdns/pdns.spec` for understanding the top-level specification and the summaries.
+
+### Step 2 - Validating Manual Effort
+
+> **Note**: These numbers are slighly different from those in Table 5, as we've evolved our specification since then.
+
+A quick count of LOCs in `iceberg/test/pdns/pdns.spec` yields:
+* **Library LOC**: 986 (1-133, 647-1499)
+* **Stub LOC**: 294 (352-645)
+* **Top-level spec LOC**: 756 (1501-2256)
+
+And we roughly estimate the C++ LOC of our verified components to be O(5,000):
+```txt
+/app/iceberg/impl/PowerDNS/src# cloc .
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+C++                              7            887            475           5157
+C/C++ Header                     3            268            144           1541
+```
+
+The spec-to-code ratio is approximately $294 / 5,000 < 10\%$.
+
+### Step 3 - Measuring Scalability 
+> **Note**: Fully running verification for every zone file below can take a long time (from hours to days). We recommend validating this last.  
 
 ```bash
 # In docker; iceberg/
@@ -195,30 +390,21 @@ cargo run --release --bin iceberg pdns simple 0 1000 | tee logs/pdns-simple.txt
 cargo run --release --bin iceberg pdns complex 0 100 | tee logs/pdns-complex.txt
 cargo run --release --bin iceberg pdns real 0 2 | tee logs/pdns-real.txt
 ```
-For each zone file, check out the top-level summary at `iceberg/test/pdns/verify/`. For example, the summary of `iceberg/test/pdns/json/Simple/0` would be `iceberg/test/pdns/verify/Simple/0.sum`. Summaries are presented in the same format as documented in Table 2 of our paper. Specifically, search for `return { false`, which indicates a branch with a bug.
-
-### Step 2 - Reproducing Bugs
-
-TODO: check notes for locatin bugs by zone id
-
-### Step 3 - Validating Manual Effort
-
-TODO: count spec lines and code lines (with `cloc`)
-
-### Step 4 - Measuring Scalability 
-
 The log files (`logs/pdns-simple.txt`, `logs/pdns-complex.txt`, and `logs/pdns-real.txt`) contain the verification time under each zone file. 
 See `plots/scale.py` for plotting Figure 10.
 
-### Optional: Compilation
+### Optional: Testing PowerDNS with individual zones
 
-TODO: build and push the container for this.
+See `pdns/zone.sh`.
+
+Basically, one needs to set up `/usr/local/etc/named.conf`, `/usr/local/etc/pdns.conf`, and `/usr/local/etc/zone`.
+Run with `./pdns/pdns_server &`, then query with `dig @127.0.0.1 ...`.
+
+### Optional: Compilation
 
 See `iceberg/test/pdns/README.md`. Note that our changes to the codebase can be validated with the `git` history. 
 
 ### Optional: Zone invariants dumping
-
-TODO: author this file and documment the ddump-cpp tool.
 
 See `pdns/DUMP.md` 
 
@@ -228,7 +414,7 @@ See `pdns/DUMP.md`
 
 We verify [HickoryDNS](https://github.com/hickory-dns/hickory-dns) version 0.24.1, off of commit `6334a01430088ead8642cafaee592ec7bf49831f`.
 
-### Step 1 - Running Verification
+### Step 1 - Reproducing Bugs
 
 TODO: 
 

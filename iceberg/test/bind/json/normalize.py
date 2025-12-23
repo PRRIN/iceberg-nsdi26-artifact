@@ -126,16 +126,8 @@ def main(file_name):
 
     data = resolve_global(data)
     
-    output_file_name = "ctx-norm.json"
+    output_file_name = "ctx.json"
     with open(output_file_name, "w") as f:
-        # strs = json.dumps(data, indent=4).splitlines()
-        # jstr = ""
-        # for s in strs: 
-        #     if re.match(r'^\s*[a-zA-Z()"\d-]+,?$|^\s*],?$', s):
-        #         jstr += s.lstrip()
-        #     else:
-        #         jstr += "\n" + s
-        # f.write(jstr)
         json.dump(data, f, separators=(',', ':'))
 
 if __name__ == "__main__":

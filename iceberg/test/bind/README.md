@@ -3,7 +3,6 @@
 ### Components
 * The full Bind 9 repository.
 
-
 ### Source Code changes
 
 #### Hashing
@@ -57,10 +56,9 @@ opt-15 -S -strip-debug -opaque-pointers=0 --internalize bind.ll > bind.opt.ll
 opt-15 -S -Oz -opaque-pointers=0 bind.opt.ll > bind.opt.oz.ll
 ```
 
-For compiling with the dumping code:
+For compiling with the memory-dumping code (see `bind/DUMP.md`):
 ```bash
-# put dump.h to lib/ns/, and modify query.c
-
+# Put dump.h to lib/ns/, and modify query.c;
 # disable the check for --enable-static in configure.ac
 
 CC=clang-15 CFLAGS="-g -fno-pie" LDFLAGS="-no-pie -Wl,--undefined=isc__initialize,--undefined=initialize_bits_for_byte" ./configure --disable-dnstap --disable-geoip --enable-static=yes --enable-shared=no
@@ -69,7 +67,7 @@ make
 ```
 
 
-### Manual Changes
+### Manual Changes (for `bind.opt.oz.verify.ll`)
 
 #### remove header and trailers
 
@@ -82,8 +80,6 @@ make
 (be sure to delete %0 s)
 
 #### reltables
-
-<!-- TODO: in fact these are not used.. -->
 
 * Some functions (especially those doing formatting) uses `reltable` for data, which
 involves inter-region pointer arithmetics; \

@@ -1,12 +1,20 @@
 # PowerDNS Compilation
 
+## Building PDNS
+
+* Use a docker environment for compiling:
 ```bash
-
-CC=/usr/bin/clang-15 CXX=/usr/bin/clang++-15 CPPFLAGS="-I/app/ -g -fno-pie -O1" LDFLAGS="-no-pie" ./configure --with-modules="bind" --disable-lua-records --enable-static=yes --enable-shared=no
-
+docker run -v $(pwd):/app -it --platform linux/amd64 ubuntu:22.04
 ```
 
-# pdns.ll
+* Follow the [project instructions](https://github.com/PowerDNS/pdns?tab=readme-ov-file#compiling-authoritative-server) for installing the dependencies. 
+
+* Then configure the project with:
+```bash
+CC=/usr/bin/clang-15 CXX=/usr/bin/clang++-15 CPPFLAGS="-I/app/ -g -fno-pie -O1" LDFLAGS="-no-pie" ./configure --with-modules="bind" --disable-lua-records --enable-static=yes --enable-shared=no
+```
+
+## pdns.ll
 ```bash
 ./build_ir.sh
 llvm-link-15 *.bc -opaque-pointers=0 -o pdns.bc
@@ -16,7 +24,7 @@ opt-15 -S -strip-debug -opaque-pointers=0 --internalize pdns.ll > pdns.opt.ll
 opt-15 -S -Oz -opaque-pointers=0 pdns.opt.ll > pdns.opt.oz.ll
 ```
 
-# pdns.opt.oz.ll
+## pdns.opt.oz.ll
 
 Replace `float` and `double` with `i32` and `i64`
 
@@ -71,10 +79,4 @@ Cannot parse `@llvm.used`.
 
 ```llvm
 %exitcond = icmp eq i32 %886, 4
-```
-
-# ddump
-
-```bash
-cargo run --release --bin ddump-cpp test/pdns/dump.in test/pdns/auto_dump.hh %class.PacketHandler.3481 %class.DNSPacket %class.BB2DomainInfo %struct.Bind2DNSRecordExt %class.PDNSException %class.Bind2Backend
 ```
