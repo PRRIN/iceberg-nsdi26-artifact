@@ -13,7 +13,7 @@ Follow the instructions below to reproduce Section 8 (Evaluation) of our paper.
 Ensure you have:
 * Docker 
 * At least 16 GB DRAM and 64 GB free disk space. **Note**: it would be more ideal to compiler and run Iceberg with 32 GB or more DRAM; verification under large zone files would be significantly slower otherwise.
-* If you are using an VSCode-like IDE, we recommend **not** having the `rust-analyzer` plugin enabled, for its codebase indexing locks the project and may block you from manually running `cargo` for an extended period of time. 
+* If you are using a VSCode-like IDE, we recommend **not** having the `rust-analyzer` plugin enabled, for its codebase indexing locks the project and may block you from manually running `cargo` for an extended period of time. 
 
 Pull our artifact from GitHub:
 ```bash
