@@ -11,3 +11,6 @@
 [submodule "pdns"]
 	path = pdns
 	url = https://github.com/PRRIN/pdns.git
+[submodule "Ferret"]
+	path = Ferret
+	url = https://github.com/PRRIN/Ferret.git

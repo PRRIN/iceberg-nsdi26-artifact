@@ -497,3 +497,88 @@ See the 1st step of `iceberg/test/hickory-dns/README.md`. Note that our changes 
 ### Optional: Zone invariants dumping
 
 See `hickory-dns/DUMP.md`, or the 2nd step of `iceberg/test/hickory-dns/README.md`.
+
+## Verification of SCALE
+
+### How to verify with SCALE
+
+We add extra constraints to fix the zone and force SCALE to only output queries, and inspect whether its differential testing identifies any bugs. 
+
+All the zone files are equivalent (but not strictly the same) to the reports in `iceberg/test/coredns/BUGS.md`, `iceberg/test/pdns/BUGS.md`, `iceberg/test/hickory-dns/BUGS.md`.
+
+The codebase of SCALE is located at `Ferret/`.
+
+### Step 1: Test Generation (Optional)
+
+> **Note**: We have provided all the tests. If you want to generate the tests manually, you can follow the instructions below.
+
+> **Note**: See original `Ferret/TestGenerator/README.md` for more details. And our changes to the `Dockerfile` and codebase can be validated with the `git` history in each branch. 
+
+Pre-requisite: build the Docker image for Ferret's TestGenerator, and run it.
+
+```bash
+# Not in docker; Ferret/TestGenerator
+docker build -t ferrettestgen .
+docker run -it --rm -v ../:/home/ferret/Ferret ferrettestgen:latest /bin/bash
+```
+
+For each bug, there is a git branch named `bug<id>_<coredns|pdns|hickory>`, where `<id>` is the bug ID. For example, the branch for bug 6 in CoreDNS is `bug6_coredns`. 
+
+Check out each branch, and run the following commands to generate the corresponding test:
+```bash
+# in container, use sudo to avoid permission issues
+ferret@392411cfa340:/home/ferret/Ferret/TestGenerator$ sudo dotnet build --configuration Release
+ferret@392411cfa340:/home/ferret/Ferret/TestGenerator$ sudo dotnet run --configuration Release --project Samples -l <max_length>
+```
+
+The `max_length` is the maximum length for constraining the zone file, which impacts the time of test generation. SCALE set it to 4 by default, but we recommend setting it respectively to the bug ID. 
+
+| Bug ID | max_length |
+| ------ | ---------- |
+| 1      | 3          |
+| 6      | 2          |
+| ...    | ...        |
+
+The generated results are located in `Ferret/TestGenerator/Results/ValidZoneFileTest/`. You can rename `ValidZoneFileTest` to `bug<id>_<coredns|pdns|hickory>`, e.g., `bug6_coredns`.
+
+### Step 2: Differential Testing
+
+> **Note**: See original `Ferret/DifferentialTesting/README.md` for more details. And our changes to the `Dockerfile` and codebase can be validated with the `git` history. 
+
+> **Note**: We have provided all the tests of Step 1 in `git` branch `all_bugs`. You can check out this branch to get them.
+
+Pre-requisite: install the following tools.
+
+- Install `python3`.
+- Install `dnspython`. (e.g., `pip install dnspython`)
+- Install `named-compilezone`. (e.g., `sudo apt install bind9-utils`)
+- Build the Docker image for DNS server.
+```bash
+# Not in docker; Ferret/DifferentialTesting
+python3 Scripts/generate_docker_images.py -n -k -y -m -e
+```
+
+Copy the generated tests to the `DifferentialTesting` directory, and translate them to zone files.
+
+Example:
+
+```bash
+# Not in docker; Ferret/DifferentialTesting
+cp -r ../TestGenerator/Results ./
+
+# Translate the tests to zone files, see the original README.md for details
+# If you get an error "Permission denied" (typically generated from Step 1),
+# try running the command with sudo, or chmod 777 on the Results directory
+python3 Scripts/translate_tests.py Results/bug6_coredns
+```
+
+Finally, run the differential testing. 
+
+Example:
+```bash
+# Not in docker; Ferret/DifferentialTesting
+# Run the differential testing, see original README.md for details
+python3 -m Scripts.test_with_valid_zone_files -n -k -y -m -e -path Results/bug6_coredns
+```
+
+**Full bug list.** Compared to the bugs we found, see `Ferret/BUGS.md` in `all_bugs` branch.
