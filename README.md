@@ -51,7 +51,7 @@ Go to `/app/iceberg` in the container, and run:
 cargo test --release
 ```
 
-> **WARNING:** Building Iceberg from scratch under `--release` can take up to a few hours (most of the time is spent on building `Z3` and the frontends for parsing LLVM IR). If you are using our artifact and Docker image, this should not be a fresh build (only linking is performed here); but expect long waiting time if you made any changes to the project.
+> **NOTE:** Building Iceberg from scratch under `--release` can take up to a few hours (most of the time is spent on building `Z3` and the frontends for parsing LLVM IR). 
 
 This will run all 106 tests in the main crate in around one minute. All of them should pass. Note that many of these tests are already non-trivial - they correspond to partial refinement of the four verification targets with certain zone file configs.
 
