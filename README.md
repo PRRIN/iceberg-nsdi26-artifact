@@ -529,6 +529,8 @@ Check out each branch, and run the following commands to generate the correspond
 # in container, use sudo to avoid permission issues
 ferret@392411cfa340:/home/ferret/Ferret/TestGenerator$ sudo dotnet build --configuration Release
 ferret@392411cfa340:/home/ferret/Ferret/TestGenerator$ sudo dotnet run --configuration Release --project Samples -l <max_length>
+# Prevent permission issues for the following steps
+ferret@392411cfa340:/home/ferret/Ferret/TestGenerator$ sudo chmod 777 -R Results/ValidZoneFileTests/
 ```
 
 The `max_length` is the maximum length for constraining the zone file, which impacts the time of test generation. SCALE set it to 4 by default, but we recommend setting it respectively to the bug ID. 
@@ -536,8 +538,17 @@ The `max_length` is the maximum length for constraining the zone file, which imp
 | Bug ID | max_length |
 | ------ | ---------- |
 | 1      | 3          |
+| 2      | 3          |
+| 3      | ❌         |
+| 4      | ❌         |
+| 5      | ❌         |
 | 6      | 2          |
-| ...    | ...        |
+| 7      | 4          |
+| 8      | ❌         |
+| 9      | 2          |
+| 10     | ❌         |
+| 11     | 3          |
+| 12     | 4          |
 
 The generated results are located in `Ferret/TestGenerator/Results/ValidZoneFileTest/`. You can rename `ValidZoneFileTest` to `bug<id>_<coredns|pdns|hickory>`, e.g., `bug6_coredns`.
 
